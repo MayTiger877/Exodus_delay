@@ -96,7 +96,7 @@ void MyReverb::setOutputGain(float out_gain_chosen)
 	output_gain = out_gain_chosen;
 }
 
-void MyReverb::setInputBuffer(AudioBuffer <float>& new_buffer)
+void MyReverb::setInputBuffer(AudioBuffer<SmoothedValue<float>>& new_buffer)
 {
 	input_buffer.makeCopyOf(new_buffer);
 	input_buffer_size = input_buffer.getNumSamples();
@@ -154,7 +154,7 @@ void MyReverb::setupMyReverb()
 	is_clipping = false;
 }
 
-AudioBuffer <float>& MyReverb::addReverb(int channel)
+AudioBuffer<SmoothedValue<float>>& MyReverb::addReverb(int channel)
 {
 	ScopedNoDenormals noDenormals;
 
@@ -176,8 +176,8 @@ AudioBuffer <float>& MyReverb::addReverb(int channel)
 	}
 
 	
-		float* output_write = output_buffer.getWritePointer(channel);
-		const float* input_read = input_buffer.getReadPointer(channel);
+		SmoothedValue<float>* output_write = output_buffer.getWritePointer(channel);
+		const SmoothedValue<float>* input_read = input_buffer.getReadPointer(channel);
 
 		for (auto sample = 0; sample < output_buffer.getNumSamples(); ++sample)
 		{
@@ -187,7 +187,7 @@ AudioBuffer <float>& MyReverb::addReverb(int channel)
 				temp_matrix(counter, 0) = (*delay_lines[counter])[delay_line_lengths[counter] - (int)1];
 				out_sample += temp_matrix(counter, 0) * c_gain[counter][channel];
 				current_matrix_product = *feedback_matrix_rows[counter] * temp_matrix;
-				current_sample = (input_read[sample] * b_gain) + *(current_matrix_product.getRawDataPointer());
+				current_sample = (input_read[sample].getCurrentValue() * b_gain) + *(current_matrix_product.getRawDataPointer());
 				current_sample = dampening_filters_tab[counter]->processSample(current_sample);
 				delay_lines[counter]->push_front(current_sample);
 				delay_lines[counter]->pop_back();
@@ -196,12 +196,12 @@ AudioBuffer <float>& MyReverb::addReverb(int channel)
 			out_sample = tonal_correction_filter_ptr.get()->processSample(out_sample);
 			init_delay_line.push_front(out_sample);
 			init_delay_line.pop_back();
-			output_write[sample] = ((input_read[sample] * b_gain * balance_dry)
+			output_write[sample] = ((input_read[sample].getCurrentValue() * b_gain * balance_dry)
 				+ init_delay_line.back()) * output_gain;
 
 			if (is_clipping == false)
 			{
-				if (output_write[sample] > 1.0 || output_write[sample] < -1.0)
+				if (output_write[sample].getCurrentValue() > 1.0 || output_write[sample].getCurrentValue() < -1.0)
 					is_clipping = true;
 			}
 

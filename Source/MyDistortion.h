@@ -25,7 +25,7 @@ class MyDistortion
         };
 
     private:
-        AudioBuffer<float> dist_buffer;
+        AudioBuffer<juce::SmoothedValue<float>> dist_buffer;
         int dist_buffer_length;
         double sample_rate;
         float balance;
@@ -47,6 +47,6 @@ class MyDistortion
         void prepareFilter(const dsp::ProcessSpec& spec);
         void reset();
         float distorter(float to_distort, float balance);
-        void process(AudioBuffer<float>& buffer, int channel);
+        void process(AudioBuffer<juce::SmoothedValue<float>>& buffer, int channel);
 
 };

@@ -95,8 +95,8 @@ public:
 
     Visualiser m_visualiser;
     Visualiser m_visualiser_2;
-    AudioBuffer<float> dry_delay_buffer;
-    AudioBuffer<float> wet_delay_buffer;
+    AudioBuffer<juce::SmoothedValue<float>> dry_delay_buffer;
+    AudioBuffer<juce::SmoothedValue<float>> wet_delay_buffer;
     Parameters parameters;
     dsp::Reverb reverb;
     dsp::Reverb::Parameters reverb_params;
@@ -118,8 +118,8 @@ public:
     void setSize(int new_num_channels, int new_num_samples);
     void setParameters(const Parameters& new_params);
     void fillDelayBuffers(int channel, const int buffer_length, const float* read_pointer, int buffer_write_position);
-    void getFromDelayBuffer(AudioBuffer<float>& buffer, int channel, const int buffer_length, const int delay_buffer_length, int buffer_write_position);
-    void feedbackDelay(int channel, const int buffer_length, float* write_pointer, int buffer_write_position);
+    void getFromDelayBuffer(AudioBuffer<juce::SmoothedValue<float>>& buffer, int channel, const int buffer_length, const int delay_buffer_length, int buffer_write_position);
+    void feedbackDelay(int channel, const int buffer_length, SmoothedValue<float>* write_pointer, int buffer_write_position);
     void updateDelaySettings();
     void updateReverbSettings();
     void updateDistortionSettings();

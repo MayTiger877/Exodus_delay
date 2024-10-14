@@ -124,26 +124,29 @@ void ExodusAudioProcessor::applyDist(int channel)
 }
 
 
-void ExodusAudioProcessor::fillDelayBuffers(int channel, const int buffer_length, const float* read_pointer, int buffer_write_position)
+void ExodusAudioProcessor::fillDelayBuffers(int channel, const int buffer_length, SmoothedValue<float>* read_pointer, int buffer_write_position)
 {
+    SmoothedValue<float>* smoothed_read_pointer;
+
+    smoothed_read_pointer = read_pointer;
     if (delay_buffer_length > buffer_length + buffer_write_position)
     {
-        dry_delay_buffer.copyFromWithRamp(channel, buffer_write_position, read_pointer, buffer_length, parameters.delay_feedback, parameters.delay_feedback);
+        dry_delay_buffer.copyFromWithRamp(channel, buffer_write_position, smoothed_read_pointer, buffer_length, parameters.delay_feedback, parameters.delay_feedback);
     }
     else
     {
         const int buffer_remaining = delay_buffer_length - buffer_write_position;
-        dry_delay_buffer.copyFromWithRamp(channel, buffer_write_position, read_pointer, buffer_remaining, parameters.delay_feedback, parameters.delay_feedback);
-        dry_delay_buffer.copyFromWithRamp(channel, 0, read_pointer, (buffer_length - buffer_remaining), parameters.delay_feedback, parameters.delay_feedback);
+        dry_delay_buffer.copyFromWithRamp(channel, buffer_write_position, smoothed_read_pointer, buffer_remaining, parameters.delay_feedback, parameters.delay_feedback);
+        dry_delay_buffer.copyFromWithRamp(channel, 0, smoothed_read_pointer, (buffer_length - buffer_remaining), parameters.delay_feedback, parameters.delay_feedback);
     }
     wet_delay_buffer.copyFromWithRamp(channel, 0, dry_delay_buffer.getReadPointer(channel), delay_buffer_length, 1, 1);
 }
 
 
-void ExodusAudioProcessor::getFromDelayBuffer(AudioBuffer<float>& buffer, int channel, const int buffer_length, const int delay_buffer_length, int buffer_write_position)
+void ExodusAudioProcessor::getFromDelayBuffer(AudioBuffer<juce::SmoothedValue<float>>& buffer, int channel, const int buffer_length, const int delay_buffer_length, int buffer_write_position)
 {
     const int read_position = static_cast<int> (delay_buffer_length + buffer_write_position - (sample_rate * parameters.delay_time / 1000)) % delay_buffer_length;
-    const float* wet_delay_buffer_data = wet_delay_buffer.getReadPointer(channel);
+    const SmoothedValue<float>* wet_delay_buffer_data = wet_delay_buffer.getReadPointer(channel);
     parameters.app_delay_pan = calculatePanMargin(channel);
     if (delay_buffer_length > buffer_length + read_position)
     {
@@ -158,7 +161,7 @@ void ExodusAudioProcessor::getFromDelayBuffer(AudioBuffer<float>& buffer, int ch
 }
 
 
-void ExodusAudioProcessor::feedbackDelay(int channel, const int buffer_length, float* write_pointer, int buffer_write_position)
+void ExodusAudioProcessor::feedbackDelay(int channel, const int buffer_length, SmoothedValue<float>* write_pointer, int buffer_write_position)
 {
     if (delay_buffer_length > buffer_length + buffer_write_position)
     {
@@ -433,8 +436,8 @@ void ExodusAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce:
             channelData[sample] = channelData[sample] * juce::Decibels::decibelsToGain(tree_state.getRawParameterValue("m_input_gain_id")->load());
         }
 
-        float*       write_pointer = buffer.getWritePointer(channel);
-        const float* read_pointer  = buffer.getReadPointer(channel);
+        juce::SmoothedValue<float>*  write_pointer = buffer.getWritePointer(channel);
+        const juce::SmoothedValue<float>*  read_pointer  = buffer.getReadPointer(channel);
 
         fillDelayBuffers(channel, buffer_length, read_pointer, processor_buffer_write_pos); //now also copy to wet
         

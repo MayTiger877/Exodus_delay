@@ -11,7 +11,7 @@
 #include "MyDistortion.h"
 using namespace juce;
 
-MyDistortion::MyDistortion()
+MyDistortion::MyDistortion() : dist_buffer_length(0), sample_rate(0), balance(0), drive_mult(0)
 {
     dist_buffer.clear();
     brightness_filter.setHighpass(true);
@@ -72,7 +72,7 @@ float MyDistortion::distorter(float to_distort, float balance)
     return dry_sample * parameters.dist_dry + to_distort * parameters.dist_wet;
 }
 
-void MyDistortion::process(AudioBuffer<float>& buffer, int channel)
+void MyDistortion::process(AudioBuffer<juce::SmoothedValue<float>>& buffer, int channel)
 {
     for (int i = 0; i < dist_buffer_length; i++)
     {
