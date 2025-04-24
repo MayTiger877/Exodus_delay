@@ -12,19 +12,19 @@
 
 
 //==============================================================================
-MyReverb::MyReverb() :	num_delay_lines(12),
-						b_gain(1.0),
-						balance_dry(1.0),
-						feedback_matrix(12, 12),
-						delay_line_lengths{ 601, 1399, 1747, 2269, 2707, 3089, 3323, 3571, 3911, 4127, 4639, 4999 },     //try different occurences
-						is_clipping(false),
-						input_gain(0.0),
-						output_gain(0.0),
-						input_buffer_size(0),
-						balance_current_value(0.0),
-						time_current_value(1.5),
-						dampening_current_value(75.0),
-						init_current_value(0.0)
+MyReverb::MyReverb() : num_delay_lines(12),
+b_gain(1.0),
+balance_dry(1.0),
+feedback_matrix(12, 12),
+delay_line_lengths{ 601, 1399, 1747, 2269, 2707, 3089, 3323, 3571, 3911, 4127, 4639, 4999 },     //try different occurences
+is_clipping(false),
+input_gain(0.0),
+output_gain(0.0),
+input_buffer_size(0),
+balance_current_value(0.0),
+time_current_value(1.5),
+dampening_current_value(75.0),
+init_current_value(0.0)
 {
 	setupGainC(0.0);
 
@@ -51,7 +51,7 @@ MyReverb::MyReverb() :	num_delay_lines(12),
 	feedback_matrix = circulant_matrix - ((u_vector * (2.0 / num_delay_lines)) * u_vector_transposed);
 
 	for (int counter = 0; counter < 12; ++counter)
-		feedback_matrix_rows.add( new dsp::Matrix <float>(1, 12, feedback_matrix.getRawDataPointer() + counter * (int)12) );
+		feedback_matrix_rows.add(new dsp::Matrix <float>(1, 12, feedback_matrix.getRawDataPointer() + counter * (int)12));
 
 	input_buffer.clear();
 	output_buffer.clear();
@@ -96,7 +96,7 @@ void MyReverb::setOutputGain(float out_gain_chosen)
 	output_gain = out_gain_chosen;
 }
 
-void MyReverb::setInputBuffer(AudioBuffer<SmoothedValue<float>>& new_buffer)
+void MyReverb::setInputBuffer(AudioBuffer<float>& new_buffer)
 {
 	input_buffer.makeCopyOf(new_buffer);
 	input_buffer_size = input_buffer.getNumSamples();
@@ -154,7 +154,7 @@ void MyReverb::setupMyReverb()
 	is_clipping = false;
 }
 
-AudioBuffer<SmoothedValue<float>>& MyReverb::addReverb(int channel)
+AudioBuffer<float>& MyReverb::addReverb(int channel)
 {
 	ScopedNoDenormals noDenormals;
 
@@ -175,35 +175,35 @@ AudioBuffer<SmoothedValue<float>>& MyReverb::addReverb(int channel)
 		delay_lines.add(new std::deque <float>(4999, 0.0));
 	}
 
-	
-		SmoothedValue<float>* output_write = output_buffer.getWritePointer(channel);
-		const SmoothedValue<float>* input_read = input_buffer.getReadPointer(channel);
 
-		for (auto sample = 0; sample < output_buffer.getNumSamples(); ++sample)
+	float* output_write = output_buffer.getWritePointer(channel);
+	const float* input_read = input_buffer.getReadPointer(channel);
+
+	for (auto sample = 0; sample < output_buffer.getNumSamples(); ++sample)
+	{
+		out_sample = 0.0;
+		for (int counter = 0; counter < 12; ++counter)
 		{
-			out_sample = 0.0;
-			for (int counter = 0; counter < 12; ++counter)
-			{
-				temp_matrix(counter, 0) = (*delay_lines[counter])[delay_line_lengths[counter] - (int)1];
-				out_sample += temp_matrix(counter, 0) * c_gain[counter][channel];
-				current_matrix_product = *feedback_matrix_rows[counter] * temp_matrix;
-				current_sample = (input_read[sample].getCurrentValue() * b_gain) + *(current_matrix_product.getRawDataPointer());
-				current_sample = dampening_filters_tab[counter]->processSample(current_sample);
-				delay_lines[counter]->push_front(current_sample);
-				delay_lines[counter]->pop_back();
-			}
+			temp_matrix(counter, 0) = (*delay_lines[counter])[delay_line_lengths[counter] - (int)1];
+			out_sample += temp_matrix(counter, 0) * c_gain[counter][channel];
+			current_matrix_product = *feedback_matrix_rows[counter] * temp_matrix;
+			current_sample = (input_read[sample] * b_gain) + *(current_matrix_product.getRawDataPointer());
+			current_sample = dampening_filters_tab[counter]->processSample(current_sample);
+			delay_lines[counter]->push_front(current_sample);
+			delay_lines[counter]->pop_back();
+		}
 
-			out_sample = tonal_correction_filter_ptr.get()->processSample(out_sample);
-			init_delay_line.push_front(out_sample);
-			init_delay_line.pop_back();
-			output_write[sample] = ((input_read[sample].getCurrentValue() * b_gain * balance_dry)
-				+ init_delay_line.back()) * output_gain;
+		out_sample = tonal_correction_filter_ptr.get()->processSample(out_sample);
+		init_delay_line.push_front(out_sample);
+		init_delay_line.pop_back();
+		output_write[sample] = ((input_read[sample] * b_gain * balance_dry)
+			+ init_delay_line.back()) * output_gain;
 
-			if (is_clipping == false)
-			{
-				if (output_write[sample].getCurrentValue() > 1.0 || output_write[sample].getCurrentValue() < -1.0)
-					is_clipping = true;
-			}
+		if (is_clipping == false)
+		{
+			if (output_write[sample] > 1.0 || output_write[sample] < -1.0)
+				is_clipping = true;
+		}
 
 		for (int counter = 0; counter < 12; ++counter)
 			dampening_filters_tab[counter]->reset();

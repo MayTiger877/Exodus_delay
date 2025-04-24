@@ -30,7 +30,7 @@ void MyDistortion::setSize(int new_num_channels, int new_num_samples)
     dist_buffer_length = dist_buffer.getNumSamples();
 }
 
-void MyDistortion::setParameters(const Parameters& new_params) 
+void MyDistortion::setParameters(const Parameters& new_params)
 {
     parameters.dist_drive = new_params.dist_drive;
     parameters.dist_dry = new_params.dist_dry;
@@ -56,7 +56,7 @@ void MyDistortion::prepareFilter(const dsp::ProcessSpec& spec)
     brightness_filter.setCutoffFrequency(parameters.dist_brightness);
 }
 
-void MyDistortion::reset() 
+void MyDistortion::reset()
 {
     dist_buffer.clear();
 }
@@ -72,7 +72,7 @@ float MyDistortion::distorter(float to_distort, float balance)
     return dry_sample * parameters.dist_dry + to_distort * parameters.dist_wet;
 }
 
-void MyDistortion::process(AudioBuffer<juce::SmoothedValue<float>>& buffer, int channel)
+void MyDistortion::process(AudioBuffer<float>& buffer, int channel)
 {
     for (int i = 0; i < dist_buffer_length; i++)
     {

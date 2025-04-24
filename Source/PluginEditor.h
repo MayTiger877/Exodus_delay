@@ -16,20 +16,20 @@ using namespace std;
 //==============================================================================
 /**
 */
-class ExodusAudioProcessorEditor :  public juce::AudioProcessorEditor,
-                                    public juce::Button::Listener,
-                                    public juce::Timer
-                                    
+class ExodusAudioProcessorEditor : public juce::AudioProcessorEditor,
+    public juce::Button::Listener,
+    public juce::Timer
+
 {
 public:
-    ExodusAudioProcessorEditor (ExodusAudioProcessor&);
+    ExodusAudioProcessorEditor(ExodusAudioProcessor&);
     ~ExodusAudioProcessorEditor() override;
 
-    void juce::Button::Listener::buttonClicked(Button*) override;
+    void buttonClicked(Button* button) override;
     void reAlphaComponents();
     void initiateComponents(AudioProcessor&);
     void printComponents();
-    void paint (juce::Graphics&) override;
+    void paint(juce::Graphics&) override;
     void resized() override;
 
 private:
@@ -144,5 +144,5 @@ public:
     std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> m_dist_buttons_attach[NUM_OF_INSTENCES];
 
     ExodusAudioProcessor& audioProcessor;
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ExodusAudioProcessorEditor)
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ExodusAudioProcessorEditor)
 };

@@ -145,7 +145,7 @@ void MyFilter::recursiveFilter(int channel, float* buffer, float* tmp, int buffe
 
 void MyFilter::moogFilter(int channel, float* buffer, float* tmp, int buffer_length)
 {
-    for (int i = 0; i < 2 * buffer_length; i++) 
+    for (int i = 0; i < 2 * buffer_length; i++)
     {
         buffer[i / 2] = tanhf(buffer[i / 2] * drive);
         y_a = y_a + g * (tanhf(buffer[i / 2] - resonance * ((y_d_1 + y_d) / 2) - tanhf(y_a)));
@@ -173,11 +173,11 @@ void LowpassHighpassFilter::setSamplingRate(float samplingRate) {
     this->samplingRate = samplingRate;
 }
 
-void LowpassHighpassFilter::process(juce::AudioBuffer<float>& buffer, int channel) 
+void LowpassHighpassFilter::process(AudioBuffer<float>& buffer, int channel)
 {
     dnBuffer.resize(buffer.getNumChannels(), 0.f);
     auto channelSamples = buffer.getWritePointer(channel);
-    for (auto i = 0; i < buffer.getNumSamples(); ++i) 
+    for (auto i = 0; i < buffer.getNumSamples(); ++i)
     {
         const auto tan = std::tan(M_PI * cutoffFrequency / samplingRate);
         const auto a1 = (tan - 1.f) / (tan + 1.f);
@@ -187,4 +187,4 @@ void LowpassHighpassFilter::process(juce::AudioBuffer<float>& buffer, int channe
         const auto filterOutput = 0.65f * (inputSample + allpassFilteredSample);
         channelSamples[i] = filterOutput;
     }
-}  
+}

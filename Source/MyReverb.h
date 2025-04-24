@@ -39,8 +39,8 @@ private:
 
 	//  Input and output buffers 
 
-	AudioBuffer<SmoothedValue<float>> input_buffer;
-	AudioBuffer<SmoothedValue<float>> output_buffer;
+	AudioBuffer<float> input_buffer;
+	AudioBuffer<float> output_buffer;
 
 	//  Values read from sliders
 
@@ -70,10 +70,10 @@ public:
 	void setInputGain(float in_gain_chosen);
 	void setOutputGain(float out_gain_chosen);
 
-	void setInputBuffer(AudioBuffer<SmoothedValue<float>>& new_buffer);
+	void setInputBuffer(AudioBuffer<float>& new_buffer);
 
 	void setupMyReverb();
-	AudioBuffer<SmoothedValue<float>>& addReverb(int channel);
+	AudioBuffer<float>& addReverb(int channel);
 
 
 };

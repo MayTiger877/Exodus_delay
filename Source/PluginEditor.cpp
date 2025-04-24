@@ -13,23 +13,23 @@
 #define BOLD 1.0f
 
 //==============================================================================
-ExodusAudioProcessorEditor::ExodusAudioProcessorEditor (ExodusAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p), instence_indicator()
+ExodusAudioProcessorEditor::ExodusAudioProcessorEditor(ExodusAudioProcessor& p)
+    : AudioProcessorEditor(&p), audioProcessor(p), instence_indicator()
 {
-    m_input_gain_attach =       std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_input_gain_id", m_input_gain);
-    m_output_gain_attach =      std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_output_gain_id", m_output_gain);
-    m_delay_time_attach =       std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_delay_time_id", m_delay_time);
-    m_delay_feedback_attach =   std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_delay_feedback_id", m_delay_feedback);
-    m_delay_mix_attach =        std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_delay_mix_id", m_delay_mix);
+    m_input_gain_attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_input_gain_id", m_input_gain);
+    m_output_gain_attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_output_gain_id", m_output_gain);
+    m_delay_time_attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_delay_time_id", m_delay_time);
+    m_delay_feedback_attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_delay_feedback_id", m_delay_feedback);
+    m_delay_mix_attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_delay_mix_id", m_delay_mix);
     m_reverb_room_size_attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_reverb_room_size_id", m_reverb_room_size);
-    m_reverb_damping_attach =   std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_reverb_damping_id", m_reverb_damping);
-    m_reverb_width_attach =     std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_reverb_width_id", m_reverb_width);
+    m_reverb_damping_attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_reverb_damping_id", m_reverb_damping);
+    m_reverb_width_attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_reverb_width_id", m_reverb_width);
     m_reverb_wet_level_attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_reverb_wet_level_id", m_reverb_wet_level);
     m_reverb_dry_level_attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_reverb_dry_level_id", m_reverb_dry_level);
-    m_dist_drive_attach =       std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_dist_drive_id", m_dist_drive);
-    m_dist_brightness_attach =  std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_dist_brightness_id", m_dist_brightness);
-    m_dist_wet_level_attach =   std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_dist_wet_level_id", m_dist_wet_level);
-    m_dist_dry_level_attach =   std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_dist_dry_level_id", m_dist_dry_level);
+    m_dist_drive_attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_dist_drive_id", m_dist_drive);
+    m_dist_brightness_attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_dist_brightness_id", m_dist_brightness);
+    m_dist_wet_level_attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_dist_wet_level_id", m_dist_wet_level);
+    m_dist_dry_level_attach = std::make_unique<AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.tree_state, "m_dist_dry_level_id", m_dist_dry_level);
 
 
     for (int i = 0; i < NUM_OF_INSTENCES; i++)
@@ -56,7 +56,7 @@ ExodusAudioProcessorEditor::ExodusAudioProcessorEditor (ExodusAudioProcessor& p)
     //setResizeLimits(600, juce::roundToInt(600.0 / winSizeRatio), 1200, juce::roundToInt(1200.0 / winSizeRatio));
     //getConstrainer()->setFixedAspectRatio(winSizeRatio);
     //setResizeLimits(600, 400, 1200, 800);
-    setSize (1200, 800);
+    setSize(1200, 800);
     initiateComponents(p);
 }
 
@@ -113,7 +113,7 @@ void ExodusAudioProcessorEditor::buttonClicked(Button* button)
             case true:
                 if (audioProcessor.addDistMarked(i) == false)
                     m_dist_buttons[i].setToggleState(false, true);
-                
+
                 break;
             case false:
                 audioProcessor.subDistMarked(i);
@@ -149,7 +149,7 @@ void ExodusAudioProcessorEditor::reAlphaComponents()
 }
 
 //==============================================================================
-void ExodusAudioProcessorEditor::paint (juce::Graphics& g)
+void ExodusAudioProcessorEditor::paint(juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll(getLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId));
@@ -233,7 +233,7 @@ void ExodusAudioProcessorEditor::initiateComponents(AudioProcessor& p)
     m_delay_feedback_label.setText("feedback", juce::dontSendNotification);
 
     addAndMakeVisible(m_delay_mix);
-    m_delay_mix.setRange(0.0f, 100.0f,1.0f);
+    m_delay_mix.setRange(0.0f, 100.0f, 1.0f);
     m_delay_mix.setValue(40.0f);
     m_delay_mix.setTextValueSuffix("%");
     m_delay_mix.setTextBoxStyle(Slider::TextBoxBelow, true, 50, 20);
@@ -424,6 +424,6 @@ void ExodusAudioProcessorEditor::printComponents()
 
 void ExodusAudioProcessorEditor::resized()
 {
-    auto bounds = getLocalBounds().toFloat() .removeFromBottom(getHeight() * 0.9f) .reduced(getWidth() * 0.06f, getHeight() * 0.25f);
+    auto bounds = getLocalBounds().toFloat().removeFromBottom(getHeight() * 0.9f).reduced(getWidth() * 0.06f, getHeight() * 0.25f);
     printComponents();
 }

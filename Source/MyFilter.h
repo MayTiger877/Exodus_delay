@@ -86,7 +86,7 @@ public:
     void setHighpass(bool highpass);
     void setCutoffFrequency(float cutoffFrequency);
     void setSamplingRate(float samplingRate);
-    void process(juce::AudioBuffer<float>&, int channel);
+    void process(AudioBuffer<float>& buffer, int channel);
 
 private:
     bool highpass;
