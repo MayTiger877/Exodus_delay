@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿/*
+=======
+/*
+>>>>>>> master
   ==============================================================================
 
     This file contains the basic framework code for a JUCE plugin processor.
@@ -9,16 +13,21 @@
 #pragma once
 
 #include <JuceHeader.h>
+<<<<<<< HEAD
 #include "MyDistortion.h"
 #include "MyFilter.h"
 
 #define NUM_OF_INSTENCES 16
 #define INSTENCE_ON 1
 #define INSTENCE_OFF 0
+=======
+#include "DelayEngine.h"
+>>>>>>> master
 
 //==============================================================================
 /**
 */
+<<<<<<< HEAD
 class ExodusAudioProcessor : public juce::AudioProcessor
 {
 public:
@@ -35,6 +44,24 @@ public:
 #endif
 
     void processBlock(juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+=======
+class Exodus_2AudioProcessor  : public juce::AudioProcessor
+{
+public:
+    //==============================================================================
+    Exodus_2AudioProcessor();
+    ~Exodus_2AudioProcessor() override;
+
+    //==============================================================================
+    void prepareToPlay (double sampleRate, int samplesPerBlock) override;
+    void releaseResources() override;
+
+   #ifndef JucePlugin_PreferredChannelConfigurations
+    bool isBusesLayoutSupported (const BusesLayout& layouts) const override;
+   #endif
+
+    void processBlock (juce::AudioBuffer<float>&, juce::MidiBuffer&) override;
+>>>>>>> master
 
     //==============================================================================
     juce::AudioProcessorEditor* createEditor() override;
@@ -51,6 +78,7 @@ public:
     //==============================================================================
     int getNumPrograms() override;
     int getCurrentProgram() override;
+<<<<<<< HEAD
     void setCurrentProgram(int index) override;
     const juce::String getProgramName(int index) override;
     void changeProgramName(int index, const juce::String& newName) override;
@@ -143,4 +171,34 @@ public:
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ExodusAudioProcessor)
+=======
+    void setCurrentProgram (int index) override;
+    const juce::String getProgramName (int index) override;
+    void changeProgramName (int index, const juce::String& newName) override;
+
+    //==============================================================================
+    void getStateInformation (juce::MemoryBlock& destData) override;
+    void setStateInformation (const void* data, int sizeInBytes) override;
+
+	juce::AudioProcessorValueTreeState apvts;
+
+    //----------------------
+
+	DelayEngine* getDelayEngine() const { return m_delayEngine.get(); }
+	void setIndex(int index) { m_index = index; }
+	const float getDelayTimeInMs() const { return m_delayTimeInMs; }
+
+private:
+	
+    std::unique_ptr<DelayEngine> m_delayEngine;
+
+	int m_index = 0;
+	float m_delayTimeInMs = 0.0f;
+
+    juce::AudioProcessorValueTreeState::ParameterLayout creatParametersLayout();
+
+
+    //==============================================================================
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Exodus_2AudioProcessor)
+>>>>>>> master
 };

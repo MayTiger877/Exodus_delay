@@ -1,3 +1,19 @@
+<<<<<<< HEAD
 Builds
 build
 JUCE
+=======
+*.db
+Builds/
+./Builds/
+./Builds/VisualStudio2022
+./Builds/VisualStudio2022/*
+build/
+./build/
+./build/VisualStudio2022
+./build/VisualStudio2022/*
+.vscode/
+./.vscode/
+Source/.vscode
+./Source/.vscode
+>>>>>>> master
