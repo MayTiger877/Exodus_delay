@@ -11,11 +11,7 @@
 // Audio plugin settings..
 
 #ifndef  JucePlugin_Build_VST
-<<<<<<< HEAD
- #define JucePlugin_Build_VST              1
-=======
  #define JucePlugin_Build_VST              0
->>>>>>> master
 #endif
 #ifndef  JucePlugin_Build_VST3
  #define JucePlugin_Build_VST3             1
@@ -45,17 +41,10 @@
  #define JucePlugin_Enable_ARA             0
 #endif
 #ifndef  JucePlugin_Name
-<<<<<<< HEAD
- #define JucePlugin_Name                   "Exodus"
-#endif
-#ifndef  JucePlugin_Desc
- #define JucePlugin_Desc                   "Exodus"
-=======
  #define JucePlugin_Name                   "Exodus_2"
 #endif
 #ifndef  JucePlugin_Desc
  #define JucePlugin_Desc                   "Exodus_2"
->>>>>>> master
 #endif
 #ifndef  JucePlugin_Manufacturer
  #define JucePlugin_Manufacturer           "yourcompany"
@@ -70,11 +59,7 @@
  #define JucePlugin_ManufacturerCode       0x4d616e75
 #endif
 #ifndef  JucePlugin_PluginCode
-<<<<<<< HEAD
- #define JucePlugin_PluginCode             0x4d307479
-=======
  #define JucePlugin_PluginCode             0x4d776f6f
->>>>>>> master
 #endif
 #ifndef  JucePlugin_IsSynth
  #define JucePlugin_IsSynth                0
@@ -107,11 +92,7 @@
  #define JucePlugin_VSTCategory            kPlugCategEffect
 #endif
 #ifndef  JucePlugin_Vst3Category
-<<<<<<< HEAD
- #define JucePlugin_Vst3Category           "Fx|Delay"
-=======
  #define JucePlugin_Vst3Category           "Fx"
->>>>>>> master
 #endif
 #ifndef  JucePlugin_AUMainType
  #define JucePlugin_AUMainType             'aufx'
@@ -120,33 +101,19 @@
  #define JucePlugin_AUSubType              JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_AUExportPrefix
-<<<<<<< HEAD
- #define JucePlugin_AUExportPrefix         ExodusAU
-#endif
-#ifndef  JucePlugin_AUExportPrefixQuoted
- #define JucePlugin_AUExportPrefixQuoted   "ExodusAU"
-=======
  #define JucePlugin_AUExportPrefix         Exodus_2AU
 #endif
 #ifndef  JucePlugin_AUExportPrefixQuoted
  #define JucePlugin_AUExportPrefixQuoted   "Exodus_2AU"
->>>>>>> master
 #endif
 #ifndef  JucePlugin_AUManufacturerCode
  #define JucePlugin_AUManufacturerCode     JucePlugin_ManufacturerCode
 #endif
 #ifndef  JucePlugin_CFBundleIdentifier
-<<<<<<< HEAD
- #define JucePlugin_CFBundleIdentifier     com.yourcompany.Exodus
-#endif
-#ifndef  JucePlugin_AAXIdentifier
- #define JucePlugin_AAXIdentifier          com.yourcompany.Exodus
-=======
  #define JucePlugin_CFBundleIdentifier     com.yourcompany.Exodus_2
 #endif
 #ifndef  JucePlugin_AAXIdentifier
  #define JucePlugin_AAXIdentifier          com.yourcompany.Exodus_2
->>>>>>> master
 #endif
 #ifndef  JucePlugin_AAXManufacturerCode
  #define JucePlugin_AAXManufacturerCode    JucePlugin_ManufacturerCode
@@ -170,11 +137,7 @@
  #define JucePlugin_IAASubType             JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_IAAName
-<<<<<<< HEAD
- #define JucePlugin_IAAName                "yourcompany: Exodus"
-=======
  #define JucePlugin_IAAName                "yourcompany: Exodus_2"
->>>>>>> master
 #endif
 #ifndef  JucePlugin_VSTNumMidiInputs
  #define JucePlugin_VSTNumMidiInputs       16
@@ -189,17 +152,10 @@
  #define JucePlugin_ARATransformationFlags  0
 #endif
 #ifndef  JucePlugin_ARAFactoryID
-<<<<<<< HEAD
- #define JucePlugin_ARAFactoryID           "com.yourcompany.Exodus.factory"
-#endif
-#ifndef  JucePlugin_ARADocumentArchiveID
- #define JucePlugin_ARADocumentArchiveID   "com.yourcompany.Exodus.aradocumentarchive.1.0.0"
-=======
  #define JucePlugin_ARAFactoryID           "com.yourcompany.Exodus_2.factory"
 #endif
 #ifndef  JucePlugin_ARADocumentArchiveID
  #define JucePlugin_ARADocumentArchiveID   "com.yourcompany.Exodus_2.aradocumentarchive.1.0.0"
->>>>>>> master
 #endif
 #ifndef  JucePlugin_ARACompatibleArchiveIDs
  #define JucePlugin_ARACompatibleArchiveIDs  ""

@@ -26,13 +26,8 @@
 #include <juce_graphics/juce_graphics.h>
 #include <juce_gui_basics/juce_gui_basics.h>
 #include <juce_gui_extra/juce_gui_extra.h>
-<<<<<<< HEAD
-#include <juce_opengl/juce_opengl.h>
-
-=======
 
 #include "BinaryData.h"
->>>>>>> master
 
 #if defined (JUCE_PROJUCER_VERSION) && JUCE_PROJUCER_VERSION < JUCE_VERSION
  /** If you've hit this error then the version of the Projucer that was used to generate this project is
@@ -47,11 +42,7 @@
 #if ! JUCE_DONT_DECLARE_PROJECTINFO
 namespace ProjectInfo
 {
-<<<<<<< HEAD
-    const char* const  projectName    = "Exodus";
-=======
     const char* const  projectName    = "Exodus_2";
->>>>>>> master
     const char* const  companyName    = "";
     const char* const  versionString  = "1.0.0";
     const int          versionNumber  = 0x10000;

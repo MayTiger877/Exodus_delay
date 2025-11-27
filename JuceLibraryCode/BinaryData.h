@@ -9,25 +9,25 @@
 namespace BinaryData
 {
     extern const char*   bg_svg;
-    const int            bg_svgSize = 55243;
+    const int            bg_svgSize = 55299;
 
     extern const char*   TileBG_svg;
-    const int            TileBG_svgSize = 760;
+    const int            TileBG_svgSize = 773;
 
     extern const char*   green_Slider_svg;
-    const int            green_Slider_svgSize = 221;
+    const int            green_Slider_svgSize = 225;
 
     extern const char*   orange_Slider_svg;
-    const int            orange_Slider_svgSize = 221;
+    const int            orange_Slider_svgSize = 225;
 
     extern const char*   purple_Slider_svg;
-    const int            purple_Slider_svgSize = 221;
+    const int            purple_Slider_svgSize = 225;
 
     extern const char*   Red_Slider_svg;
-    const int            Red_Slider_svgSize = 221;
+    const int            Red_Slider_svgSize = 225;
 
     extern const char*   yellow_Slider_svg;
-    const int            yellow_Slider_svgSize = 221;
+    const int            yellow_Slider_svgSize = 225;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 7;
