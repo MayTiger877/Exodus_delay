@@ -39,14 +39,14 @@ void DelayEngine::prepareToPlay(const double newSampleRate, const int newSamples
     d_sampleRate = newSampleRate;
     d_samplesPerBlock = newSamplesPerBlock;
 
-    feedbackSmoothed.reset(d_sampleRate, 0.01f);
-
     d_delayBufferLength = d_sampleRate * 2; // 2 seconds max delay
     d_dryDelayBuffer.setSize(2, d_delayBufferLength); // Stereo buffer
 	d_wetDelayBuffer.setSize(2, d_samplesPerBlock); // Stereo buffer for wet signal
+    d_wetFeedbackDelayBuffer.setSize(2, d_samplesPerBlock); // Stereo buffer for wet signal
 
     d_dryDelayBuffer.clear();
 	d_wetDelayBuffer.clear();
+    d_wetFeedbackDelayBuffer.clear();
     d_writePosition = 0;
 
     juce::dsp::ProcessSpec spec{};
@@ -113,44 +113,39 @@ void DelayEngine::fillFromDelayBuffer(const int channel, juce::AudioBuffer<float
     const int readPosition = static_cast<int>(d_delayBufferLength + d_writePosition - (d_delayParameters.delayTimeInSec * d_sampleRate)) % d_delayBufferLength;
 
     const float* dryDelayBufferData = d_dryDelayBuffer.getReadPointer(channel);
+    d_feedbackReadPosition = dryDelayBufferData;
     if (d_delayBufferLength > readPosition + bufferLength)
     {
-        d_wetDelayBuffer.copyFrom(channel, 0, dryDelayBufferData + readPosition, bufferLength);
+        d_wetDelayBuffer.copyFrom(channel, 0, (dryDelayBufferData + readPosition), bufferLength);
     }
     else
     {
         const int bufferRemaining = d_delayBufferLength - readPosition;
-        d_wetDelayBuffer.copyFrom(channel, 0, dryDelayBufferData + readPosition, bufferRemaining);
-        d_wetDelayBuffer.copyFrom(channel, bufferRemaining, dryDelayBufferData, bufferLength - bufferRemaining);
+        d_wetDelayBuffer.copyFrom(channel, 0, (dryDelayBufferData + readPosition), bufferRemaining);
+        d_wetDelayBuffer.copyFrom(channel, bufferRemaining, dryDelayBufferData, (bufferLength - bufferRemaining));
     }
 	
+	d_wetFeedbackDelayBuffer.copyFrom(channel, 0, d_wetDelayBuffer.getReadPointer(channel), bufferLength);
 	applyDelayLineEffects(channel, d_wetDelayBuffer, bufferLength, index);
 
     buffer.addFrom(channel, 0, d_wetDelayBuffer.getReadPointer(channel), bufferLength);
 }
 
-
-
 void DelayEngine::feedbackDelay(const int channel, const int bufferLength)
 {
-	const float* wetDelayBufferData = d_wetDelayBuffer.getReadPointer(channel);
-   /* if (d_wetDelayBuffer.getSample(channel, 20) != 0.0f)
-    {
-        int test = 0;
-		std::cout << "Feedback Active" << std::endl;
-	}*/
+	const float* dryDelayBufferData = d_wetFeedbackDelayBuffer.getReadPointer(channel);
+
     if (d_delayBufferLength > d_writePosition + bufferLength)
     {
-        d_dryDelayBuffer.addFromWithRamp(channel, d_writePosition, wetDelayBufferData, bufferLength, d_delayParameters.feedback, d_delayParameters.feedback);
+        d_dryDelayBuffer.addFromWithRamp(channel, d_writePosition, dryDelayBufferData, bufferLength, d_delayParameters.feedback, d_delayParameters.feedback);
     }
     else
     {
         const int bufferRemaining = d_delayBufferLength - d_writePosition;
-        d_dryDelayBuffer.addFromWithRamp(channel, d_writePosition, wetDelayBufferData, bufferRemaining,d_delayParameters.feedback, d_delayParameters.feedback);
-        d_dryDelayBuffer.addFromWithRamp(channel, 0, (wetDelayBufferData + bufferRemaining), (bufferLength - bufferRemaining), d_delayParameters.feedback, d_delayParameters.feedback);
+        d_dryDelayBuffer.addFromWithRamp(channel, d_writePosition, dryDelayBufferData, bufferRemaining,d_delayParameters.feedback, d_delayParameters.feedback);
+        d_dryDelayBuffer.addFromWithRamp(channel, 0, (dryDelayBufferData + bufferRemaining), (bufferLength - bufferRemaining), d_delayParameters.feedback, d_delayParameters.feedback);
     }
 }
-
 
 
 void DelayEngine::incrementWritePosition(const int bufferSize)

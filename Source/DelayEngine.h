@@ -60,6 +60,7 @@ public:
 private:
 	juce::AudioBuffer<float> d_dryDelayBuffer;
 	juce::AudioBuffer<float> d_wetDelayBuffer;
+	juce::AudioBuffer<float> d_wetFeedbackDelayBuffer;
 
 	double d_sampleRate = 44100;
 	int d_samplesPerBlock = 512;
@@ -68,8 +69,7 @@ private:
 	
 	int d_writePosition = 0;
 	int d_readPosition = 0;
-
-	juce::SmoothedValue<float, juce::ValueSmoothingTypes::Linear> feedbackSmoothed;
+	const float *d_feedbackReadPosition;
 
 	DelayParameters d_delayParameters;
 
