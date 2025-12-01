@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="MwooOX" name="Exodus_2" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginFormats="buildVST3">
+  <MAINGROUP id="fJgS2l" name="Exodus_2">
+    <GROUP id="{9C46E52D-2BF1-E7D6-EEB7-623E057E1954}" name="Source">
+      <FILE id="chDtez" name="Configs.h" compile="0" resource="0" file="Source/Configs.h"/>
+      <FILE id="bNeWhE" name="TileSlider.cpp" compile="1" resource="0" file="Source/TileSlider.cpp"/>
+      <FILE id="yMGRCO" name="TileSlider.h" compile="0" resource="0" file="Source/TileSlider.h"/>
+      <FILE id="xmnlml" name="DelayEngine.cpp" compile="1" resource="0" file="Source/DelayEngine.cpp"/>
+      <FILE id="XV11hP" name="DelayEngine.h" compile="0" resource="0" file="Source/DelayEngine.h"/>
+      <FILE id="HJXHNr" name="Distortion.cpp" compile="1" resource="0" file="Source/Distortion.cpp"/>
+      <FILE id="nfovOG" name="Distortion.h" compile="0" resource="0" file="Source/Distortion.h"/>
+      <FILE id="CAmwJm" name="DelayLine.cpp" compile="1" resource="0" file="Source/DelayLine.cpp"/>
+      <FILE id="UrCdvS" name="DelayLine.h" compile="0" resource="0" file="Source/DelayLine.h"/>
+      <FILE id="NM7QHZ" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="BLWcXb" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="CgAg2S" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="jBEaML" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+    <FILE id="JruIcP" name="bg.svg" compile="0" resource="1" file="Resources/bg.svg"/>
+    <FILE id="FPLiGo" name="TileBG.svg" compile="0" resource="1" file="Resources/TileBG.svg"/>
+    <FILE id="GhVWnc" name="green Slider.svg" compile="0" resource="1"
+          file="Resources/green Slider.svg"/>
+    <FILE id="ma9xHe" name="orange Slider.svg" compile="0" resource="1"
+          file="Resources/orange Slider.svg"/>
+    <FILE id="WE9TJt" name="purple Slider.svg" compile="0" resource="1"
+          file="Resources/purple Slider.svg"/>
+    <FILE id="tVXr7b" name="Red Slider.svg" compile="0" resource="1" file="Resources/Red Slider.svg"/>
+    <FILE id="wwBfOZ" name="yellow Slider.svg" compile="0" resource="1"
+          file="Resources/yellow Slider.svg"/>
+  </MAINGROUP>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors_headless" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <VS2026 targetFolder="Builds/VisualStudio2026">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug"/>
+        <CONFIGURATION isDebug="0" name="Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="D:\Plugin_Laboratory\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="D:\Plugin_Laboratory\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="D:\Plugin_Laboratory\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="D:\Plugin_Laboratory\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="D:\Plugin_Laboratory\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors_headless" path="D:\Plugin_Laboratory\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_utils" path="D:\Plugin_Laboratory\JUCE\modules"/>
+        <MODULEPATH id="juce_core" path="D:\Plugin_Laboratory\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="D:\Plugin_Laboratory\JUCE\modules"/>
+        <MODULEPATH id="juce_dsp" path="D:\Plugin_Laboratory\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="D:\Plugin_Laboratory\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="D:\Plugin_Laboratory\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="D:\Plugin_Laboratory\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="D:\Plugin_Laboratory\JUCE\modules"/>
+      </MODULEPATHS>
+    </VS2026>
+  </EXPORTFORMATS>
+</JUCERPROJECT>
