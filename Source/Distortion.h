@@ -11,14 +11,8 @@
 #pragma once
 
 #include <JuceHeader.h>
+#include "Configs.h"
 
-typedef enum
-{
-	distType_SoftClip = 1,
-	distType_HardClip = 2,
-	distType_Exponential = 3,
-	distType_numberOfTypes = 3
-}DistortionType;
 
 class Distortion
 {

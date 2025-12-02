@@ -42,7 +42,7 @@ void Distortion::processBuffer(juce::AudioBuffer<float>& buffer, int channel)
 			distortedSample = std::tanh(dist_drive * inputSample);
 			break;
 		case distType_HardClip:
-			distortedSample = juce::jlimit(-1.0f, 1.0f, dist_drive * inputSample);
+			distortedSample = juce::jlimit(-1.0f + dist_drive, 1.0f - dist_drive,  inputSample); // TODO: change the limits based on drive
 			break;
 		case distType_Exponential:
 			distortedSample = (inputSample >= 0.0f) ? (1.0f - std::exp(dist_drive * inputSample)) : (-1.0f + std::exp(dist_drive * inputSample));

@@ -24,6 +24,30 @@ struct channelStrip
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> gainAttachment, panAttachment, distortionMixAttachment, reverbMixAttachment, phaserMixAttachment;
 };
 
+struct distortionSettings
+{
+	juce::ComboBox distortionTypeComboBox;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> distortionTypeAttachment;
+
+	juce::Slider distortionDriveSlider;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionDriveAttachment;
+};
+
+struct phaserSettings
+{
+	juce::ComboBox phaserTypeComboBox;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> phaserTypeAttachment;
+
+	juce::Slider phaserRateSlider, phaserDepthSlider, phaserFeedbackSlider;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> phaserRateAttachment, phaserDepthAttachment, phaserFeedbackAttachment;
+};
+
+struct reverbSettings
+{
+	juce::Slider reverbRoomSizeSlider, reverbDampingSlider, reverbWidthSlider;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> reverbRoomSizeAttachment, reverbDampingAttachment, reverbWidthAttachment;
+};
+
 class Exodus_2AudioProcessorEditor : public juce::AudioProcessorEditor, public juce::Timer
 {
 public:
@@ -61,5 +85,10 @@ private:
 	ReverbLAF reverbLAF;
 	PhaserLAF phaserLAF;
 
+	distortionSettings m_distortionSettings;
+	phaserSettings m_phaserSettings;
+	reverbSettings m_reverbSettings;
+	void initiateEffectSettings();
+	
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Exodus_2AudioProcessorEditor)
 };

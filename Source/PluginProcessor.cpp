@@ -230,6 +230,17 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
     return new Exodus_2AudioProcessor();
 }
 
+// Parameter Layout
+
+juce::StringArray getDistortionTypes()
+{
+    return juce::StringArray{ "Soft Clip", "Hard Clip", "Bit Crush" };
+}
+
+juce::StringArray getPhaserTypes()
+{
+	return juce::StringArray{ "sine", "triangle", "saw up", "saw down", "square" };
+}
 
 juce::AudioProcessorValueTreeState::ParameterLayout Exodus_2AudioProcessor::creatParametersLayout()
 {
@@ -264,7 +275,30 @@ juce::AudioProcessorValueTreeState::ParameterLayout Exodus_2AudioProcessor::crea
 	layout.add(std::make_unique<juce::AudioParameterFloat>("GNRL_WET_LEVEL", "General Wet Level",
 		juce::NormalisableRange<float>(GNRL_WET_LEVEL_SLIDER_MIN_VALUE, GNRL_WET_LEVEL_SLIDER_MAX_VALUE, GNRL_WET_LEVEL_SLIDER_INTERVAL), GNRL_WET_LEVEL_SLIDER_DEFAULT_VALUE));
 
+	layout.add(std::make_unique<juce::AudioParameterChoice>("DISTORTION_TYPE", "Distortion Type", getDistortionTypes(), 1));
 
+	layout.add(std::make_unique<juce::AudioParameterFloat>("DISTORTION_DRIVE", "Distortion Drive",
+        juce::NormalisableRange<float>(DISTORTION_DRIVE_SLIDER_MIN_VALUE, DISTORTION_DRIVE_SLIDER_MAX_VALUE, DISTORTION_DRIVE_SLIDER_INTERVAL), DISTORTION_DRIVE_SLIDER_DEFAULT_VALUE));
+
+	layout.add(std::make_unique<juce::AudioParameterChoice>("PHASER_TYPE", "Phaser Type", getPhaserTypes(), 1));
+    
+    layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_RATE", "Phaser Rate",
+        juce::NormalisableRange<float>(PHASER_RATE_SLIDER_MIN_VALUE, PHASER_RATE_SLIDER_MAX_VALUE, PHASER_RATE_SLIDER_INTERVAL), PHASER_RATE_SLIDER_DEFAULT_VALUE));
+
+    layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_DEPTH", "Phaser Depth",
+		juce::NormalisableRange<float>(PHASER_DEPTH_SLIDER_MIN_VALUE, PHASER_DEPTH_SLIDER_MAX_VALUE, PHASER_DEPTH_SLIDER_INTERVAL), PHASER_DEPTH_SLIDER_DEFAULT_VALUE));
+
+	layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_FEEDBACK", "Phaser Feedback",
+		juce::NormalisableRange<float>(PHASER_FEEDBACK_SLIDER_MIN_VALUE, PHASER_FEEDBACK_SLIDER_MAX_VALUE, PHASER_FEEDBACK_SLIDER_INTERVAL), PHASER_FEEDBACK_SLIDER_DEFAULT_VALUE));
+
+	layout.add(std::make_unique<juce::AudioParameterFloat>("REVERB_ROOM_SIZE", "Reverb Room Size",
+		juce::NormalisableRange<float>(REVERB_ROOM_SIZE_SLIDER_MIN_VALUE, REVERB_ROOM_SIZE_SLIDER_MAX_VALUE, REVERB_ROOM_SIZE_SLIDER_INTERVAL), REVERB_ROOM_SIZE_SLIDER_DEFAULT_VALUE));
+
+	layout.add(std::make_unique<juce::AudioParameterFloat>("REVERB_DAMPING", "Reverb Damping",
+		juce::NormalisableRange<float>(REVERB_DAMPING_SLIDER_MIN_VALUE, REVERB_DAMPING_SLIDER_MAX_VALUE, REVERB_DAMPING_SLIDER_INTERVAL), REVERB_DAMPING_SLIDER_DEFAULT_VALUE));
+
+	layout.add(std::make_unique<juce::AudioParameterFloat>("REVERB_WIDTH", "Reverb Width",
+		juce::NormalisableRange<float>(REVERB_WIDTH_SLIDER_MIN_VALUE, REVERB_WIDTH_SLIDER_MAX_VALUE, REVERB_WIDTH_SLIDER_INTERVAL), REVERB_WIDTH_SLIDER_DEFAULT_VALUE));
 
     return layout;
 }

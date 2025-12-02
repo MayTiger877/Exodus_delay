@@ -14,7 +14,7 @@
 DelayEngine::DelayEngine() : d_dryDelayBuffer(), d_wetDelayBuffer(), d_phaser()
 {
 	d_distortion.setDrive(0.8f);
-	d_distortion.setType(distType_HardClip);
+	d_distortion.setType(distType_SoftClip);
 	d_distortion.setMix(0.8f);
 
 	d_phaser.setRate(0.5f);
