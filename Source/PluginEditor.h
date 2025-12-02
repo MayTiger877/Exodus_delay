@@ -29,8 +29,8 @@ struct distortionSettings
 	juce::ComboBox distortionTypeComboBox;
 	std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> distortionTypeAttachment;
 
-	juce::Slider distortionDriveSlider;
-	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionDriveAttachment;
+	juce::Slider distortionDriveSlider, distortionThresholdSlider;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionDriveAttachment, distortionThresholdAttachment;
 };
 
 struct phaserSettings

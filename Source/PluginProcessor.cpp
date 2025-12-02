@@ -280,6 +280,9 @@ juce::AudioProcessorValueTreeState::ParameterLayout Exodus_2AudioProcessor::crea
 	layout.add(std::make_unique<juce::AudioParameterFloat>("DISTORTION_DRIVE", "Distortion Drive",
         juce::NormalisableRange<float>(DISTORTION_DRIVE_SLIDER_MIN_VALUE, DISTORTION_DRIVE_SLIDER_MAX_VALUE, DISTORTION_DRIVE_SLIDER_INTERVAL), DISTORTION_DRIVE_SLIDER_DEFAULT_VALUE));
 
+    layout.add(std::make_unique<juce::AudioParameterFloat>("DISTORTION_THRESHOLD", "Distortion Threshold",
+		juce::NormalisableRange<float>(DISTORTION_THRESHOLD_SLIDER_MIN_VALUE, DISTORTION_THRESHOLD_SLIDER_MAX_VALUE, DISTORTION_THRESHOLD_SLIDER_INTERVAL), DISTORTION_THRESHOLD_SLIDER_DEFAULT_VALUE));
+
 	layout.add(std::make_unique<juce::AudioParameterChoice>("PHASER_TYPE", "Phaser Type", getPhaserTypes(), 1));
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_RATE", "Phaser Rate",

@@ -146,6 +146,7 @@ void Exodus_2AudioProcessorEditor::initiateGeneralSettings()
 
 void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 {
+	// Distortion Settings
 	m_distortionSettings.distortionTypeComboBox.setBounds(DISTORTION_TYPE_COMBOBOX_BOUNDS);
 	m_distortionSettings.distortionTypeComboBox.addItem("Soft Clip", DISTORTION_TYPE_COMBOBOX_SOFTCLIP_INDEX + 1);
 	m_distortionSettings.distortionTypeComboBox.addItem("Hard Clip", DISTORTION_TYPE_COMBOBOX_HARDCLIP_INDEX + 1);
@@ -162,7 +163,15 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	addAndMakeVisible(m_distortionSettings.distortionDriveSlider);
 	m_distortionSettings.distortionDriveAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "DISTORTION_DRIVE", m_distortionSettings.distortionDriveSlider);
 
-	
+	m_distortionSettings.distortionThresholdSlider.setValue(DISTORTION_THRESHOLD_SLIDER_DEFAULT_VALUE);
+	m_distortionSettings.distortionThresholdSlider.setRange(DISTORTION_THRESHOLD_SLIDER_MIN_VALUE, DISTORTION_THRESHOLD_SLIDER_MAX_VALUE, DISTORTION_THRESHOLD_SLIDER_INTERVAL);
+	m_distortionSettings.distortionThresholdSlider.setBounds(DISTORTION_THRESHOLD_SLIDER_BOUNDS);
+	m_distortionSettings.distortionThresholdSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+	m_distortionSettings.distortionThresholdSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
+	addAndMakeVisible(m_distortionSettings.distortionThresholdSlider);
+	m_distortionSettings.distortionThresholdAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "DISTORTION_THRESHOLD", m_distortionSettings.distortionThresholdSlider);
+
+	// Phaser Settings
 	m_phaserSettings.phaserTypeComboBox.setBounds(PHASER_TYPE_COMBOBOX_BOUNDS);
 	m_phaserSettings.phaserTypeComboBox.addItem("Sine", PHASER_TYPE_COMBOBOX_SINE_INDEX + 1);
 	m_phaserSettings.phaserTypeComboBox.addItem("Triangle", PHASER_TYPE_COMBOBOX_TRIANGLE_INDEX + 1);
@@ -197,6 +206,7 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	addAndMakeVisible(m_phaserSettings.phaserFeedbackSlider);
 	m_phaserSettings.phaserFeedbackAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "PHASER_FEEDBACK", m_phaserSettings.phaserFeedbackSlider);
 
+	// Reverb Settings
 	m_reverbSettings.reverbRoomSizeSlider.setValue(REVERB_ROOM_SIZE_SLIDER_DEFAULT_VALUE);
 	m_reverbSettings.reverbRoomSizeSlider.setRange(REVERB_ROOM_SIZE_SLIDER_MIN_VALUE, REVERB_ROOM_SIZE_SLIDER_MAX_VALUE, REVERB_ROOM_SIZE_SLIDER_INTERVAL);
 	m_reverbSettings.reverbRoomSizeSlider.setBounds(REVERB_ROOM_SIZE_SLIDER_BOUNDS);
