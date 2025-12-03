@@ -12,7 +12,7 @@
 
 void Distortion::setDrive(float newDrive)
 {
-	jassert(newDrive >= 0.0f && newDrive <= 1.0);
+	jassert(newDrive >= DISTORTION_DRIVE_SLIDER_MIN_VALUE && newDrive <= DISTORTION_DRIVE_SLIDER_MAX_VALUE);
 	dist_drive = newDrive;
 }
 
@@ -29,6 +29,12 @@ void Distortion::setType(int newType)
 	dist_type = newType;
 }
 
+void Distortion::setThreshold(float newThreshold)
+{
+	jassert(newThreshold >= 0.0f && newThreshold <= 1.0f);
+	dist_threshold = newThreshold;
+}
+
 void Distortion::processBuffer(juce::AudioBuffer<float>& buffer, int channel)
 {
 	float* channelData = buffer.getWritePointer(channel);
@@ -42,7 +48,7 @@ void Distortion::processBuffer(juce::AudioBuffer<float>& buffer, int channel)
 			distortedSample = std::tanh(dist_drive * inputSample);
 			break;
 		case distType_HardClip:
-			distortedSample = juce::jlimit(-1.0f + dist_drive, 1.0f - dist_drive,  inputSample); // TODO: change the limits based on drive
+			distortedSample = juce::jlimit(0 - dist_threshold, dist_threshold, inputSample * dist_drive);
 			break;
 		case distType_Exponential:
 			distortedSample = (inputSample >= 0.0f) ? (1.0f - std::exp(dist_drive * inputSample)) : (-1.0f + std::exp(dist_drive * inputSample));

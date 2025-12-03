@@ -13,7 +13,7 @@
 
 DelayEngine::DelayEngine() : d_dryDelayBuffer(), d_wetDelayBuffer(), d_phaser()
 {
-	d_distortion.setDrive(0.8f);
+	/*d_distortion.setDrive(0.8f);
 	d_distortion.setType(distType_SoftClip);
 	d_distortion.setMix(0.8f);
 
@@ -30,7 +30,7 @@ DelayEngine::DelayEngine() : d_dryDelayBuffer(), d_wetDelayBuffer(), d_phaser()
 	reverbParams.width = 1.0f;
 	reverbParams.freezeMode = 0.0f;
 	d_reverb.setParameters(reverbParams);
-	d_reverb.setEnabled(true);
+	d_reverb.setEnabled(true);*/
 
 }
 
@@ -75,20 +75,30 @@ void DelayEngine::setDelayLineSettings(const int index, const DelayLineSettings 
     }
 }
 
-void DelayEngine::setDistortionSettings(const float drive, const float mix, const int type)
+void DelayEngine::setDistortionSettings(const int type, const float drive, const float threshold)
 {
-    d_distortion.setDrive(drive);
-    d_distortion.setMix(mix);
     d_distortion.setType(static_cast<DistortionType>(type));
+    d_distortion.setDrive(drive);
+	d_distortion.setThreshold(threshold); // You can parameterize threshold as needed
 }
 
-void DelayEngine::setPhaserSettings(const float rate, const float depth, const float centreFrequency, const float feedback, const float mix)
+void DelayEngine::setPhaserSettings(const int type, const float rate, const float depth, const float feedback)
 {
+	//d_phaser.setType(type);
     d_phaser.setRate(rate);
     d_phaser.setDepth(depth);
-    d_phaser.setCentreFrequency(centreFrequency);
     d_phaser.setFeedback(feedback);
-    d_phaser.setMix(mix);
+	//d_phaser.setCentreFrequency(1000.0f); // You can parameterize centre frequency as needed TODO: add this parameter
+}
+
+void DelayEngine::setReverbSettings(const float roomSize, const float damping, const float width)
+{
+    reverbParams.roomSize = roomSize;
+    reverbParams.damping = damping;
+    reverbParams.width = width;
+	reverbParams.wetLevel = 0.1f; // You can parameterize wet level as needed
+	reverbParams.dryLevel = 0.0f; // You can parameterize dry level as needed
+	d_reverb.setParameters(reverbParams);
 }
 
 /***************************************************************************************/
@@ -113,7 +123,7 @@ void DelayEngine::fillFromDelayBuffer(const int channel, juce::AudioBuffer<float
     const int readPosition = static_cast<int>(d_delayBufferLength + d_writePosition - (d_delayParameters.delayTimeInSec * d_sampleRate)) % d_delayBufferLength;
 
     const float* dryDelayBufferData = d_dryDelayBuffer.getReadPointer(channel);
-    d_feedbackReadPosition = dryDelayBufferData;
+    
     if (d_delayBufferLength > readPosition + bufferLength)
     {
         d_wetDelayBuffer.copyFrom(channel, 0, (dryDelayBufferData + readPosition), bufferLength);
@@ -126,6 +136,7 @@ void DelayEngine::fillFromDelayBuffer(const int channel, juce::AudioBuffer<float
     }
 	
 	d_wetFeedbackDelayBuffer.copyFrom(channel, 0, d_wetDelayBuffer.getReadPointer(channel), bufferLength);
+
 	applyDelayLineEffects(channel, d_wetDelayBuffer, bufferLength, index);
 
     buffer.addFrom(channel, 0, d_wetDelayBuffer.getReadPointer(channel), bufferLength);
@@ -189,17 +200,19 @@ void DelayEngine::applyDelayLineEffects(const int channel, juce::AudioBuffer<flo
 	buffer.applyGain(channel, 0, bufferLength, currentSettings.gain * calculatedPanGain); // apply gain and pan
 
 	// apply distortion- mix is handled inside distortion class
+	d_distortion.setMix(currentSettings.distortionMix);
 	d_distortion.processBuffer(buffer, channel);
 
 	// apply phaser
 	juce::dsp::AudioBlock<float> block(buffer);
 	juce::dsp::ProcessContextReplacing<float> context(block);
-	//d_phaser.process(context);
+	d_phaser.setMix(currentSettings.phaserMix);
+	d_phaser.process(context);
 
 	// apply reverb
     juce::dsp::AudioBlock<float> block_2(buffer);
     juce::dsp::ProcessContextReplacing<float> context_2(block_2);
-	//d_reverb.process(juce::dsp::ProcessContextReplacing<float>(block_2));
+	d_reverb.setParameters(reverbParams);
+    d_reverb.process(context);
 
-    //d_reverb.process(context);
 }

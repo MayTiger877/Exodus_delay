@@ -53,9 +53,11 @@ public:
 
 	void incrementWritePosition(const int bufferSize);
 
-	void setDistortionSettings(const float drive, const float mix, const int type);
+	void setDistortionSettings(const int type, const float drive, const float threshold);
 
-	void setPhaserSettings(const float rate, const float depth, const float centreFrequency, const float feedback, const float mix);
+	void setPhaserSettings(const int type, const float rate, const float depth, const float feedback);
+
+	void setReverbSettings(const float roomSize, const float damping, const float width);
 
 private:
 	juce::AudioBuffer<float> d_dryDelayBuffer;
@@ -69,7 +71,6 @@ private:
 	
 	int d_writePosition = 0;
 	int d_readPosition = 0;
-	const float *d_feedbackReadPosition;
 
 	DelayParameters d_delayParameters;
 

@@ -171,6 +171,23 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
         apvts.getRawParameterValue("REVERB_MIX_" + std::to_string(m_index))->load(),
         apvts.getRawParameterValue("PHASER_MIX_" + std::to_string(m_index))->load()});
 
+    m_delayEngine->setDistortionSettings(
+        apvts.getRawParameterValue("DISTORTION_TYPE")->load(),
+        apvts.getRawParameterValue("DISTORTION_DRIVE")->load(),
+        apvts.getRawParameterValue("DISTORTION_THRESHOLD")->load());
+
+	m_delayEngine->setPhaserSettings(
+		apvts.getRawParameterValue("PHASER_TYPE")->load(),
+		apvts.getRawParameterValue("PHASER_RATE")->load(),
+		apvts.getRawParameterValue("PHASER_DEPTH")->load(),
+		apvts.getRawParameterValue("PHASER_FEEDBACK")->load());
+
+    m_delayEngine->setReverbSettings(
+        apvts.getRawParameterValue("REVERB_ROOM_SIZE")->load(),
+        apvts.getRawParameterValue("REVERB_DAMPING")->load(),
+		apvts.getRawParameterValue("REVERB_WIDTH")->load());
+
+
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
@@ -185,7 +202,6 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
         buffer.clear (i, 0, numSamples);
     }
 
-	//test__Distortion(buffer); // Test Distortion effect
 
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
