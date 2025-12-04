@@ -202,6 +202,9 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
         buffer.clear (i, 0, numSamples);
     }
 
+	//test__Phaser(buffer, m_delayEngine->d_phaser);
+
+	//test__Reverb(buffer, m_delayEngine->d_reverb);
 
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {

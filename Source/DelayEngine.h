@@ -77,6 +77,7 @@ private:
 	DelayLineSettings d_delayLines[16];
 
 	Distortion d_distortion;
+
 	juce::dsp::Phaser<float> d_phaser;
 
 	juce::dsp::Reverb::Parameters reverbParams;

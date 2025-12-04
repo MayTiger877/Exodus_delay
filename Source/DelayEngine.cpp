@@ -139,7 +139,7 @@ void DelayEngine::fillFromDelayBuffer(const int channel, juce::AudioBuffer<float
 
 	applyDelayLineEffects(channel, d_wetDelayBuffer, bufferLength, index);
 
-    buffer.addFrom(channel, 0, d_wetDelayBuffer.getReadPointer(channel), bufferLength);
+    buffer.addFromWithRamp(channel, 0, d_wetDelayBuffer.getReadPointer(channel), bufferLength, 1.0f, 1.0f);
 }
 
 void DelayEngine::feedbackDelay(const int channel, const int bufferLength)

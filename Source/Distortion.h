@@ -33,15 +33,3 @@ private:
 	float dist_threshold = DISTORTION_THRESHOLD_SLIDER_DEFAULT_VALUE;
 	int dist_type = DISTORTION_TYPE_COMBOBOX_DEFAULT_INDEX;
 };
-
-
-// graphics
-
-struct DistortionTab
-{
-	juce::Slider distortionDriveSlider, distortionMixSlider;
-	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionDrive, distortionMix;
-
-	juce::ToggleButton distTypeSoftClipButton, distTypeHardClipButton, distTypeExponentialButton;
-	std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> distTypeSoftClipAttachment, distTypeHardClipAttachment, distTypeExponentialAttachment;
-};
