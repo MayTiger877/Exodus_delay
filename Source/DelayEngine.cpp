@@ -139,7 +139,8 @@ void DelayEngine::fillFromDelayBuffer(const int channel, juce::AudioBuffer<float
 
 	applyDelayLineEffects(channel, d_wetDelayBuffer, bufferLength, index);
 
-    buffer.addFromWithRamp(channel, 0, d_wetDelayBuffer.getReadPointer(channel), bufferLength, 1.0f, 1.0f);
+	buffer.applyGain(channel, 0, bufferLength, d_delayParameters.dryLevel); // apply dry level
+	buffer.addFromWithRamp(channel, 0, d_wetDelayBuffer.getReadPointer(channel), bufferLength, d_delayParameters.wetLevel, d_delayParameters.wetLevel); // add wet and apply wet level 
 }
 
 void DelayEngine::feedbackDelay(const int channel, const int bufferLength)
@@ -205,7 +206,8 @@ void DelayEngine::applyDelayLineEffects(const int channel, juce::AudioBuffer<flo
 
 	// apply phaser
 	juce::dsp::AudioBlock<float> block(buffer);
-	juce::dsp::ProcessContextReplacing<float> context(block);
+	juce::dsp::AudioBlock<float> usableBlock = block.getSubBlock(0, static_cast<size_t>(bufferLength));
+	juce::dsp::ProcessContextReplacing<float> context(usableBlock);
 	d_phaser.setMix(currentSettings.phaserMix);
 	d_phaser.process(context);
 
@@ -213,6 +215,6 @@ void DelayEngine::applyDelayLineEffects(const int channel, juce::AudioBuffer<flo
     juce::dsp::AudioBlock<float> block_2(buffer);
     juce::dsp::ProcessContextReplacing<float> context_2(block_2);
 	d_reverb.setParameters(reverbParams);
-    d_reverb.process(context);
+    //d_reverb.process(context);
 
 }

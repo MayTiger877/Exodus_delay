@@ -203,8 +203,10 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     }
 
 	//test__Phaser(buffer, m_delayEngine->d_phaser);
+    //return;
 
 	//test__Reverb(buffer, m_delayEngine->d_reverb);
+    //return;
 
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
@@ -214,6 +216,22 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 	}
 
 	m_delayEngine->incrementWritePosition(numSamples);
+
+	//print firt and last 10 samples of channel 0 
+    /*for (int sample = 0; sample < 10; ++sample)
+    {
+        float currentSample = buffer.getSample(0, sample);
+		juce::Logger::writeToLog("Sample " + std::to_string(sample) + ": " + std::to_string(currentSample));
+    }
+    juce::Logger::writeToLog("---------------------------------");
+    for (int sample = numSamples - 11; sample < numSamples; ++sample)
+    {
+        float currentSample = buffer.getSample(0, sample);
+        juce::Logger::writeToLog("Sample " + std::to_string(sample) + ": " + std::to_string(currentSample));
+    }*/
+	
+    // print log to file
+
 
 }
 

@@ -59,6 +59,7 @@ public:
 
 	void setReverbSettings(const float roomSize, const float damping, const float width);
 
+	juce::dsp::Phaser<float> d_phaser;
 private:
 	juce::AudioBuffer<float> d_dryDelayBuffer;
 	juce::AudioBuffer<float> d_wetDelayBuffer;
@@ -78,7 +79,6 @@ private:
 
 	Distortion d_distortion;
 
-	juce::dsp::Phaser<float> d_phaser;
 
 	juce::dsp::Reverb::Parameters reverbParams;
 	juce::dsp::Reverb d_reverb;
