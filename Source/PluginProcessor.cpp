@@ -8,7 +8,7 @@
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
-#include "Distortion.h"
+#include "MyDistortion.h"
 
 //==============================================================================
 Exodus_2AudioProcessor::Exodus_2AudioProcessor()
@@ -134,7 +134,7 @@ bool Exodus_2AudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 
 static void test__Distortion(juce::AudioBuffer<float>& buffer)
 {
-    Distortion distortion;
+    MyDistortion distortion;
     distortion.setMix(1.0f);
     distortion.setDrive(1.0f); // You can set drive value as needed
     distortion.setType(distType_SoftClip); // You can set distortion type as needed

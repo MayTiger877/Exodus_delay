@@ -90,7 +90,7 @@ void DelayEngine::setPhaserSettings(const int type, const float rate, const floa
     d_phaser.setRate(rate);
     d_phaser.setDepth(depth);
     d_phaser.setFeedback(feedback);
-	//d_phaser.setCentreFrequency(1000.0f); // You can parameterize centre frequency as needed TODO: add this parameter
+	d_phaser.setCentreFrequency(1000.0f); // You can parameterize centre frequency as needed TODO: add this parameter
 }
 
 void DelayEngine::setReverbSettings(const float roomSize, const float damping, const float width)
@@ -99,7 +99,7 @@ void DelayEngine::setReverbSettings(const float roomSize, const float damping, c
     reverbParams.damping = damping;
     reverbParams.width = width;
 	reverbParams.wetLevel = 0.1f; // You can parameterize wet level as needed
-	reverbParams.dryLevel = 0.0f; // You can parameterize dry level as needed
+	reverbParams.dryLevel = 1.0f; // You can parameterize dry level as needed
 	d_reverb.setParameters(reverbParams);
 }
 
@@ -110,13 +110,13 @@ void DelayEngine::fillDelayBuffer(const int channel, const int bufferLength, con
 
     if (d_delayBufferLength > d_writePosition + bufferLength)
     {
-        d_dryDelayBuffer.copyFromWithRamp(channel, d_writePosition, bufferData, bufferLength, d_delayParameters.feedback, d_delayParameters.feedback);
+        d_dryDelayBuffer.copyFromWithRamp(channel, d_writePosition, bufferData, bufferLength, 1.0f, 1.0f);
     }
     else
     {
         const int bufferRemaining = d_delayBufferLength - d_writePosition;
-        d_dryDelayBuffer.copyFromWithRamp(channel, d_writePosition, bufferData, bufferRemaining, d_delayParameters.feedback, d_delayParameters.feedback);
-        d_dryDelayBuffer.copyFromWithRamp(channel, 0, bufferData + bufferRemaining, bufferLength - bufferRemaining, d_delayParameters.feedback, d_delayParameters.feedback);
+        d_dryDelayBuffer.copyFromWithRamp(channel, d_writePosition, bufferData, bufferRemaining, 1.0f, 1.0f);
+        d_dryDelayBuffer.copyFromWithRamp(channel, 0, bufferData + bufferRemaining, bufferLength - bufferRemaining, 1.0f, 1.0f);
     }
 }
 

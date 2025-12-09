@@ -8,34 +8,34 @@
   ==============================================================================
 */
 
-#include "Distortion.h"
+#include "MyDistortion.h"
 
-void Distortion::setDrive(float newDrive)
+void MyDistortion::setDrive(float newDrive)
 {
 	jassert(newDrive >= DISTORTION_DRIVE_SLIDER_MIN_VALUE && newDrive <= DISTORTION_DRIVE_SLIDER_MAX_VALUE);
 	dist_drive = newDrive;
 }
 
-void Distortion::setMix(float newMix)
+void MyDistortion::setMix(float newMix)
 {
 	jassert(newMix >= 0.0f && newMix <= 1.0f);
 	dist_mix = newMix;
 }
 
-void Distortion::setType(int newType)
+void MyDistortion::setType(int newType)
 {
 	jassert(newType >= 0 && newType <= distType_numberOfTypes);
 
 	dist_type = newType;
 }
 
-void Distortion::setThreshold(float newThreshold)
+void MyDistortion::setThreshold(float newThreshold)
 {
 	jassert(newThreshold >= 0.0f && newThreshold <= 1.0f);
 	dist_threshold = newThreshold;
 }
 
-void Distortion::processBuffer(juce::AudioBuffer<float>& buffer, int channel)
+void MyDistortion::processBuffer(juce::AudioBuffer<float>& buffer, int channel)
 {
 	float* channelData = buffer.getWritePointer(channel);
 	for (int sample = 0; sample < buffer.getNumSamples(); ++sample)

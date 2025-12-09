@@ -12,7 +12,8 @@
 
 #include <JuceHeader.h>
 #include "Configs.h"
-#include "Distortion.h"
+#include "MyDistortion.h"
+#include "MyPhaser.h"
 
 struct DelayLineSettings
 {
@@ -60,7 +61,6 @@ public:
 
 	void setReverbSettings(const float roomSize, const float damping, const float width);
 
-	juce::dsp::Phaser<float> d_phaser;
 private:
 	juce::AudioBuffer<float> d_dryDelayBuffer;
 	juce::AudioBuffer<float> d_wetDelayBuffer;
@@ -78,8 +78,9 @@ private:
 
 	DelayLineSettings d_delayLines[16];
 
-	Distortion d_distortion;
+	MyDistortion d_distortion;
 
+	MyPhaser d_phaser;
 
 	juce::dsp::Reverb::Parameters reverbParams;
 	juce::dsp::Reverb d_reverb;

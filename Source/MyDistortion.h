@@ -14,11 +14,11 @@
 #include "Configs.h"
 
 
-class Distortion
+class MyDistortion
 {
 public:
-	Distortion() = default;
-	~Distortion() = default;
+	MyDistortion() = default;
+	~MyDistortion() = default;
 
 	void setDrive(float newDrive);
 	void setMix(float newMix);
