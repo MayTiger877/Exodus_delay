@@ -48,7 +48,8 @@ public:
 	void setDelayLineSettings(const int index, const DelayLineSettings newSettings);
 
 	void fillDelayBuffer(const int channel, const int bufferLength, const float* bufferData);
-	void fillFromDelayBuffer(const int channel, juce::AudioBuffer<float>& buffer, const int bufferLength, const int index);
+	void fillFromDelayBuffer(const int channel, juce::AudioBuffer<float>& buffer, const int bufferLength);
+	void applyEffectsAndCopyToBuffer(juce::AudioBuffer<float>& buffer, const int bufferLength, const int index);
 	void feedbackDelay(const int channel, const int bufferLength);
 
 	void incrementWritePosition(const int bufferSize);
@@ -83,6 +84,6 @@ private:
 	juce::dsp::Reverb::Parameters reverbParams;
 	juce::dsp::Reverb d_reverb;
 
-	void applyDelayLineEffects(const int channel, juce::AudioBuffer<float>& buffer, const int bufferLength, const int index);
+	void applyDelayLineEffects(juce::AudioBuffer<float>& buffer, const int bufferLength, const int index);
 	float calculatePanMargin(const int channel, const float pan);
 };

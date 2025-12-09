@@ -208,30 +208,15 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 	//test__Reverb(buffer, m_delayEngine->d_reverb);
     //return;
 
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-		m_delayEngine->fillDelayBuffer(channel, numSamples, buffer.getReadPointer(channel));
-		m_delayEngine->fillFromDelayBuffer(channel, buffer, numSamples, m_index);
-		m_delayEngine->feedbackDelay(channel, numSamples);
-	}
+	m_delayEngine->fillDelayBuffer(0, numSamples, buffer.getReadPointer(0));
+    m_delayEngine->fillDelayBuffer(1, numSamples, buffer.getReadPointer(1));
+	m_delayEngine->fillFromDelayBuffer(0, buffer, numSamples);
+    m_delayEngine->fillFromDelayBuffer(1, buffer, numSamples);
+	m_delayEngine->applyEffectsAndCopyToBuffer(buffer, numSamples, m_index);
+	m_delayEngine->feedbackDelay(0, numSamples);
+    m_delayEngine->feedbackDelay(1, numSamples);
 
 	m_delayEngine->incrementWritePosition(numSamples);
-
-	//print firt and last 10 samples of channel 0 
-    /*for (int sample = 0; sample < 10; ++sample)
-    {
-        float currentSample = buffer.getSample(0, sample);
-		juce::Logger::writeToLog("Sample " + std::to_string(sample) + ": " + std::to_string(currentSample));
-    }
-    juce::Logger::writeToLog("---------------------------------");
-    for (int sample = numSamples - 11; sample < numSamples; ++sample)
-    {
-        float currentSample = buffer.getSample(0, sample);
-        juce::Logger::writeToLog("Sample " + std::to_string(sample) + ": " + std::to_string(currentSample));
-    }*/
-	
-    // print log to file
-
 
 }
 

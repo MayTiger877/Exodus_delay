@@ -56,7 +56,9 @@ void DelayEngine::prepareToPlay(const double newSampleRate, const int newSamples
 	//const juce::dsp::ProcessSpec spec{ d_sampleRate, static_cast<juce::uint32> (d_samplesPerBlock), 2 };
 	
     d_phaser.prepare(spec);
+	d_phaser.reset();
 	d_reverb.prepare(spec);
+	d_reverb.reset();
 }
 
 void DelayEngine::setDelayEngineParameters(const DelayParameters newDelayParameters)
@@ -118,7 +120,7 @@ void DelayEngine::fillDelayBuffer(const int channel, const int bufferLength, con
     }
 }
 
-void DelayEngine::fillFromDelayBuffer(const int channel, juce::AudioBuffer<float>& buffer, const int bufferLength, const int index)
+void DelayEngine::fillFromDelayBuffer(const int channel, juce::AudioBuffer<float>& buffer, const int bufferLength)
 {
     const int readPosition = static_cast<int>(d_delayBufferLength + d_writePosition - (d_delayParameters.delayTimeInSec * d_sampleRate)) % d_delayBufferLength;
 
@@ -136,12 +138,20 @@ void DelayEngine::fillFromDelayBuffer(const int channel, juce::AudioBuffer<float
     }
 	
 	d_wetFeedbackDelayBuffer.copyFrom(channel, 0, d_wetDelayBuffer.getReadPointer(channel), bufferLength);
-
-	applyDelayLineEffects(channel, d_wetDelayBuffer, bufferLength, index);
-
-	buffer.applyGain(channel, 0, bufferLength, d_delayParameters.dryLevel); // apply dry level
-	buffer.addFromWithRamp(channel, 0, d_wetDelayBuffer.getReadPointer(channel), bufferLength, d_delayParameters.wetLevel, d_delayParameters.wetLevel); // add wet and apply wet level 
 }
+
+void DelayEngine::applyEffectsAndCopyToBuffer(juce::AudioBuffer<float>& buffer, const int bufferLength, const int index)
+{
+    applyDelayLineEffects(d_wetDelayBuffer, bufferLength, index);
+
+    // apply dry level
+    buffer.applyGain(0, 0, bufferLength, d_delayParameters.dryLevel);
+    buffer.applyGain(1, 0, bufferLength, d_delayParameters.dryLevel);
+    // add wet and apply wet level
+    buffer.addFromWithRamp(0, 0, d_wetDelayBuffer.getReadPointer(0), bufferLength, d_delayParameters.wetLevel, d_delayParameters.wetLevel);
+    buffer.addFromWithRamp(1, 0, d_wetDelayBuffer.getReadPointer(1), bufferLength, d_delayParameters.wetLevel, d_delayParameters.wetLevel);
+}
+
 
 void DelayEngine::feedbackDelay(const int channel, const int bufferLength)
 {
@@ -193,28 +203,36 @@ float DelayEngine::calculatePanMargin(const int channel, const float pan)
     return 1;
 }
 
-void DelayEngine::applyDelayLineEffects(const int channel, juce::AudioBuffer<float>& buffer, const int bufferLength, const int index)
+void DelayEngine::applyDelayLineEffects(juce::AudioBuffer<float>& buffer, const int bufferLength, const int index)
 {    
 	DelayLineSettings currentSettings = d_delayLines[index];
 
-    float calculatedPanGain = calculatePanMargin(channel, currentSettings.pan);
-	buffer.applyGain(channel, 0, bufferLength, currentSettings.gain * calculatedPanGain); // apply gain and pan
+    // apply gain and pan
+    float calculatedPanGain = calculatePanMargin(0, currentSettings.pan);
+	buffer.applyGain(0, 0, bufferLength, currentSettings.gain * calculatedPanGain);
+    calculatedPanGain = calculatePanMargin(1, currentSettings.pan);
+    buffer.applyGain(1, 0, bufferLength, currentSettings.gain * calculatedPanGain);
 
 	// apply distortion- mix is handled inside distortion class
 	d_distortion.setMix(currentSettings.distortionMix);
-	d_distortion.processBuffer(buffer, channel);
+	d_distortion.processBuffer(buffer, 0);
+    d_distortion.processBuffer(buffer, 1);
 
 	// apply phaser
-	juce::dsp::AudioBlock<float> block(buffer);
-	juce::dsp::AudioBlock<float> usableBlock = block.getSubBlock(0, static_cast<size_t>(bufferLength));
-	juce::dsp::ProcessContextReplacing<float> context(usableBlock);
 	d_phaser.setMix(currentSettings.phaserMix);
-	d_phaser.process(context);
+    if (currentSettings.phaserMix > 0.05f)
+    {
+        juce::dsp::AudioBlock<float> block(buffer);
+        juce::dsp::ProcessContextReplacing<float> context(block);    
+        d_phaser.process(context);
+    }
 
 	// apply reverb
-    juce::dsp::AudioBlock<float> block_2(buffer);
-    juce::dsp::ProcessContextReplacing<float> context_2(block_2);
 	d_reverb.setParameters(reverbParams);
-    //d_reverb.process(context);
-
+    if (currentSettings.reverbMix > 0.05f)
+    {
+        juce::dsp::AudioBlock<float> block_2(buffer);
+        juce::dsp::ProcessContextReplacing<float> context_2(block_2);
+        d_reverb.process(context_2);
+    }
 }
