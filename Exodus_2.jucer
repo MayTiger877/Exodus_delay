@@ -3,19 +3,41 @@
 <JUCERPROJECT id="MwooOX" name="Exodus_2" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginFormats="buildVST3">
   <MAINGROUP id="fJgS2l" name="Exodus_2">
+    <GROUP id="{F932481B-72FA-71E3-F647-B4B516A500F9}" name="Resources">
+      <FILE id="JruIcP" name="bg.svg" compile="0" resource="1" file="Resources/bg.svg"/>
+      <FILE id="FPLiGo" name="TileBG.svg" compile="0" resource="1" file="Resources/TileBG.svg"/>
+      <FILE id="GhVWnc" name="green Slider.svg" compile="0" resource="1"
+            file="Resources/green Slider.svg"/>
+      <FILE id="ma9xHe" name="orange Slider.svg" compile="0" resource="1"
+            file="Resources/orange Slider.svg"/>
+      <FILE id="WE9TJt" name="purple Slider.svg" compile="0" resource="1"
+            file="Resources/purple Slider.svg"/>
+      <FILE id="ureqjA" name="Knob.svg" compile="0" resource="1" file="Resources/Knob.svg"/>
+      <FILE id="tVXr7b" name="Red Slider.svg" compile="0" resource="1" file="Resources/Red Slider.svg"/>
+      <FILE id="wwBfOZ" name="yellow Slider.svg" compile="0" resource="1"
+            file="Resources/yellow Slider.svg"/>
+    </GROUP>
     <GROUP id="{9C46E52D-2BF1-E7D6-EEB7-623E057E1954}" name="Source">
-      <FILE id="huHWBg" name="MyReverb.cpp" compile="1" resource="0" file="Source/MyReverb.cpp"/>
-      <FILE id="vjOvw2" name="MyReverb.h" compile="0" resource="0" file="Source/MyReverb.h"/>
-      <FILE id="etHnxb" name="MyPhaser.cpp" compile="1" resource="0" file="Source/MyPhaser.cpp"/>
-      <FILE id="dbHZdj" name="MyPhaser.h" compile="0" resource="0" file="Source/MyPhaser.h"/>
+      <GROUP id="{8C76F35E-C977-BFB0-F1DB-A39EF7C35947}" name="Engine">
+        <FILE id="xmnlml" name="DelayEngine.cpp" compile="1" resource="0" file="Source/DelayEngine.cpp"/>
+        <FILE id="XV11hP" name="DelayEngine.h" compile="0" resource="0" file="Source/DelayEngine.h"/>
+      </GROUP>
+      <GROUP id="{5E1F7AE3-7A3F-D81A-B2F8-7C10FD3BC082}" name="Modules">
+        <FILE id="huHWBg" name="MyReverb.cpp" compile="1" resource="0" file="Source/MyReverb.cpp"/>
+        <FILE id="vjOvw2" name="MyReverb.h" compile="0" resource="0" file="Source/MyReverb.h"/>
+        <FILE id="etHnxb" name="MyPhaser.cpp" compile="1" resource="0" file="Source/MyPhaser.cpp"/>
+        <FILE id="dbHZdj" name="MyPhaser.h" compile="0" resource="0" file="Source/MyPhaser.h"/>
+        <FILE id="HJXHNr" name="MyDistortion.cpp" compile="1" resource="0"
+              file="Source/MyDistortion.cpp"/>
+        <FILE id="nfovOG" name="MyDistortion.h" compile="0" resource="0" file="Source/MyDistortion.h"/>
+      </GROUP>
+      <GROUP id="{39851644-156E-C24B-5607-21347F49C710}" name="GUI">
+        <FILE id="yKnanI" name="CostumeKnob.cpp" compile="1" resource="0" file="Source/CostumeKnob.cpp"/>
+        <FILE id="QBVm3t" name="CostumeKnob.h" compile="0" resource="0" file="Source/CostumeKnob.h"/>
+        <FILE id="bNeWhE" name="TileSlider.cpp" compile="1" resource="0" file="Source/TileSlider.cpp"/>
+        <FILE id="yMGRCO" name="TileSlider.h" compile="0" resource="0" file="Source/TileSlider.h"/>
+      </GROUP>
       <FILE id="chDtez" name="Configs.h" compile="0" resource="0" file="Source/Configs.h"/>
-      <FILE id="bNeWhE" name="TileSlider.cpp" compile="1" resource="0" file="Source/TileSlider.cpp"/>
-      <FILE id="yMGRCO" name="TileSlider.h" compile="0" resource="0" file="Source/TileSlider.h"/>
-      <FILE id="xmnlml" name="DelayEngine.cpp" compile="1" resource="0" file="Source/DelayEngine.cpp"/>
-      <FILE id="XV11hP" name="DelayEngine.h" compile="0" resource="0" file="Source/DelayEngine.h"/>
-      <FILE id="HJXHNr" name="MyDistortion.cpp" compile="1" resource="0"
-            file="Source/MyDistortion.cpp"/>
-      <FILE id="nfovOG" name="MyDistortion.h" compile="0" resource="0" file="Source/MyDistortion.h"/>
       <FILE id="NM7QHZ" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="BLWcXb" name="PluginProcessor.h" compile="0" resource="0"
@@ -24,17 +46,6 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="jBEaML" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
-    <FILE id="JruIcP" name="bg.svg" compile="0" resource="1" file="Resources/bg.svg"/>
-    <FILE id="FPLiGo" name="TileBG.svg" compile="0" resource="1" file="Resources/TileBG.svg"/>
-    <FILE id="GhVWnc" name="green Slider.svg" compile="0" resource="1"
-          file="Resources/green Slider.svg"/>
-    <FILE id="ma9xHe" name="orange Slider.svg" compile="0" resource="1"
-          file="Resources/orange Slider.svg"/>
-    <FILE id="WE9TJt" name="purple Slider.svg" compile="0" resource="1"
-          file="Resources/purple Slider.svg"/>
-    <FILE id="tVXr7b" name="Red Slider.svg" compile="0" resource="1" file="Resources/Red Slider.svg"/>
-    <FILE id="wwBfOZ" name="yellow Slider.svg" compile="0" resource="1"
-          file="Resources/yellow Slider.svg"/>
   </MAINGROUP>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

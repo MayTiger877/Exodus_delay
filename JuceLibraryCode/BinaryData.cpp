@@ -1124,23 +1124,44 @@ static const unsigned char temp_binary_data_4[] =
 
 const char* purple_Slider_svg = (const char*) temp_binary_data_4;
 
-//================== Red Slider.svg ==================
+//================== Knob.svg ==================
 static const unsigned char temp_binary_data_5[] =
+"<svg width=\"46\" height=\"46\" viewBox=\"0 0 46 46\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n"
+"<circle cx=\"23\" cy=\"23\" r=\"23\" fill=\"#131611\"/>\n"
+"<circle cx=\"23\" cy=\"23\" r=\"22.5\" fill=\"#171A15\"/>\n"
+"<rect x=\"21.875\" y=\"0.500061\" width=\"2.25\" height=\"45\" fill=\"#343D2E\"/>\n"
+"<rect x=\"0.5\" y=\"24.1251\" width=\"2.25\" height=\"45\" transform=\"rotate(-90 0.5 24.1251)\" fill=\"#343D2E\"/>\n"
+"<rect x=\"6.29462\" y=\"7.88562\" width=\"2.25\" height=\"45\" transform=\"rotate(-45 6.29462 7.88562)\" fill=\"#343D2E\"/>\n"
+"<rect x=\"7.88559\" y=\"39.7054\" width=\"2.25\" height=\"45\" transform=\"rotate(-135 7.88559 39.7054)\" fill=\"#343D2E\"/>\n"
+"<rect x=\"13.3503\" y=\"2.64331\" width=\"2.25\" height=\"45\" transform=\"rotate(-22.5 13.3503 2.64331)\" fill=\"#343D2E\"/>\n"
+"<rect x=\"1.7822\" y=\"15.429\" width=\"2.25\" height=\"45\" transform=\"rotate(-67.5 1.7822 15.429)\" fill=\"#343D2E\"/>\n"
+"<rect x=\"43.3568\" y=\"13.3503\" width=\"2.25\" height=\"45\" transform=\"rotate(67.5 43.3568 13.3503)\" fill=\"#343D2E\"/>\n"
+"<rect x=\"30.571\" y=\"1.78217\" width=\"2.25\" height=\"45\" transform=\"rotate(22.5 30.571 1.78217)\" fill=\"#343D2E\"/>\n"
+"<circle cx=\"23\" cy=\"23.0001\" r=\"21\" fill=\"#333C2D\"/>\n"
+"<circle cx=\"23\" cy=\"23\" r=\"20\" fill=\"#35402F\"/>\n"
+"<line x1=\"23.0551\" y1=\"23.0806\" x2=\"6.56573\" y2=\"33.7219\" stroke=\"#2E3628\"/>\n"
+"<line x1=\"7.40594\" y1=\"33.1796\" x2=\"6.56576\" y2=\"33.7219\" stroke=\"#323A2D\"/>\n"
+"</svg>\n";
+
+const char* Knob_svg = (const char*) temp_binary_data_5;
+
+//================== Red Slider.svg ==================
+static const unsigned char temp_binary_data_6[] =
 "<svg width=\"19\" height=\"7\" viewBox=\"0 0 19 7\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n"
 "<rect width=\"19\" height=\"7\" fill=\"#26312B\"/>\r\n"
 "<line x1=\"2\" y1=\"3.5\" x2=\"17\" y2=\"3.5\" stroke=\"#721F1F\" stroke-width=\"3\"/>\r\n"
 "</svg>\r\n";
 
-const char* Red_Slider_svg = (const char*) temp_binary_data_5;
+const char* Red_Slider_svg = (const char*) temp_binary_data_6;
 
 //================== yellow Slider.svg ==================
-static const unsigned char temp_binary_data_6[] =
+static const unsigned char temp_binary_data_7[] =
 "<svg width=\"19\" height=\"7\" viewBox=\"0 0 19 7\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n"
 "<rect width=\"19\" height=\"7\" fill=\"#26312B\"/>\r\n"
 "<line x1=\"2\" y1=\"3.5\" x2=\"17\" y2=\"3.5\" stroke=\"#67872D\" stroke-width=\"3\"/>\r\n"
 "</svg>\r\n";
 
-const char* yellow_Slider_svg = (const char*) temp_binary_data_6;
+const char* yellow_Slider_svg = (const char*) temp_binary_data_7;
 
 
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes);
@@ -1159,6 +1180,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0x439100e2:  numBytes = 225; return green_Slider_svg;
         case 0x7f7e10d7:  numBytes = 225; return orange_Slider_svg;
         case 0xd8ba4a89:  numBytes = 225; return purple_Slider_svg;
+        case 0xece1753b:  numBytes = 1305; return Knob_svg;
         case 0x6dc4feb4:  numBytes = 225; return Red_Slider_svg;
         case 0x49004ad1:  numBytes = 225; return yellow_Slider_svg;
         default: break;
@@ -1175,6 +1197,7 @@ const char* namedResourceList[] =
     "green_Slider_svg",
     "orange_Slider_svg",
     "purple_Slider_svg",
+    "Knob_svg",
     "Red_Slider_svg",
     "yellow_Slider_svg"
 };
@@ -1186,6 +1209,7 @@ const char* originalFilenames[] =
     "green Slider.svg",
     "orange Slider.svg",
     "purple Slider.svg",
+    "Knob.svg",
     "Red Slider.svg",
     "yellow Slider.svg"
 };

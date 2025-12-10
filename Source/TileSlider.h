@@ -33,7 +33,7 @@ protected:
 class GainLAF : public TileSlider
 {
     public:
-    GainLAF() = default;
+    GainLAF();
     ~GainLAF() override = default;
     
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
@@ -43,7 +43,7 @@ class GainLAF : public TileSlider
 class PanLAF : public TileSlider
 {
     public:
-    PanLAF() = default;
+    PanLAF();
     ~PanLAF() override = default;
     
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
@@ -53,7 +53,7 @@ class PanLAF : public TileSlider
 class DistortionLAF : public TileSlider
 {
 public:
-	DistortionLAF() = default;
+	DistortionLAF();
     ~DistortionLAF() override = default;
 
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
@@ -63,7 +63,7 @@ public:
 class ReverbLAF : public TileSlider
 {
 public:
-    ReverbLAF() = default;
+    ReverbLAF();
     ~ReverbLAF() override = default;
 
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
@@ -74,7 +74,7 @@ public:
 class PhaserLAF : public TileSlider
 {
 public:
-    PhaserLAF() = default;
+    PhaserLAF();
     ~PhaserLAF() override = default;
 
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,

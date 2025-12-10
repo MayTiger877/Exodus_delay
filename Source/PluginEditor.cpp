@@ -37,6 +37,11 @@ Exodus_2AudioProcessorEditor::~Exodus_2AudioProcessorEditor()
 		m_channelStrips[i].reverbMixSlider.setLookAndFeel(nullptr);
 		m_channelStrips[i].phaserMixSlider.setLookAndFeel(nullptr);
 	}
+
+	m_delayTimeSlider.setLookAndFeel(nullptr);
+	m_feedbackSlider.setLookAndFeel(nullptr);
+	m_dryLevelSlider.setLookAndFeel(nullptr);
+	m_wetLevelSlider.setLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -115,6 +120,7 @@ void Exodus_2AudioProcessorEditor::initiateGeneralSettings()
 	m_delayTimeSlider.setBounds(GNRL_DELAY_TIME_SLIDER_BOUNDS);
 	m_delayTimeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_delayTimeSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
+	m_delayTimeSlider.setLookAndFeel(&costumeKnobLAF);
 	addAndMakeVisible(m_delayTimeSlider);
 	m_delayTimeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "GNRL_DELAY_TIME", m_delayTimeSlider);
 
@@ -123,6 +129,7 @@ void Exodus_2AudioProcessorEditor::initiateGeneralSettings()
 	m_feedbackSlider.setBounds(GNRL_FEEDBACK_SLIDER_BOUNDS);
 	m_feedbackSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_feedbackSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
+	m_feedbackSlider.setLookAndFeel(&costumeKnobLAF);
 	addAndMakeVisible(m_feedbackSlider);
 	m_feedbackAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "GNRL_FEEDBACK", m_feedbackSlider);
 
@@ -131,6 +138,7 @@ void Exodus_2AudioProcessorEditor::initiateGeneralSettings()
 	m_dryLevelSlider.setBounds(GNRL_DRY_LEVEL_SLIDER_BOUNDS);
 	m_dryLevelSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_dryLevelSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
+	m_dryLevelSlider.setLookAndFeel(&costumeKnobLAF);
 	addAndMakeVisible(m_dryLevelSlider);
 	m_dryLevelAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "GNRL_DRY_LEVEL", m_dryLevelSlider);
 
@@ -139,6 +147,7 @@ void Exodus_2AudioProcessorEditor::initiateGeneralSettings()
 	m_wetLevelSlider.setBounds(GNRL_WET_LEVEL_SLIDER_BOUNDS);
 	m_wetLevelSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_wetLevelSlider.setTextBoxStyle(juce::Slider::TextBoxBelow, true, 50, 20);
+	m_wetLevelSlider.setLookAndFeel(&costumeKnobLAF);
 	addAndMakeVisible(m_wetLevelSlider);
 	m_wetLevelAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "GNRL_WET_LEVEL", m_wetLevelSlider);
 

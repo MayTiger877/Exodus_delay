@@ -12,6 +12,7 @@
 #include "Configs.h"
 #include "PluginProcessor.h"
 #include "TileSlider.h"
+#include "CostumeKnob.h"
 #include <chrono>
 
 //==============================================================================
@@ -84,6 +85,7 @@ private:
 	DistortionLAF distortionLAF;
 	ReverbLAF reverbLAF;
 	PhaserLAF phaserLAF;
+	CostumeKnob costumeKnobLAF;
 
 	distortionSettings m_distortionSettings;
 	phaserSettings m_phaserSettings;
