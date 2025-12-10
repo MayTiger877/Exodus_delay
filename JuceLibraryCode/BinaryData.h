@@ -12,7 +12,7 @@ namespace BinaryData
     const int            Knob_svgSize = 1205;
 
     extern const char*   bg_svg;
-    const int            bg_svgSize = 89103;
+    const int            bg_svgSize = 165035;
 
     extern const char*   TileBG_svg;
     const int            TileBG_svgSize = 773;
@@ -29,11 +29,17 @@ namespace BinaryData
     extern const char*   Red_Slider_svg;
     const int            Red_Slider_svgSize = 225;
 
+    extern const char*   DistKnob_svg;
+    const int            DistKnob_svgSize = 624;
+
+    extern const char*   Dist_Knob_svg;
+    const int            Dist_Knob_svgSize = 624;
+
     extern const char*   yellow_Slider_svg;
     const int            yellow_Slider_svgSize = 225;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 8;
+    const int namedResourceListSize = 10;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
