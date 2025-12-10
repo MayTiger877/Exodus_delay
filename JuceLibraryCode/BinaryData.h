@@ -8,6 +8,9 @@
 
 namespace BinaryData
 {
+    extern const char*   Knob_svg;
+    const int            Knob_svgSize = 1205;
+
     extern const char*   bg_svg;
     const int            bg_svgSize = 89103;
 
@@ -22,9 +25,6 @@ namespace BinaryData
 
     extern const char*   purple_Slider_svg;
     const int            purple_Slider_svgSize = 225;
-
-    extern const char*   Knob_svg;
-    const int            Knob_svgSize = 1305;
 
     extern const char*   Red_Slider_svg;
     const int            Red_Slider_svgSize = 225;

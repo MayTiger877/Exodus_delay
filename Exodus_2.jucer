@@ -4,6 +4,7 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginFormats="buildVST3">
   <MAINGROUP id="fJgS2l" name="Exodus_2">
     <GROUP id="{F932481B-72FA-71E3-F647-B4B516A500F9}" name="Resources">
+      <FILE id="dQWcFz" name="Knob.svg" compile="0" resource="1" file="Resources/Knob.svg"/>
       <FILE id="JruIcP" name="bg.svg" compile="0" resource="1" file="Resources/bg.svg"/>
       <FILE id="FPLiGo" name="TileBG.svg" compile="0" resource="1" file="Resources/TileBG.svg"/>
       <FILE id="GhVWnc" name="green Slider.svg" compile="0" resource="1"
@@ -12,7 +13,6 @@
             file="Resources/orange Slider.svg"/>
       <FILE id="WE9TJt" name="purple Slider.svg" compile="0" resource="1"
             file="Resources/purple Slider.svg"/>
-      <FILE id="ureqjA" name="Knob.svg" compile="0" resource="1" file="Resources/Knob.svg"/>
       <FILE id="tVXr7b" name="Red Slider.svg" compile="0" resource="1" file="Resources/Red Slider.svg"/>
       <FILE id="wwBfOZ" name="yellow Slider.svg" compile="0" resource="1"
             file="Resources/yellow Slider.svg"/>

@@ -1,16 +1,15 @@
 <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="23" cy="23" r="23" fill="#131611"/>
-<circle cx="23" cy="23" r="22.5" fill="#171A15"/>
+<circle cx="23" cy="23" r="23" fill="#070707"/>
+<circle cx="23" cy="23" r="22.5" fill="#161914"/>
 <rect x="21.875" y="0.500061" width="2.25" height="45" fill="#343D2E"/>
 <rect x="0.5" y="24.1251" width="2.25" height="45" transform="rotate(-90 0.5 24.1251)" fill="#343D2E"/>
-<rect x="6.29462" y="7.88562" width="2.25" height="45" transform="rotate(-45 6.29462 7.88562)" fill="#343D2E"/>
+<rect x="6.2946" y="7.88562" width="2.25" height="45" transform="rotate(-45 6.2946 7.88562)" fill="#343D2E"/>
 <rect x="7.88559" y="39.7054" width="2.25" height="45" transform="rotate(-135 7.88559 39.7054)" fill="#343D2E"/>
 <rect x="13.3503" y="2.64331" width="2.25" height="45" transform="rotate(-22.5 13.3503 2.64331)" fill="#343D2E"/>
 <rect x="1.7822" y="15.429" width="2.25" height="45" transform="rotate(-67.5 1.7822 15.429)" fill="#343D2E"/>
 <rect x="43.3568" y="13.3503" width="2.25" height="45" transform="rotate(67.5 43.3568 13.3503)" fill="#343D2E"/>
 <rect x="30.571" y="1.78217" width="2.25" height="45" transform="rotate(22.5 30.571 1.78217)" fill="#343D2E"/>
-<circle cx="23" cy="23.0001" r="21" fill="#333C2D"/>
-<circle cx="23" cy="23" r="20" fill="#35402F"/>
-<line x1="23.0551" y1="23.0806" x2="6.56573" y2="33.7219" stroke="#2E3628"/>
-<line x1="7.40594" y1="33.1796" x2="6.56576" y2="33.7219" stroke="#323A2D"/>
+<circle cx="23" cy="23" r="19" fill="#333C2D"/>
+<circle cx="23" cy="23" r="18.5" fill="#2D3A26"/>
+<circle cx="12.8503" cy="32.1498" r="2.5" fill="#B2C2A8"/>
 </svg>
