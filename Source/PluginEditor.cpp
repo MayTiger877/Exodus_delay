@@ -151,7 +151,7 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_distortionSettings.distortionTypeComboBox.addItem("Soft Clip", DISTORTION_TYPE_COMBOBOX_SOFTCLIP_INDEX + 1);
 	m_distortionSettings.distortionTypeComboBox.addItem("Hard Clip", DISTORTION_TYPE_COMBOBOX_HARDCLIP_INDEX + 1);
 	m_distortionSettings.distortionTypeComboBox.addItem("Exponential", DISTORTION_TYPE_COMBOBOX_EXPONENTIAL_INDEX + 1);
-	m_distortionSettings.distortionTypeComboBox.setSelectedId(DISTORTION_TYPE_COMBOBOX_SOFTCLIP_INDEX + 1);
+	m_distortionSettings.distortionTypeComboBox.setSelectedId(DISTORTION_TYPE_COMBOBOX_SOFTCLIP_INDEX);
 	addAndMakeVisible(m_distortionSettings.distortionTypeComboBox);
 	m_distortionSettings.distortionTypeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(audioProcessor.apvts, "DISTORTION_TYPE", m_distortionSettings.distortionTypeComboBox);
 
@@ -178,7 +178,7 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_phaserSettings.phaserTypeComboBox.addItem("SawUp", PHASER_TYPE_COMBOBOX_SAWUP_INDEX + 1);
 	m_phaserSettings.phaserTypeComboBox.addItem("SawDown", PHASER_TYPE_COMBOBOX_SAWDOWN_INDEX + 1);
 	m_phaserSettings.phaserTypeComboBox.addItem("Square", PHASER_TYPE_COMBOBOX_SQUARE_INDEX + 1);
-	m_phaserSettings.phaserTypeComboBox.setSelectedId(PHASER_TYPE_COMBOBOX_SINE_INDEX + 1);
+	m_phaserSettings.phaserTypeComboBox.setSelectedId(PHASER_TYPE_COMBOBOX_SINE_INDEX);
 	addAndMakeVisible(m_phaserSettings.phaserTypeComboBox);
 	m_phaserSettings.phaserTypeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(audioProcessor.apvts, "PHASER_TYPE", m_phaserSettings.phaserTypeComboBox);
 

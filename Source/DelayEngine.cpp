@@ -86,7 +86,7 @@ void DelayEngine::setDistortionSettings(const int type, const float drive, const
 
 void DelayEngine::setPhaserSettings(const int type, const float rate, const float depth, const float feedback)
 {
-	//d_phaser.setType(type);
+	d_phaser.setLFOType(type);
     d_phaser.setRate(rate);
     d_phaser.setDepth(depth);
     d_phaser.setFeedback(feedback);

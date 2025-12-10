@@ -9,7 +9,9 @@
 */
 
 #pragma once
+
 #include <JuceHeader.h>
+#include "Configs.h"
 
 class MyPhaser
 {
@@ -22,7 +24,7 @@ public:
     void setDepth(float newDepth);
     void setCentreFrequency(float newCentreHz);
     void setFeedback(float newFeedback);
-    void setType(int newType);
+    void setLFOType(int newLFOType);
     void setMix(float newMix);
     void prepare(const juce::dsp::ProcessSpec& spec);
     void reset();
@@ -43,6 +45,7 @@ private:
     juce::AudioBuffer<float> bufferFrequency;
     float normCentreFrequency = 0.5;
     double sampleRate = 44100.0;
+	int phaser_LFOType = phaserLFOType_Sine;
 
     int updateCounter = 0;
     static constexpr int my_maxUpdateCounter = 4;

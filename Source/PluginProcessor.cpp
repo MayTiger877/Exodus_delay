@@ -297,7 +297,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout Exodus_2AudioProcessor::crea
 	layout.add(std::make_unique<juce::AudioParameterFloat>("GNRL_WET_LEVEL", "General Wet Level",
 		juce::NormalisableRange<float>(GNRL_WET_LEVEL_SLIDER_MIN_VALUE, GNRL_WET_LEVEL_SLIDER_MAX_VALUE, GNRL_WET_LEVEL_SLIDER_INTERVAL), GNRL_WET_LEVEL_SLIDER_DEFAULT_VALUE));
 
-	layout.add(std::make_unique<juce::AudioParameterChoice>("DISTORTION_TYPE", "Distortion Type", getDistortionTypes(), 1));
+	layout.add(std::make_unique<juce::AudioParameterChoice>("DISTORTION_TYPE", "Distortion Type", getDistortionTypes(), 0));
 
 	layout.add(std::make_unique<juce::AudioParameterFloat>("DISTORTION_DRIVE", "Distortion Drive",
         juce::NormalisableRange<float>(DISTORTION_DRIVE_SLIDER_MIN_VALUE, DISTORTION_DRIVE_SLIDER_MAX_VALUE, DISTORTION_DRIVE_SLIDER_INTERVAL), DISTORTION_DRIVE_SLIDER_DEFAULT_VALUE));
@@ -305,7 +305,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout Exodus_2AudioProcessor::crea
     layout.add(std::make_unique<juce::AudioParameterFloat>("DISTORTION_THRESHOLD", "Distortion Threshold",
 		juce::NormalisableRange<float>(DISTORTION_THRESHOLD_SLIDER_MIN_VALUE, DISTORTION_THRESHOLD_SLIDER_MAX_VALUE, DISTORTION_THRESHOLD_SLIDER_INTERVAL), DISTORTION_THRESHOLD_SLIDER_DEFAULT_VALUE));
 
-	layout.add(std::make_unique<juce::AudioParameterChoice>("PHASER_TYPE", "Phaser Type", getPhaserTypes(), 1));
+	layout.add(std::make_unique<juce::AudioParameterChoice>("PHASER_TYPE", "Phaser Type", getPhaserTypes(), 0));
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_RATE", "Phaser Rate",
         juce::NormalisableRange<float>(PHASER_RATE_SLIDER_MIN_VALUE, PHASER_RATE_SLIDER_MAX_VALUE, PHASER_RATE_SLIDER_INTERVAL), PHASER_RATE_SLIDER_DEFAULT_VALUE));

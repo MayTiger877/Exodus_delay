@@ -44,6 +44,58 @@ void MyPhaser::setDepth(float newDepth)
     update();
 }
 
+void MyPhaser::setLFOType(int newLFOType)
+{
+    jassert(newLFOType >= 0 && newLFOType <= phaserLFOType_numberOfTypes);
+
+    if (newLFOType == phaser_LFOType)
+		return;
+
+    phaser_LFOType = newLFOType;
+
+    switch (phaser_LFOType)
+    {
+        case phaserLFOType_Sine:
+        {
+            auto oscFunction = [](float x) { return std::sin(x); };
+            osc.initialise(oscFunction);
+            break;
+		}
+        case phaserLFOType_Triangle:
+        {
+            auto oscFunction = [](float x) { return juce::jmap(juce::jlimit(-1.0f, 1.0f, (2.0f / juce::MathConstants<float>::pi) * std::asin(std::sin(x))), -1.0f, 1.0f, -1.0f, 1.0f); };
+            osc.initialise(oscFunction);
+            break;
+		}
+        case phaserLFOType_SawUp:
+        {
+			auto oscFunction = [](float x) { return juce::jmap(juce::jlimit(-1.0f, 1.0f, (2.0f / juce::MathConstants<float>::pi) * (x - juce::MathConstants<float>::pi * std::floor((x / juce::MathConstants<float>::pi + 1.0f) * 0.5f + 0.5f))), -1.0f, 1.0f, -1.0f, 1.0f); };
+            osc.initialise(oscFunction);
+            break;
+        }
+        case phaserLFOType_SawDown:
+        {
+            auto oscFunction = [](float x) { return juce::jmap(juce::jlimit(-1.0f, 1.0f, (2.0f / juce::MathConstants<float>::pi) * (juce::MathConstants<float>::pi - (x - juce::MathConstants<float>::pi * std::floor((x / juce::MathConstants<float>::pi + 1.0f) * 0.5f + 0.5f)))), -1.0f, 1.0f, -1.0f, 1.0f); };
+			osc.initialise(oscFunction);
+			break;
+        }
+        case phaserLFOType_Square:
+        {
+            auto oscFunction = [](float x) { return (std::sin(x) >= 0.0f) ? 1.0f : -1.0f; };
+            osc.initialise(oscFunction);
+			break;
+		}
+        default:
+        {
+            auto oscFunction = [](float x) { return std::sin(x); };
+            osc.initialise(oscFunction);
+            break;
+        }
+    }
+
+	update();
+}
+
 
 void MyPhaser::setCentreFrequency(float newCentreHz)
 {
