@@ -22,9 +22,9 @@ void MyDistortion::setMix(float newMix)
 	dist_mix = newMix;
 }
 
-void MyDistortion::setType(int newType)
+void MyDistortion::setType(float newType)
 {
-	jassert(newType >= 0 && newType <= distType_numberOfTypes);
+	jassert(newType >= 0.0f && newType <= distType_numberOfTypes);
 
 	dist_type = newType;
 }
@@ -42,7 +42,8 @@ void MyDistortion::processBuffer(juce::AudioBuffer<float>& buffer, int channel)
 	{
 		float inputSample = channelData[sample];
 		float distortedSample = 0.0f;
-		switch (dist_type)
+		int distTypeInt = static_cast<int>(dist_type);
+		switch (distTypeInt)
 		{
 		case distType_SoftClip:
 			distortedSample = std::tanh(dist_drive * inputSample);

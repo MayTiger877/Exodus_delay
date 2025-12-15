@@ -254,11 +254,6 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 
 // Parameter Layout
 
-juce::StringArray getDistortionTypes()
-{
-    return juce::StringArray{ "Soft Clip", "Hard Clip", "Bit Crush" };
-}
-
 juce::StringArray getPhaserTypes()
 {
 	return juce::StringArray{ "sine", "triangle", "saw up", "saw down", "square" };
@@ -297,7 +292,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout Exodus_2AudioProcessor::crea
 	layout.add(std::make_unique<juce::AudioParameterFloat>("GNRL_WET_LEVEL", "General Wet Level",
 		juce::NormalisableRange<float>(GNRL_WET_LEVEL_SLIDER_MIN_VALUE, GNRL_WET_LEVEL_SLIDER_MAX_VALUE, GNRL_WET_LEVEL_SLIDER_INTERVAL), GNRL_WET_LEVEL_SLIDER_DEFAULT_VALUE));
 
-	layout.add(std::make_unique<juce::AudioParameterChoice>("DISTORTION_TYPE", "Distortion Type", getDistortionTypes(), 0));
+	layout.add(std::make_unique<juce::AudioParameterFloat>("DISTORTION_TYPE", "Distortion Type",
+		juce::NormalisableRange<float>(DISTORTION_TYPE_SLIDER_MIN_VALUE, DISTORTION_TYPE_SLIDER_MAX_VALUE, DISTORTION_TYPE_SLIDER_INTERVAL), DISTORTION_TYPE_SLIDER_DEFAULT_VALUE));
 
 	layout.add(std::make_unique<juce::AudioParameterFloat>("DISTORTION_DRIVE", "Distortion Drive",
         juce::NormalisableRange<float>(DISTORTION_DRIVE_SLIDER_MIN_VALUE, DISTORTION_DRIVE_SLIDER_MAX_VALUE, DISTORTION_DRIVE_SLIDER_INTERVAL), DISTORTION_DRIVE_SLIDER_DEFAULT_VALUE));

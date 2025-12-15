@@ -2107,29 +2107,14 @@ static const unsigned char temp_binary_data_7[] =
 
 const char* DistKnob_svg = (const char*) temp_binary_data_7;
 
-//================== Dist Knob.svg ==================
-static const unsigned char temp_binary_data_8[] =
-"<svg width=\"34\" height=\"24\" viewBox=\"0 0 34 24\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n"
-"<rect width=\"34\" height=\"24\" fill=\"#232A17\"/>\n"
-"<rect x=\"1\" y=\"1\" width=\"32\" height=\"22\" fill=\"#384227\"/>\n"
-"<path d=\"M28 18H5L7.44681 17H26.0426L28 18Z\" stroke=\"#545554\"/>\n"
-"<path d=\"M28 19H5L7.44681 20H26.0426L28 19Z\" fill=\"white\" stroke=\"#1D2215\"/>\n"
-"<path d=\"M28 11H5L7.44681 10H26.0426L28 11Z\" stroke=\"#545554\"/>\n"
-"<path d=\"M28 12H5L7.44681 13H26.0426L28 12Z\" fill=\"white\" stroke=\"#1D2215\"/>\n"
-"<path d=\"M28 4H5L7.44681 3H26.0426L28 4Z\" stroke=\"#545554\"/>\n"
-"<path d=\"M28 5H5L7.44681 6H26.0426L28 5Z\" fill=\"white\" stroke=\"#1D2215\"/>\n"
-"</svg>\n";
-
-const char* Dist_Knob_svg = (const char*) temp_binary_data_8;
-
 //================== yellow Slider.svg ==================
-static const unsigned char temp_binary_data_9[] =
+static const unsigned char temp_binary_data_8[] =
 "<svg width=\"19\" height=\"7\" viewBox=\"0 0 19 7\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\r\n"
 "<rect width=\"19\" height=\"7\" fill=\"#26312B\"/>\r\n"
 "<line x1=\"2\" y1=\"3.5\" x2=\"17\" y2=\"3.5\" stroke=\"#67872D\" stroke-width=\"3\"/>\r\n"
 "</svg>\r\n";
 
-const char* yellow_Slider_svg = (const char*) temp_binary_data_9;
+const char* yellow_Slider_svg = (const char*) temp_binary_data_8;
 
 
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes);
@@ -2151,7 +2136,6 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0xd8ba4a89:  numBytes = 225; return purple_Slider_svg;
         case 0x6dc4feb4:  numBytes = 225; return Red_Slider_svg;
         case 0xf5ded101:  numBytes = 624; return DistKnob_svg;
-        case 0x08f4c394:  numBytes = 624; return Dist_Knob_svg;
         case 0x49004ad1:  numBytes = 225; return yellow_Slider_svg;
         default: break;
     }
@@ -2170,7 +2154,6 @@ const char* namedResourceList[] =
     "purple_Slider_svg",
     "Red_Slider_svg",
     "DistKnob_svg",
-    "Dist_Knob_svg",
     "yellow_Slider_svg"
 };
 
@@ -2184,7 +2167,6 @@ const char* originalFilenames[] =
     "purple Slider.svg",
     "Red Slider.svg",
     "DistKnob.svg",
-    "Dist Knob.svg",
     "yellow Slider.svg"
 };
 

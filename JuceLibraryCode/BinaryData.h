@@ -32,14 +32,11 @@ namespace BinaryData
     extern const char*   DistKnob_svg;
     const int            DistKnob_svgSize = 624;
 
-    extern const char*   Dist_Knob_svg;
-    const int            Dist_Knob_svgSize = 624;
-
     extern const char*   yellow_Slider_svg;
     const int            yellow_Slider_svgSize = 225;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 10;
+    const int namedResourceListSize = 9;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

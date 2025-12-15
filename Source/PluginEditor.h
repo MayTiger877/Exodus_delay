@@ -13,6 +13,7 @@
 #include "PluginProcessor.h"
 #include "TileSlider.h"
 #include "CostumeKnob.h"
+#include "DistKnob.h"
 #include <chrono>
 
 //==============================================================================
@@ -27,11 +28,8 @@ struct channelStrip
 
 struct distortionSettings
 {
-	juce::ComboBox distortionTypeComboBox;
-	std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> distortionTypeAttachment;
-
-	juce::Slider distortionDriveSlider, distortionThresholdSlider;
-	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionDriveAttachment, distortionThresholdAttachment;
+	juce::Slider distortionDriveSlider, distortionThresholdSlider, distortionTypeSlider;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionDriveAttachment, distortionThresholdAttachment, distortionTypeAttachment;
 };
 
 struct phaserSettings
@@ -86,6 +84,7 @@ private:
 	ReverbLAF reverbLAF;
 	PhaserLAF phaserLAF;
 	CostumeKnob costumeKnobLAF;
+	DistKnob distKnobLAF;
 
 	distortionSettings m_distortionSettings;
 	phaserSettings m_phaserSettings;

@@ -15,7 +15,6 @@
             file="Resources/purple Slider.svg"/>
       <FILE id="tVXr7b" name="Red Slider.svg" compile="0" resource="1" file="Resources/Red Slider.svg"/>
       <FILE id="KDFZAC" name="DistKnob.svg" compile="0" resource="1" file="Resources/DistKnob.svg"/>
-      <FILE id="z8uTbR" name="Dist Knob.svg" compile="0" resource="1" file="Resources/Dist Knob.svg"/>
       <FILE id="wwBfOZ" name="yellow Slider.svg" compile="0" resource="1"
             file="Resources/yellow Slider.svg"/>
     </GROUP>
@@ -36,6 +35,10 @@
       <GROUP id="{39851644-156E-C24B-5607-21347F49C710}" name="GUI">
         <FILE id="yKnanI" name="CostumeKnob.cpp" compile="1" resource="0" file="Source/CostumeKnob.cpp"/>
         <FILE id="QBVm3t" name="CostumeKnob.h" compile="0" resource="0" file="Source/CostumeKnob.h"/>
+        <FILE id="pkQO6D" name="DistKnob.cpp" compile="1" resource="0" file="Source/DistKnob.cpp"/>
+        <FILE id="Kp1Rb7" name="DistKnob.h" compile="0" resource="0" file="Source/DistKnob.h"/>
+        <FILE id="loaktL" name="PhaserKnob.cpp" compile="1" resource="0" file="Source/PhaserKnob.cpp"/>
+        <FILE id="OfBIyl" name="PhaserKnob.h" compile="0" resource="0" file="Source/PhaserKnob.h"/>
         <FILE id="bNeWhE" name="TileSlider.cpp" compile="1" resource="0" file="Source/TileSlider.cpp"/>
         <FILE id="yMGRCO" name="TileSlider.h" compile="0" resource="0" file="Source/TileSlider.h"/>
       </GROUP>

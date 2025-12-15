@@ -167,13 +167,14 @@ void Exodus_2AudioProcessorEditor::initiateGeneralSettings()
 void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 {
 	// Distortion Settings
-	m_distortionSettings.distortionTypeComboBox.setBounds(DISTORTION_TYPE_COMBOBOX_BOUNDS);
-	m_distortionSettings.distortionTypeComboBox.addItem("Soft Clip", DISTORTION_TYPE_COMBOBOX_SOFTCLIP_INDEX + 1);
-	m_distortionSettings.distortionTypeComboBox.addItem("Hard Clip", DISTORTION_TYPE_COMBOBOX_HARDCLIP_INDEX + 1);
-	m_distortionSettings.distortionTypeComboBox.addItem("Exponential", DISTORTION_TYPE_COMBOBOX_EXPONENTIAL_INDEX + 1);
-	m_distortionSettings.distortionTypeComboBox.setSelectedId(DISTORTION_TYPE_COMBOBOX_SOFTCLIP_INDEX);
-	//addAndMakeVisible(m_distortionSettings.distortionTypeComboBox);
-	m_distortionSettings.distortionTypeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(audioProcessor.apvts, "DISTORTION_TYPE", m_distortionSettings.distortionTypeComboBox);
+	m_distortionSettings.distortionTypeSlider.setValue(DISTORTION_TYPE_SLIDER_DEFAULT_VALUE);
+	m_distortionSettings.distortionTypeSlider.setRange(DISTORTION_TYPE_SLIDER_MIN_VALUE, DISTORTION_TYPE_SLIDER_MAX_VALUE, DISTORTION_TYPE_SLIDER_INTERVAL);
+	m_distortionSettings.distortionTypeSlider.setBounds(DISTORTION_TYPE_SLIDER_BOUNDS);
+	m_distortionSettings.distortionTypeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+	m_distortionSettings.distortionTypeSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
+	m_distortionSettings.distortionTypeSlider.setLookAndFeel(&distKnobLAF);
+	addAndMakeVisible(m_distortionSettings.distortionTypeSlider);
+	m_distortionSettings.distortionTypeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "DISTORTION_TYPE", m_distortionSettings.distortionTypeSlider);
 
 	m_distortionSettings.distortionDriveSlider.setValue(DISTORTION_DRIVE_SLIDER_DEFAULT_VALUE);
 	m_distortionSettings.distortionDriveSlider.setRange(DISTORTION_DRIVE_SLIDER_MIN_VALUE, DISTORTION_DRIVE_SLIDER_MAX_VALUE, DISTORTION_DRIVE_SLIDER_INTERVAL);
