@@ -84,9 +84,9 @@ void DelayEngine::setDistortionSettings(const int type, const float drive, const
 	d_distortion.setThreshold(threshold); // You can parameterize threshold as needed
 }
 
-void DelayEngine::setPhaserSettings(const int type, const float rate, const float depth, const float feedback)
+void DelayEngine::setPhaserSettings(const float type, const float rate, const float depth, const float feedback)
 {
-	d_phaser.setLFOType(type);
+    d_phaser.setLFOType(static_cast<int>(type)); // TODO check if cast is ok
     d_phaser.setRate(rate);
     d_phaser.setDepth(depth);
     d_phaser.setFeedback(feedback);

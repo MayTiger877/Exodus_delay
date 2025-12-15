@@ -57,7 +57,7 @@ public:
 
 	void setDistortionSettings(const int type, const float drive, const float threshold);
 
-	void setPhaserSettings(const int type, const float rate, const float depth, const float feedback);
+	void setPhaserSettings(const float type, const float rate, const float depth, const float feedback);
 
 	void setReverbSettings(const float roomSize, const float damping, const float width);
 

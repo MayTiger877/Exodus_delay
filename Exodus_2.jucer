@@ -14,7 +14,19 @@
       <FILE id="WE9TJt" name="purple Slider.svg" compile="0" resource="1"
             file="Resources/purple Slider.svg"/>
       <FILE id="tVXr7b" name="Red Slider.svg" compile="0" resource="1" file="Resources/Red Slider.svg"/>
+      <FILE id="iRqrZT" name="BrushedMetal_Texture.png" compile="0" resource="1"
+            file="Resources/BrushedMetal_Texture.png"/>
+      <FILE id="lJ4lj8" name="saw down lines choose.svg" compile="0" resource="1"
+            file="Resources/saw down lines choose.svg"/>
+      <FILE id="AM4PRv" name="saw up lines choose.svg" compile="0" resource="1"
+            file="Resources/saw up lines choose.svg"/>
+      <FILE id="jKXFq9" name="sine line choose.svg" compile="0" resource="1"
+            file="Resources/sine line choose.svg"/>
+      <FILE id="swnYgu" name="square lines choose.svg" compile="0" resource="1"
+            file="Resources/square lines choose.svg"/>
       <FILE id="KDFZAC" name="DistKnob.svg" compile="0" resource="1" file="Resources/DistKnob.svg"/>
+      <FILE id="Nf4YJx" name="triangle lines choose.svg" compile="0" resource="1"
+            file="Resources/triangle lines choose.svg"/>
       <FILE id="wwBfOZ" name="yellow Slider.svg" compile="0" resource="1"
             file="Resources/yellow Slider.svg"/>
     </GROUP>

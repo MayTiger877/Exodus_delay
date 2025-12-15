@@ -22,6 +22,8 @@ Exodus_2AudioProcessorEditor::Exodus_2AudioProcessorEditor (Exodus_2AudioProcess
     auto backgroundSVGFile = juce::MemoryInputStream(BinaryData::bg_svg, BinaryData::bg_svgSize, false);
     backgroundDrawable = juce::Drawable::createFromImageDataStream(backgroundSVGFile);
 
+	backgroundTextureDrawable = juce::Drawable::createFromImageData(BinaryData::BrushedMetal_Texture_png, BinaryData::BrushedMetal_Texture_pngSize);
+
     initiateChannelStrips();
 	initiateGeneralSettings();
 	initiateEffectSettings();
@@ -43,9 +45,11 @@ Exodus_2AudioProcessorEditor::~Exodus_2AudioProcessorEditor()
 	m_dryLevelSlider.setLookAndFeel(nullptr);
 	m_wetLevelSlider.setLookAndFeel(nullptr);
 
+	m_distortionSettings.distortionTypeSlider.setLookAndFeel(nullptr);
 	m_distortionSettings.distortionDriveSlider.setLookAndFeel(nullptr);
 	m_distortionSettings.distortionThresholdSlider.setLookAndFeel(nullptr);
 
+	m_phaserSettings.phaserTypeSlider.setLookAndFeel(nullptr);
 	m_phaserSettings.phaserRateSlider.setLookAndFeel(nullptr);
 	m_phaserSettings.phaserDepthSlider.setLookAndFeel(nullptr);
 	m_phaserSettings.phaserFeedbackSlider.setLookAndFeel(nullptr);
@@ -128,7 +132,7 @@ void Exodus_2AudioProcessorEditor::initiateGeneralSettings()
 {
 	m_delayTimeSlider.setValue(GNRL_DELAY_TIME_SLIDER_DEFAULT_VALUE);
 	m_delayTimeSlider.setRange(GNRL_DELAY_TIME_SLIDER_MIN_VALUE, GNRL_DELAY_TIME_SLIDER_MAX_VALUE, GNRL_DELAY_TIME_SLIDER_INTERVAL);
-	m_delayTimeSlider.setBounds(GNRL_DELAY_TIME_SLIDER_BOUNDS);
+ 	m_delayTimeSlider.setBounds(GNRL_DELAY_TIME_SLIDER_BOUNDS);
 	m_delayTimeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_delayTimeSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
 	m_delayTimeSlider.setLookAndFeel(&costumeKnobLAF);
@@ -195,15 +199,14 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_distortionSettings.distortionThresholdAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "DISTORTION_THRESHOLD", m_distortionSettings.distortionThresholdSlider);
 
 	// Phaser Settings
-	m_phaserSettings.phaserTypeComboBox.setBounds(PHASER_TYPE_COMBOBOX_BOUNDS);
-	m_phaserSettings.phaserTypeComboBox.addItem("Sine", PHASER_TYPE_COMBOBOX_SINE_INDEX + 1);
-	m_phaserSettings.phaserTypeComboBox.addItem("Triangle", PHASER_TYPE_COMBOBOX_TRIANGLE_INDEX + 1);
-	m_phaserSettings.phaserTypeComboBox.addItem("SawUp", PHASER_TYPE_COMBOBOX_SAWUP_INDEX + 1);
-	m_phaserSettings.phaserTypeComboBox.addItem("SawDown", PHASER_TYPE_COMBOBOX_SAWDOWN_INDEX + 1);
-	m_phaserSettings.phaserTypeComboBox.addItem("Square", PHASER_TYPE_COMBOBOX_SQUARE_INDEX + 1);
-	m_phaserSettings.phaserTypeComboBox.setSelectedId(PHASER_TYPE_COMBOBOX_SINE_INDEX);
-	//addAndMakeVisible(m_phaserSettings.phaserTypeComboBox);
-	m_phaserSettings.phaserTypeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ComboBoxAttachment>(audioProcessor.apvts, "PHASER_TYPE", m_phaserSettings.phaserTypeComboBox);
+	m_phaserSettings.phaserTypeSlider.setValue(PHASER_TYPE_SLIDER_DEFAULT_VALUE);
+	m_phaserSettings.phaserTypeSlider.setRange(PHASER_TYPE_SLIDER_MIN_VALUE, PHASER_TYPE_SLIDER_MAX_VALUE, PHASER_TYPE_SLIDER_INTERVAL);
+	m_phaserSettings.phaserTypeSlider.setBounds(PHASER_TYPE_SLIDER_BOUNDS);
+	m_phaserSettings.phaserTypeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+	m_phaserSettings.phaserTypeSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
+	m_phaserSettings.phaserTypeSlider.setLookAndFeel(&phaserKnobLAF);
+	addAndMakeVisible(m_phaserSettings.phaserTypeSlider);
+	m_phaserSettings.phaserTypeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "PHASER_TYPE", m_phaserSettings.phaserTypeSlider);
 
 	m_phaserSettings.phaserRateSlider.setValue(PHASER_RATE_SLIDER_DEFAULT_VALUE);
 	m_phaserSettings.phaserRateSlider.setRange(PHASER_RATE_SLIDER_MIN_VALUE, PHASER_RATE_SLIDER_MAX_VALUE, PHASER_RATE_SLIDER_INTERVAL);
@@ -272,6 +275,12 @@ void Exodus_2AudioProcessorEditor::paint (juce::Graphics& g)
         backgroundDrawable->setBounds(getLocalBounds());
         backgroundDrawable->draw(g, 1.0f);
     }
+
+	if (backgroundTextureDrawable != nullptr)
+	{
+		backgroundTextureDrawable->setBounds(getLocalBounds());
+		backgroundTextureDrawable->drawWithin(g, getLocalBounds().toFloat(), juce::RectanglePlacement::stretchToFit, 0.2f);
+	}
 
 	g.setColour(juce::Colours::forestgreen.darker(0.8f));
 	g.fillRect(TILE_SLIDER_STARTING_X - 1 + (m_index * TILE_SLIDER_GAP_X), 418, 40, 9);

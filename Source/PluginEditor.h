@@ -14,6 +14,7 @@
 #include "TileSlider.h"
 #include "CostumeKnob.h"
 #include "DistKnob.h"
+#include "PhaserKnob.h"
 #include <chrono>
 
 //==============================================================================
@@ -34,11 +35,8 @@ struct distortionSettings
 
 struct phaserSettings
 {
-	juce::ComboBox phaserTypeComboBox;
-	std::unique_ptr<juce::AudioProcessorValueTreeState::ComboBoxAttachment> phaserTypeAttachment;
-
-	juce::Slider phaserRateSlider, phaserDepthSlider, phaserFeedbackSlider;
-	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> phaserRateAttachment, phaserDepthAttachment, phaserFeedbackAttachment;
+	juce::Slider phaserRateSlider, phaserDepthSlider, phaserFeedbackSlider, phaserTypeSlider;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> phaserRateAttachment, phaserDepthAttachment, phaserFeedbackAttachment, phaserTypeAttachment;
 };
 
 struct reverbSettings
@@ -67,7 +65,7 @@ private:
     uint32_t m_timer = 0;
 	int m_index = 0;
 
-    std::unique_ptr<juce::Drawable> backgroundDrawable;
+    std::unique_ptr<juce::Drawable> backgroundDrawable, backgroundTextureDrawable;
 
 	channelStrip m_channelStrips[16];
 	void initiateChannelStrips();
@@ -85,6 +83,7 @@ private:
 	PhaserLAF phaserLAF;
 	CostumeKnob costumeKnobLAF;
 	DistKnob distKnobLAF;
+	PhaserKnob phaserKnobLAF;
 
 	distortionSettings m_distortionSettings;
 	phaserSettings m_phaserSettings;

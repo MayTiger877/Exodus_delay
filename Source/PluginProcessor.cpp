@@ -253,12 +253,6 @@ juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 }
 
 // Parameter Layout
-
-juce::StringArray getPhaserTypes()
-{
-	return juce::StringArray{ "sine", "triangle", "saw up", "saw down", "square" };
-}
-
 juce::AudioProcessorValueTreeState::ParameterLayout Exodus_2AudioProcessor::creatParametersLayout()
 {
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
@@ -301,7 +295,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout Exodus_2AudioProcessor::crea
     layout.add(std::make_unique<juce::AudioParameterFloat>("DISTORTION_THRESHOLD", "Distortion Threshold",
 		juce::NormalisableRange<float>(DISTORTION_THRESHOLD_SLIDER_MIN_VALUE, DISTORTION_THRESHOLD_SLIDER_MAX_VALUE, DISTORTION_THRESHOLD_SLIDER_INTERVAL), DISTORTION_THRESHOLD_SLIDER_DEFAULT_VALUE));
 
-	layout.add(std::make_unique<juce::AudioParameterChoice>("PHASER_TYPE", "Phaser Type", getPhaserTypes(), 0));
+	layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_TYPE", "Phaser Type",
+		juce::NormalisableRange<float>(PHASER_TYPE_SLIDER_MIN_VALUE, PHASER_TYPE_SLIDER_MAX_VALUE, PHASER_TYPE_SLIDER_INTERVAL), PHASER_TYPE_SLIDER_DEFAULT_VALUE));
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_RATE", "Phaser Rate",
         juce::NormalisableRange<float>(PHASER_RATE_SLIDER_MIN_VALUE, PHASER_RATE_SLIDER_MAX_VALUE, PHASER_RATE_SLIDER_INTERVAL), PHASER_RATE_SLIDER_DEFAULT_VALUE));
