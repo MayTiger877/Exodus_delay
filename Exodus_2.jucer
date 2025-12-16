@@ -29,6 +29,7 @@
             file="Resources/triangle lines choose.svg"/>
       <FILE id="wwBfOZ" name="yellow Slider.svg" compile="0" resource="1"
             file="Resources/yellow Slider.svg"/>
+      <FILE id="sroukz" name="TileShnatot.svg" compile="0" resource="1" file="Resources/TileShnatot.svg"/>
     </GROUP>
     <GROUP id="{9C46E52D-2BF1-E7D6-EEB7-623E057E1954}" name="Source">
       <GROUP id="{8C76F35E-C977-BFB0-F1DB-A39EF7C35947}" name="Engine">

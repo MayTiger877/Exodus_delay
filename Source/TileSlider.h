@@ -22,11 +22,11 @@ public:
 protected:
     std::unique_ptr<juce::Drawable> sliderDrawable;
 
-	juce::Rectangle<float> bgArea{ 0, 0, TILE_SLIDER_BG_WIDTH, TILE_SLIDER_BG_HEIGHT };
+	//juce::Rectangle<float> bgArea{ 0, 0, TILE_SLIDER_BG_WIDTH, TILE_SLIDER_BG_HEIGHT };
 	juce::Rectangle<float> sliderArea{ 0, 0, TILE_SLIDER_WIDTH, TILE_SLIDER_HEIGHT };
 
-    juce::MemoryInputStream backgroundSVGFile = juce::MemoryInputStream(BinaryData::TileBG_svg, BinaryData::TileBG_svgSize, false);
-    std::unique_ptr<juce::Drawable> backgroundDrawable = juce::Drawable::createFromImageDataStream(backgroundSVGFile);
+    //juce::MemoryInputStream backgroundSVGFile = juce::MemoryInputStream(BinaryData::TileBG_svg, BinaryData::TileBG_svgSize, false);
+    //std::unique_ptr<juce::Drawable> backgroundDrawable = juce::Drawable::createFromImageDataStream(backgroundSVGFile);
 
 };
 

@@ -20,7 +20,7 @@ void GainLAF::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int h
 									float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider)
 {
 	// bg
-	backgroundDrawable->drawWithin(g, this->bgArea, juce::RectanglePlacement::stretchToFit, 1.0f);
+	//backgroundDrawable->drawWithin(g, this->bgArea, juce::RectanglePlacement::stretchToFit, 1.0f);
 
 	// slider
 	sliderDrawable->drawWithin(g, juce::Rectangle<float>(6, 56 - (56 * sliderPos), TILE_SLIDER_WIDTH, TILE_SLIDER_HEIGHT).toFloat(), juce::RectanglePlacement::stretchToFit, 1.0f);
@@ -38,7 +38,7 @@ void PanLAF::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int he
 									float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider)
 {
 	// bg
-	backgroundDrawable->drawWithin(g, this->bgArea, juce::RectanglePlacement::stretchToFit, 1.0f);
+	//backgroundDrawable->drawWithin(g, this->bgArea, juce::RectanglePlacement::stretchToFit, 1.0f);
 
 	// slider
 	sliderDrawable->drawWithin(g, juce::Rectangle<float>(6, 56 - (56 * sliderPos), TILE_SLIDER_WIDTH, TILE_SLIDER_HEIGHT).toFloat(), juce::RectanglePlacement::stretchToFit, 1.0f);
@@ -56,7 +56,7 @@ void DistortionLAF::drawRotarySlider(juce::Graphics& g, int x, int y, int width,
 										float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider)
 {
 	// bg
-	backgroundDrawable->drawWithin(g, this->bgArea, juce::RectanglePlacement::stretchToFit, 1.0f);
+	//backgroundDrawable->drawWithin(g, this->bgArea, juce::RectanglePlacement::stretchToFit, 1.0f);
 
 	// slider
 	sliderDrawable->drawWithin(g, juce::Rectangle<float>(6, 56 - (56 * sliderPos), TILE_SLIDER_WIDTH, TILE_SLIDER_HEIGHT).toFloat(), juce::RectanglePlacement::stretchToFit, 1.0f);
@@ -75,7 +75,7 @@ void ReverbLAF::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int
 									float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider)
 {
 	// bg
-	backgroundDrawable->drawWithin(g, this->bgArea, juce::RectanglePlacement::stretchToFit, 1.0f);
+	//backgroundDrawable->drawWithin(g, this->bgArea, juce::RectanglePlacement::stretchToFit, 1.0f);
 
 	// slider
 	sliderDrawable->drawWithin(g, juce::Rectangle<float>(6, 56 - (56 * sliderPos), TILE_SLIDER_WIDTH, TILE_SLIDER_HEIGHT).toFloat(), juce::RectanglePlacement::stretchToFit, 1.0f);
@@ -93,7 +93,7 @@ void PhaserLAF::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int
 									float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider)
 {
 	// bg
-	backgroundDrawable->drawWithin(g, this->bgArea, juce::RectanglePlacement::stretchToFit, 1.0f);
+	//backgroundDrawable->drawWithin(g, this->bgArea, juce::RectanglePlacement::stretchToFit, 1.0f);
 
 	// slider
 	sliderDrawable->drawWithin(g, juce::Rectangle<float>(6, 56 - (56 * sliderPos), TILE_SLIDER_WIDTH, TILE_SLIDER_HEIGHT).toFloat(), juce::RectanglePlacement::stretchToFit, 1.0f);

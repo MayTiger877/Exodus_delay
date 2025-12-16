@@ -1,4 +1,6 @@
-<svg width="19" height="7" viewBox="0 0 19 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="19" height="7" fill="#26312B"/>
-<line x1="2" y1="3.5" x2="17" y2="3.5" stroke="#72521F" stroke-width="3"/>
+<svg width="28" height="12" viewBox="0 0 28 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect y="2" width="28" height="10" rx="2" fill="black" fill-opacity="0.18"/>
+<rect x="4" y="3" width="20" height="8" rx="1" fill="black" fill-opacity="0.17"/>
+<rect width="28" height="10" fill="#26312B"/>
+<rect x="4" y="3" width="20" height="4" fill="#AC6809"/>
 </svg>

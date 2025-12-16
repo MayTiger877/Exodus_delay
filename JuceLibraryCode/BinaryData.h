@@ -12,22 +12,22 @@ namespace BinaryData
     const int            Knob_svgSize = 1205;
 
     extern const char*   bg_svg;
-    const int            bg_svgSize = 157239;
+    const int            bg_svgSize = 231508;
 
     extern const char*   TileBG_svg;
     const int            TileBG_svgSize = 773;
 
     extern const char*   green_Slider_svg;
-    const int            green_Slider_svgSize = 225;
+    const int            green_Slider_svgSize = 365;
 
     extern const char*   orange_Slider_svg;
-    const int            orange_Slider_svgSize = 225;
+    const int            orange_Slider_svgSize = 365;
 
     extern const char*   purple_Slider_svg;
-    const int            purple_Slider_svgSize = 225;
+    const int            purple_Slider_svgSize = 365;
 
     extern const char*   Red_Slider_svg;
-    const int            Red_Slider_svgSize = 225;
+    const int            Red_Slider_svgSize = 365;
 
     extern const char*   BrushedMetal_Texture_png;
     const int            BrushedMetal_Texture_pngSize = 34892;
@@ -51,10 +51,13 @@ namespace BinaryData
     const int            triangle_lines_choose_svgSize = 303;
 
     extern const char*   yellow_Slider_svg;
-    const int            yellow_Slider_svgSize = 225;
+    const int            yellow_Slider_svgSize = 365;
+
+    extern const char*   TileShnatot_svg;
+    const int            TileShnatot_svgSize = 870;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 15;
+    const int namedResourceListSize = 16;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
