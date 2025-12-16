@@ -65,7 +65,7 @@ private:
     uint32_t m_timer = 0;
 	int m_index = 0;
 
-    std::unique_ptr<juce::Drawable> backgroundDrawable, backgroundTextureDrawable;
+    std::unique_ptr<juce::Drawable> backgroundDrawable, backgroundTextureDrawable, leftPanelWoodDrawable, rightPanelWoodDrawable, ventDrawable;
 
 	channelStrip m_channelStrips[16];
 	void initiateChannelStrips();

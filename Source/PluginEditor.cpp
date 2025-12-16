@@ -24,6 +24,12 @@ Exodus_2AudioProcessorEditor::Exodus_2AudioProcessorEditor (Exodus_2AudioProcess
 
 	backgroundTextureDrawable = juce::Drawable::createFromImageData(BinaryData::BrushedMetal_Texture_png, BinaryData::BrushedMetal_Texture_pngSize);
 
+	leftPanelWoodDrawable = juce::Drawable::createFromImageData(BinaryData::black_wood_texture_png, BinaryData::black_wood_texture_pngSize);
+	rightPanelWoodDrawable = juce::Drawable::createFromImageData(BinaryData::black_wood_texture_png, BinaryData::black_wood_texture_pngSize);
+
+	auto ventSVGFile = juce::MemoryInputStream(BinaryData::Vent_svg, BinaryData::Vent_svgSize, false);
+	ventDrawable = juce::Drawable::createFromImageDataStream(ventSVGFile);
+
     initiateChannelStrips();
 	initiateGeneralSettings();
 	initiateEffectSettings();
@@ -278,8 +284,26 @@ void Exodus_2AudioProcessorEditor::paint (juce::Graphics& g)
 
 	if (backgroundTextureDrawable != nullptr)
 	{
-		backgroundTextureDrawable->setBounds(getLocalBounds());
-		backgroundTextureDrawable->drawWithin(g, getLocalBounds().toFloat(), juce::RectanglePlacement::stretchToFit, 0.2f);
+		backgroundTextureDrawable->setBounds(0.0f, 0.0f, 945.0f, 648.0f);
+		backgroundTextureDrawable->drawWithin(g, juce::Rectangle(15.0f, 8.0f, 945.0f, 648.0f), juce::RectanglePlacement::stretchToFit, 0.2f);
+	}
+
+	if (leftPanelWoodDrawable != nullptr)
+	{
+		leftPanelWoodDrawable->setBounds(0.0f, 0.0f, 14.0f, 650.0f);
+		leftPanelWoodDrawable->drawWithin(g, juce::Rectangle<float>(0.0f, 0.0f, (float)14, (float)650), juce::RectanglePlacement::stretchToFit, 1.0f);
+	}
+
+	if (rightPanelWoodDrawable != nullptr)
+	{
+		rightPanelWoodDrawable->setBounds(0.0f, 0.0f, 14.0f, 650.0f);
+		rightPanelWoodDrawable->drawWithin(g, juce::Rectangle<float>(961.0f, 0.0f, (float)14, (float)650), juce::RectanglePlacement::stretchToFit, 1.0f);
+	}
+
+	if (ventDrawable != nullptr)
+	{
+		ventDrawable->setBounds(0, 0, 209, 46);
+		ventDrawable->drawWithin(g, juce::Rectangle<float>(745.0f, 15.0f, (float)209, (float)46), juce::RectanglePlacement::stretchToFit, 1.0f);
 	}
 
 	g.setColour(juce::Colours::forestgreen.darker(0.8f));

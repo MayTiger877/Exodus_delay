@@ -28,9 +28,11 @@ PhaserKnob::PhaserKnob()
 	triangleLines = juce::Drawable::createFromImageDataStream(triangleLinesSvg);
 }
 
+
 void PhaserKnob::drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
 	float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider)
 {
+	sliderPos = 1.0 - sliderPos; // invert slider position
 	if (sliderPos == 0.0f)
 	{
 		sineLines->drawWithin(g, juce::Rectangle<float>(x, y, 2, 46).toFloat(), juce::RectanglePlacement::stretchToFit, 1.0f);

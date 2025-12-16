@@ -11,11 +11,14 @@
             file="Resources/green Slider.svg"/>
       <FILE id="ma9xHe" name="orange Slider.svg" compile="0" resource="1"
             file="Resources/orange Slider.svg"/>
+      <FILE id="DFZkJj" name="Vent.svg" compile="0" resource="1" file="Resources/Vent.svg"/>
       <FILE id="WE9TJt" name="purple Slider.svg" compile="0" resource="1"
             file="Resources/purple Slider.svg"/>
       <FILE id="tVXr7b" name="Red Slider.svg" compile="0" resource="1" file="Resources/Red Slider.svg"/>
       <FILE id="iRqrZT" name="BrushedMetal_Texture.png" compile="0" resource="1"
             file="Resources/BrushedMetal_Texture.png"/>
+      <FILE id="l2S6cg" name="black_wood_texture.png" compile="0" resource="1"
+            file="Resources/black_wood_texture.png"/>
       <FILE id="lJ4lj8" name="saw down lines choose.svg" compile="0" resource="1"
             file="Resources/saw down lines choose.svg"/>
       <FILE id="AM4PRv" name="saw up lines choose.svg" compile="0" resource="1"

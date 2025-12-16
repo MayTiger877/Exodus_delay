@@ -51,7 +51,7 @@ void MyPhaser::setLFOType(int newLFOType)
     if (newLFOType == phaser_LFOType)
 		return;
 
-    phaser_LFOType = newLFOType;
+	phaser_LFOType = phaserLFOType_numberOfTypes - 1 - newLFOType; // Invert the LFO type to match the UI order
 
     switch (phaser_LFOType)
     {
