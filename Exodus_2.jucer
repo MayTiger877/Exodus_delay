@@ -35,6 +35,7 @@
       <FILE id="sroukz" name="TileShnatot.svg" compile="0" resource="1" file="Resources/TileShnatot.svg"/>
     </GROUP>
     <GROUP id="{9C46E52D-2BF1-E7D6-EEB7-623E057E1954}" name="Source">
+      <FILE id="N9DWkc" name="Parameters.h" compile="0" resource="0" file="Source/Parameters.h"/>
       <GROUP id="{8C76F35E-C977-BFB0-F1DB-A39EF7C35947}" name="Engine">
         <FILE id="xmnlml" name="DelayEngine.cpp" compile="1" resource="0" file="Source/DelayEngine.cpp"/>
         <FILE id="XV11hP" name="DelayEngine.h" compile="0" resource="0" file="Source/DelayEngine.h"/>

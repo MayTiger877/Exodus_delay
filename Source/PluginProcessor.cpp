@@ -25,6 +25,8 @@ Exodus_2AudioProcessor::Exodus_2AudioProcessor()
 {
 	m_delayEngine = std::make_unique<DelayEngine>();
 
+	m_parameters = std::make_unique<parameters>(apvts);
+
 }
 
 Exodus_2AudioProcessor::~Exodus_2AudioProcessor()
@@ -159,33 +161,35 @@ static void test__Reverb(juce::AudioBuffer<float>& buffer, juce::dsp::Reverb& re
 void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
     m_delayEngine->setDelayEngineParameters({
-        apvts.getRawParameterValue("GNRL_DELAY_TIME")->load(),
-        apvts.getRawParameterValue("GNRL_FEEDBACK")->load(),
-        apvts.getRawParameterValue("GNRL_DRY_LEVEL")->load(),
-        apvts.getRawParameterValue("GNRL_WET_LEVEL")->load() });
+        m_parameters->delayTimeParam->get(),
+				m_parameters->delayFeedbackParam->get(),
+				m_parameters->delayDryLevelParam->get(),
+				m_parameters->delayWetLevelParam->get() });
 
     m_delayEngine->setDelayLineSettings(m_index, {
-        apvts.getRawParameterValue("GAIN_" + std::to_string(m_index))->load(),
-        apvts.getRawParameterValue("PAN_" + std::to_string(m_index))->load(),
-        apvts.getRawParameterValue("DISTORTION_MIX_" + std::to_string(m_index))->load(),
-        apvts.getRawParameterValue("REVERB_MIX_" + std::to_string(m_index))->load(),
-        apvts.getRawParameterValue("PHASER_MIX_" + std::to_string(m_index))->load()});
+        m_parameters->gainMixParam[m_index]->get(),
+        m_parameters->panMixParam[m_index]->get(),
+        m_parameters->distortionMixParam[m_index]->get(),
+        m_parameters->reverbMixParam[m_index]->get(),
+        m_parameters->phaserMixParam[m_index]->get() });
 
     m_delayEngine->setDistortionSettings(
-        apvts.getRawParameterValue("DISTORTION_TYPE")->load(),
-        apvts.getRawParameterValue("DISTORTION_DRIVE")->load(),
-        apvts.getRawParameterValue("DISTORTION_THRESHOLD")->load());
+        m_parameters->distortionTypeParam->get(),
+		m_parameters->distortionDriveParam->get(),
+		m_parameters->distortionThresholdParam->get());
 
 	m_delayEngine->setPhaserSettings(
-		apvts.getRawParameterValue("PHASER_TYPE")->load(),
-		apvts.getRawParameterValue("PHASER_RATE")->load(),
-		apvts.getRawParameterValue("PHASER_DEPTH")->load(),
-		apvts.getRawParameterValue("PHASER_FEEDBACK")->load());
+		m_parameters->phaserTypeParam->get(),
+		m_parameters->phaserRateParam->get(),
+		m_parameters->phaserDepthParam->get(),
+		m_parameters->phaserFeedbackParam->get(),
+		m_parameters->phaserMixParam[m_index]->get());
 
     m_delayEngine->setReverbSettings(
-        apvts.getRawParameterValue("REVERB_ROOM_SIZE")->load(),
-        apvts.getRawParameterValue("REVERB_DAMPING")->load(),
-		apvts.getRawParameterValue("REVERB_WIDTH")->load());
+		m_parameters->reverbRoomSizeParam->get(),
+		m_parameters->reverbDampingParam->get(),
+		m_parameters->reverbWidthParam->get(),
+		m_parameters->reverbMixParam[m_index]->get());
 
 
     juce::ScopedNoDenormals noDenormals;
@@ -193,14 +197,17 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
 	int numSamples = buffer.getNumSamples();
-	this->m_delayTimeInMs = m_delayEngine->getDelayEngineParameters().delayTimeInSec * 1000.0f;
 
-	float maxSample = 0.0f;
+
+	this->m_delayTimeInMs = m_delayEngine->getDelayEngineParameters().delayTimeInSec * 1000.0f;
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     {
         buffer.clear (i, 0, numSamples);
     }
+
+    if (numSamples == 0)
+        return;
 
 	//test__Phaser(buffer, m_delayEngine->d_phaser);
     //return;
@@ -210,9 +217,12 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
 	m_delayEngine->fillDelayBuffer(0, numSamples, buffer.getReadPointer(0));
     m_delayEngine->fillDelayBuffer(1, numSamples, buffer.getReadPointer(1));
+
 	m_delayEngine->fillFromDelayBuffer(0, buffer, numSamples);
     m_delayEngine->fillFromDelayBuffer(1, buffer, numSamples);
+
 	m_delayEngine->applyEffectsAndCopyToBuffer(buffer, numSamples, m_index);
+
 	m_delayEngine->feedbackDelay(0, numSamples);
     m_delayEngine->feedbackDelay(1, numSamples);
 

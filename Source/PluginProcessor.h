@@ -10,6 +10,7 @@
 
 #include <JuceHeader.h>
 #include "DelayEngine.h"
+#include "Parameters.h"
 
 //==============================================================================
 /**
@@ -71,6 +72,7 @@ private:
 
     juce::AudioProcessorValueTreeState::ParameterLayout creatParametersLayout();
 
+	std::unique_ptr<parameters> m_parameters;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Exodus_2AudioProcessor)

@@ -57,10 +57,11 @@ public:
 
 	void setDistortionSettings(const int type, const float drive, const float threshold);
 
-	void setPhaserSettings(const float type, const float rate, const float depth, const float feedback);
+	void setPhaserSettings(const float type, const float rate, const float depth, const float feedback, const float mix);
 
-	void setReverbSettings(const float roomSize, const float damping, const float width);
+	void setReverbSettings(const float roomSize, const float damping, const float width, const float mix);
 
+	juce::dsp::Reverb d_reverb;
 private:
 	juce::AudioBuffer<float> d_dryDelayBuffer;
 	juce::AudioBuffer<float> d_wetDelayBuffer;
@@ -83,8 +84,7 @@ private:
 	MyPhaser d_phaser;
 
 	juce::dsp::Reverb::Parameters reverbParams;
-	juce::dsp::Reverb d_reverb;
 
-	void applyDelayLineEffects(juce::AudioBuffer<float>& buffer, const int bufferLength, const int index);
+	void applyDelayLineEffects(juce::AudioBuffer<float>& wetBuffer, const int bufferLength, const int index);
 	float calculatePanMargin(const int channel, const float pan);
 };
