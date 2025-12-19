@@ -61,6 +61,10 @@ public:
 
 	void setReverbSettings(const float roomSize, const float damping, const float width, const float mix);
 
+	int getSamplesPerBlock() const { return d_samplesPerBlock; }
+	int getDelayBufferLength() const { return d_delayBufferLength; }
+	int getMaxNumberOfChannels() const { return d_maxNumberOfChannels; }
+
 	juce::dsp::Reverb d_reverb;
 private:
 	juce::AudioBuffer<float> d_dryDelayBuffer;
@@ -85,6 +89,6 @@ private:
 
 	juce::dsp::Reverb::Parameters reverbParams;
 
-	void applyDelayLineEffects(juce::AudioBuffer<float>& wetBuffer, const int bufferLength, const int index);
+	void applyDelayLineEffects(juce::AudioBuffer<float>& Buffer, const int bufferLength, const int index);
 	float calculatePanMargin(const int channel, const float pan);
 };

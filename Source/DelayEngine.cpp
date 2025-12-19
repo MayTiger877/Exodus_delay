@@ -126,7 +126,6 @@ void DelayEngine::fillDelayBuffer(const int channel, const int bufferLength, con
 void DelayEngine::fillFromDelayBuffer(const int channel, juce::AudioBuffer<float>& buffer, const int bufferLength)
 {
     const int readPosition = static_cast<int>(d_delayBufferLength + d_writePosition - (d_delayParameters.delayTimeInSec * d_sampleRate)) % d_delayBufferLength;
-    d_wetDelayBuffer.clear();
     const float* dryDelayBufferData = d_dryDelayBuffer.getReadPointer(channel);
     
     if (d_delayBufferLength > readPosition + bufferLength)
@@ -148,7 +147,7 @@ void DelayEngine::applyEffectsAndCopyToBuffer(juce::AudioBuffer<float>& buffer, 
     jassert(d_wetDelayBuffer.getNumSamples() >= bufferLength);
     jassert(d_wetDelayBuffer.getNumChannels() >= 2);
 
-    applyDelayLineEffects(d_wetDelayBuffer, buffer.getNumSamples(), index);
+    //applyDelayLineEffects(buffer, bufferLength, index);
 
     // apply dry level
     
@@ -212,22 +211,22 @@ float DelayEngine::calculatePanMargin(const int channel, const float pan)
     return 1;
 }
 
-void DelayEngine::applyDelayLineEffects(juce::AudioBuffer<float>& wetBuffer, const int bufferLength, const int index)
+void DelayEngine::applyDelayLineEffects(juce::AudioBuffer<float>& Buffer, const int bufferLength, const int index)
 {   
-    jassert(wetBuffer.getNumSamples() >= bufferLength);
+    jassert(d_wetDelayBuffer.getNumSamples() >= bufferLength);
 
 	DelayLineSettings currentSettings = d_delayLines[index];
 
     // apply gain and pan
     float calculatedPanGain = calculatePanMargin(0, currentSettings.pan);
-	wetBuffer.applyGain(0, 0, bufferLength, currentSettings.gain * calculatedPanGain);
+	Buffer.applyGain(0, 0, bufferLength, currentSettings.gain * calculatedPanGain);
     calculatedPanGain = calculatePanMargin(1, currentSettings.pan);
-    wetBuffer.applyGain(1, 0, bufferLength, currentSettings.gain * calculatedPanGain);
+    Buffer.applyGain(1, 0, bufferLength, currentSettings.gain * calculatedPanGain);
 
 	// apply distortion- mix is handled inside distortion class
 	d_distortion.setMix(currentSettings.distortionMix);
-	d_distortion.processBuffer(wetBuffer, 0);
-    d_distortion.processBuffer(wetBuffer, 1);
+	d_distortion.processBuffer(Buffer, 0);
+    d_distortion.processBuffer(Buffer, 1);
 
 	// apply phaser
     //juce::dsp::AudioBlock<float> block(buffer);
@@ -235,8 +234,9 @@ void DelayEngine::applyDelayLineEffects(juce::AudioBuffer<float>& wetBuffer, con
     //d_phaser.process(context);
 
 	// apply reverb
-    juce::dsp::AudioBlock<float> block_2(wetBuffer);
+    juce::dsp::AudioBlock<float> block_2(Buffer);
+	juce::dsp::AudioBlock<float> block_2_Sub = block_2.getSubBlock(0, bufferLength);
     juce::dsp::ProcessContextReplacing<float> context_2(block_2);
 
-    d_reverb.process(context_2);
+    //d_reverb.process(context_2);
 }

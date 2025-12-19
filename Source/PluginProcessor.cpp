@@ -196,8 +196,17 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-	int numSamples = buffer.getNumSamples();
-
+    const int numSamples = buffer.getNumSamples();
+    /*if (numSamples != m_delayEngine->getSamplesPerBlock())
+    {
+        m_logger.logMessage("Warning: Mismatch in expected block size. Expected: " +
+			std::to_string(m_delayEngine->getSamplesPerBlock()) + ", Received: " + std::to_string(numSamples));
+    }
+    
+    if (numSamples != m_delayEngine->getSamplesPerBlock())
+    {
+        this->m_logger.logMessage("processBlock: numSamples = " + std::to_string(numSamples));
+    }*/
 
 	this->m_delayTimeInMs = m_delayEngine->getDelayEngineParameters().delayTimeInSec * 1000.0f;
 
