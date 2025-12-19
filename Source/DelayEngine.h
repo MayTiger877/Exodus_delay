@@ -73,7 +73,7 @@ private:
 
 	double d_sampleRate = 44100;
 	int d_samplesPerBlock = 512;
-	int d_delayBufferLength = 0;
+	int d_delayBufferLength = 512;
 	int d_maxNumberOfChannels = 2;
 	
 	int d_writePosition = 0;
@@ -89,6 +89,6 @@ private:
 
 	juce::dsp::Reverb::Parameters reverbParams;
 
-	void applyDelayLineEffects(juce::AudioBuffer<float>& Buffer, const int bufferLength, const int index);
+	void applyDelayLineEffects(juce::AudioBuffer<float>& buffer, const int bufferLength, const int index);
 	float calculatePanMargin(const int channel, const float pan);
 };
