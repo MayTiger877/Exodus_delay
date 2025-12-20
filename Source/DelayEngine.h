@@ -77,7 +77,6 @@ private:
 	int d_maxNumberOfChannels = 2;
 	
 	int d_writePosition = 0;
-	int d_readPosition = 0;
 
 	DelayParameters d_delayParameters;
 

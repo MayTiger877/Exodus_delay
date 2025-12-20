@@ -109,7 +109,7 @@ void DelayEngine::setReverbSettings(const float roomSize, const float damping, c
 
 void DelayEngine::fillDelayBuffer(const int channel, const int bufferLength, const float* bufferData)
 {
-
+    d_wetDelayBuffer.clear(channel, 0, bufferLength);
     if (d_delayBufferLength > d_writePosition + bufferLength)
     {
         d_dryDelayBuffer.copyFromWithRamp(channel, d_writePosition, bufferData, bufferLength, 1.0f, 1.0f);
@@ -174,8 +174,6 @@ void DelayEngine::feedbackDelay(const int channel, const int bufferLength)
         d_dryDelayBuffer.addFromWithRamp(channel, d_writePosition, dryDelayBufferData, bufferRemaining,d_delayParameters.feedback, d_delayParameters.feedback);
         d_dryDelayBuffer.addFromWithRamp(channel, 0, (dryDelayBufferData + bufferRemaining), (bufferLength - bufferRemaining), d_delayParameters.feedback, d_delayParameters.feedback);
     }
-
-    d_wetDelayBuffer.clear();
 }
 
 
@@ -231,12 +229,13 @@ void DelayEngine::applyDelayLineEffects(juce::AudioBuffer<float>& buffer, const 
 
 	// apply phaser
     juce::dsp::AudioBlock<float> block(d_wetDelayBuffer);
-    juce::dsp::ProcessContextReplacing<float> context(block);    
+	juce::dsp::AudioBlock<float> block_Sub = block.getSubBlock(0, static_cast<size_t>(bufferLength));
+    juce::dsp::ProcessContextReplacing<float> context(block_Sub);
     d_phaser.process(context);
 
 	// apply reverb
     juce::dsp::AudioBlock<float> block_2(d_wetDelayBuffer);
-	juce::dsp::AudioBlock<float> block_2_Sub = block_2.getSubBlock(0, bufferLength);
-    juce::dsp::ProcessContextReplacing<float> context_2(block_2);
+    juce::dsp::AudioBlock<float> block_2_Sub = block_2.getSubBlock(0, static_cast<size_t>(bufferLength));
+    juce::dsp::ProcessContextReplacing<float> context_2(block_2_Sub);
     d_reverb.process(context_2);
 }
