@@ -38,6 +38,10 @@ class GainLAF : public TileSlider
     
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
         float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider) override;
+
+    void drawLinearSlider(juce::Graphics& g, int x, int y, int width, int height,
+        float sliderPos, float minSliderPos, float maxSliderPos,
+		const juce::Slider::SliderStyle style, juce::Slider& slider) override;
 };
 
 class PanLAF : public TileSlider
@@ -48,6 +52,10 @@ class PanLAF : public TileSlider
     
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
         float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider) override;
+
+    void drawLinearSlider(juce::Graphics& g, int x, int y, int width, int height,
+		float sliderPos, float minSliderPos, float maxSliderPos,
+		const juce::Slider::SliderStyle style, juce::Slider& slider) override;
 };
 
 class DistortionLAF : public TileSlider
@@ -58,6 +66,10 @@ public:
 
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
         float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider) override;
+
+    void drawLinearSlider(juce::Graphics& g, int x, int y, int width, int height,
+        float sliderPos, float minSliderPos, float maxSliderPos,
+        const juce::Slider::SliderStyle style, juce::Slider& slider) override;
 };
 
 class ReverbLAF : public TileSlider
@@ -68,6 +80,10 @@ public:
 
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
         float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider) override;
+
+    void drawLinearSlider(juce::Graphics& g, int x, int y, int width, int height,
+        float sliderPos, float minSliderPos, float maxSliderPos,
+        const juce::Slider::SliderStyle style, juce::Slider& slider) override;
 };
 
 
@@ -79,5 +95,9 @@ public:
 
     void drawRotarySlider(juce::Graphics& g, int x, int y, int width, int height, float sliderPos,
         float rotaryStartAngle, float rotaryEndAngle, juce::Slider& slider) override;
+
+    void drawLinearSlider(juce::Graphics& g, int x, int y, int width, int height,
+        float sliderPos, float minSliderPos, float maxSliderPos,
+        const juce::Slider::SliderStyle style, juce::Slider& slider) override;
 };
 

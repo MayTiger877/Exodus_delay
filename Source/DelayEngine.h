@@ -15,6 +15,15 @@
 #include "MyDistortion.h"
 #include "MyPhaser.h"
 
+typedef enum
+{
+	gainNumerator = 0,
+	panNumerator,
+	distortionNumerator,
+	reverbNumerator,
+	phaserNumerator
+}effectNumerator;
+
 struct DelayLineSettings
 {
 	float gain = 1.0f;
@@ -77,6 +86,8 @@ private:
 	int d_maxNumberOfChannels = 2;
 	
 	int d_writePosition = 0;
+
+	std::vector<int> d_effectsOrder = { gainNumerator, panNumerator, distortionNumerator, phaserNumerator, reverbNumerator };
 
 	DelayParameters d_delayParameters;
 

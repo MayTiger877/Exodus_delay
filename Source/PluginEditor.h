@@ -88,6 +88,7 @@ private:
 	distortionSettings m_distortionSettings;
 	phaserSettings m_phaserSettings;
 	reverbSettings m_reverbSettings;
+
 	void initiateEffectSettings();
 	
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Exodus_2AudioProcessorEditor)

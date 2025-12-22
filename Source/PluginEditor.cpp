@@ -90,7 +90,9 @@ void Exodus_2AudioProcessorEditor::initiateChannelStrips()
 		strip.gainSlider.setBounds(TILE_SLIDER_STARTING_X + i * TILE_SLIDER_GAP_X, GAIN_SLIDER_Y, TILE_SLIDER_BG_WIDTH, TILE_SLIDER_BG_HEIGHT);
 		strip.gainSlider.setValue(GAIN_SLIDER_DEFAULT_VALUE);
 		strip.gainSlider.setRange(GAIN_SLIDER_MIN_VALUE, GAIN_SLIDER_MAX_VALUE, GAIN_SLIDER_INTERVAL);
-        strip.gainSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+        strip.gainSlider.setSliderStyle(juce::Slider::LinearVertical);
+		strip.gainSlider.setSliderSnapsToMousePosition(true);
+		strip.gainSlider.setVelocityBasedMode(false);
 		strip.gainSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
 		strip.gainSlider.setLookAndFeel(&gainLAF);
         addAndMakeVisible(strip.gainSlider);
@@ -99,7 +101,9 @@ void Exodus_2AudioProcessorEditor::initiateChannelStrips()
 		strip.panSlider.setBounds(TILE_SLIDER_STARTING_X + i * TILE_SLIDER_GAP_X, PAN_SLIDER_Y, TILE_SLIDER_BG_WIDTH, TILE_SLIDER_BG_HEIGHT);
         strip.panSlider.setValue(PAN_SLIDER_DEFAULT_VALUE);
 		strip.panSlider.setRange(PAN_SLIDER_MIN_VALUE, PAN_SLIDER_MAX_VALUE, PAN_SLIDER_INTERVAL);
-		strip.panSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+		strip.panSlider.setSliderStyle(juce::Slider::LinearVertical);
+		strip.panSlider.setSliderSnapsToMousePosition(true);
+		strip.panSlider.setVelocityBasedMode(false);
         strip.panSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
 		strip.panSlider.setLookAndFeel(&panLAF);
         addAndMakeVisible(strip.panSlider);
@@ -108,7 +112,9 @@ void Exodus_2AudioProcessorEditor::initiateChannelStrips()
 		strip.distortionMixSlider.setBounds(TILE_SLIDER_STARTING_X + i * TILE_SLIDER_GAP_X, DISTORTION_MIX_SLIDER_Y, TILE_SLIDER_BG_WIDTH, TILE_SLIDER_BG_HEIGHT);
 		strip.distortionMixSlider.setValue(DISTORTION_MIX_SLIDER_DEFAULT_VALUE);
 		strip.distortionMixSlider.setRange(DISTORTION_MIX_SLIDER_MIN_VALUE, DISTORTION_MIX_SLIDER_MAX_VALUE, DISTORTION_MIX_SLIDER_INTERVAL);
-		strip.distortionMixSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+		strip.distortionMixSlider.setSliderStyle(juce::Slider::LinearVertical);
+		strip.distortionMixSlider.setSliderSnapsToMousePosition(true);
+		strip.distortionMixSlider.setVelocityBasedMode(false);
 		strip.distortionMixSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
 		strip.distortionMixSlider.setLookAndFeel(&distortionLAF);
 		addAndMakeVisible(strip.distortionMixSlider);
@@ -117,7 +123,9 @@ void Exodus_2AudioProcessorEditor::initiateChannelStrips()
 		strip.reverbMixSlider.setBounds(TILE_SLIDER_STARTING_X + i * TILE_SLIDER_GAP_X, REVERB_MIX_SLIDER_Y, TILE_SLIDER_BG_WIDTH, TILE_SLIDER_BG_HEIGHT);
 		strip.reverbMixSlider.setValue(REVERB_MIX_SLIDER_DEFAULT_VALUE);
 		strip.reverbMixSlider.setRange(REVERB_MIX_SLIDER_MIN_VALUE, REVERB_MIX_SLIDER_MAX_VALUE, REVERB_MIX_SLIDER_INTERVAL);
-		strip.reverbMixSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+		strip.reverbMixSlider.setSliderStyle(juce::Slider::LinearVertical);
+		strip.reverbMixSlider.setSliderSnapsToMousePosition(true);
+		strip.reverbMixSlider.setVelocityBasedMode(false);
 		strip.reverbMixSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
 		strip.reverbMixSlider.setLookAndFeel(&reverbLAF);
 		addAndMakeVisible(strip.reverbMixSlider);
@@ -126,7 +134,9 @@ void Exodus_2AudioProcessorEditor::initiateChannelStrips()
 		strip.phaserMixSlider.setBounds(TILE_SLIDER_STARTING_X + i * TILE_SLIDER_GAP_X, PHASER_MIX_SLIDER_Y, TILE_SLIDER_BG_WIDTH, TILE_SLIDER_BG_HEIGHT);
 		strip.phaserMixSlider.setValue(PHASER_MIX_SLIDER_DEFAULT_VALUE);
 		strip.phaserMixSlider.setRange(PHASER_MIX_SLIDER_MIN_VALUE, PHASER_MIX_SLIDER_MAX_VALUE, PHASER_MIX_SLIDER_INTERVAL);
-		strip.phaserMixSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+		strip.phaserMixSlider.setSliderStyle(juce::Slider::LinearVertical);
+		strip.phaserMixSlider.setSliderSnapsToMousePosition(true);
+		strip.phaserMixSlider.setVelocityBasedMode(false);
 		strip.phaserMixSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
 		strip.phaserMixSlider.setLookAndFeel(&phaserLAF);
 		addAndMakeVisible(strip.phaserMixSlider);
