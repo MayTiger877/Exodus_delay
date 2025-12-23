@@ -35,8 +35,8 @@ struct distortionSettings
 
 struct phaserSettings
 {
-	juce::Slider phaserRateSlider, phaserDepthSlider, phaserFeedbackSlider, phaserTypeSlider;
-	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> phaserRateAttachment, phaserDepthAttachment, phaserFeedbackAttachment, phaserTypeAttachment;
+	juce::Slider phaserRateSlider, phaserDepthSlider, phaserFreqSlider, phaserTypeSlider;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> phaserRateAttachment, phaserDepthAttachment, phaserFreqAttachment, phaserTypeAttachment;
 };
 
 struct reverbSettings

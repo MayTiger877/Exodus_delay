@@ -58,7 +58,7 @@ Exodus_2AudioProcessorEditor::~Exodus_2AudioProcessorEditor()
 	m_phaserSettings.phaserTypeSlider.setLookAndFeel(nullptr);
 	m_phaserSettings.phaserRateSlider.setLookAndFeel(nullptr);
 	m_phaserSettings.phaserDepthSlider.setLookAndFeel(nullptr);
-	m_phaserSettings.phaserFeedbackSlider.setLookAndFeel(nullptr);
+	m_phaserSettings.phaserFreqSlider.setLookAndFeel(nullptr);
 
 	m_reverbSettings.reverbRoomSizeSlider.setLookAndFeel(nullptr);
 	m_reverbSettings.reverbDampingSlider.setLookAndFeel(nullptr);
@@ -225,7 +225,7 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_phaserSettings.phaserTypeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "PHASER_TYPE", m_phaserSettings.phaserTypeSlider);
 
 	m_phaserSettings.phaserRateSlider.setValue(PHASER_RATE_SLIDER_DEFAULT_VALUE);
-	m_phaserSettings.phaserRateSlider.setRange(PHASER_RATE_SLIDER_MIN_VALUE, PHASER_RATE_SLIDER_MAX_VALUE, PHASER_RATE_SLIDER_INTERVAL);
+	m_phaserSettings.phaserRateSlider.setRange(PHASER_RATE_SLIDER_MIN_VALUE, PHASER_RATE_SLIDER_MAX_VALUE);
 	m_phaserSettings.phaserRateSlider.setBounds(PHASER_RATE_SLIDER_BOUNDS);
 	m_phaserSettings.phaserRateSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_phaserSettings.phaserRateSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
@@ -242,14 +242,14 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	addAndMakeVisible(m_phaserSettings.phaserDepthSlider);
 	m_phaserSettings.phaserDepthAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "PHASER_DEPTH", m_phaserSettings.phaserDepthSlider);
 
-	m_phaserSettings.phaserFeedbackSlider.setValue(PHASER_FEEDBACK_SLIDER_DEFAULT_VALUE);
-	m_phaserSettings.phaserFeedbackSlider.setRange(PHASER_FEEDBACK_SLIDER_MIN_VALUE, PHASER_FEEDBACK_SLIDER_MAX_VALUE, PHASER_FEEDBACK_SLIDER_INTERVAL);
-	m_phaserSettings.phaserFeedbackSlider.setBounds(PHASER_FEEDBACK_SLIDER_BOUNDS);
-	m_phaserSettings.phaserFeedbackSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
-	m_phaserSettings.phaserFeedbackSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
-	m_phaserSettings.phaserFeedbackSlider.setLookAndFeel(&costumeKnobLAF);
-	addAndMakeVisible(m_phaserSettings.phaserFeedbackSlider);
-	m_phaserSettings.phaserFeedbackAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "PHASER_FEEDBACK", m_phaserSettings.phaserFeedbackSlider);
+	m_phaserSettings.phaserFreqSlider.setValue(PHASER_FREQ_SLIDER_DEFAULT_VALUE);
+	m_phaserSettings.phaserFreqSlider.setRange(PHASER_FREQ_SLIDER_MIN_VALUE, PHASER_FREQ_SLIDER_MAX_VALUE);
+	m_phaserSettings.phaserFreqSlider.setBounds(PHASER_FREQ_SLIDER_BOUNDS);
+	m_phaserSettings.phaserFreqSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
+	m_phaserSettings.phaserFreqSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
+	m_phaserSettings.phaserFreqSlider.setLookAndFeel(&costumeKnobLAF);
+	addAndMakeVisible(m_phaserSettings.phaserFreqSlider);
+	m_phaserSettings.phaserFreqAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "PHASER_FREQ", m_phaserSettings.phaserFreqSlider);
 
 	// Reverb Settings
 	m_reverbSettings.reverbRoomSizeSlider.setValue(REVERB_ROOM_SIZE_SLIDER_DEFAULT_VALUE);

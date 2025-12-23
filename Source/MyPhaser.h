@@ -50,7 +50,7 @@ private:
     int updateCounter = 0;
     static constexpr int my_maxUpdateCounter = 4;
 
-    float rate = 1.0, depth = 0.5, feedback = 0.0, mix = 0.5;
+    float rate = 1.0, depth = 0.5, feedback = 0.6, mix = 0.5;
     float centreFrequency = 1300.0;
     static constexpr int numStages = 6;
 };

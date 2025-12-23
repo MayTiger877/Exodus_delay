@@ -85,14 +85,13 @@ void DelayEngine::setDistortionSettings(const int type, const float drive, const
 	d_distortion.setThreshold(threshold); // You can parameterize threshold as needed
 }
 
-void DelayEngine::setPhaserSettings(const float type, const float rate, const float depth, const float feedback, const float mix)
+void DelayEngine::setPhaserSettings(const float type, const float rate, const float depth, const float frequency, const float mix)
 {
     d_phaser.setLFOType(static_cast<int>(type));
     d_phaser.setRate(rate);
     d_phaser.setDepth(depth);
-    d_phaser.setFeedback(feedback);
+    d_phaser.setCentreFrequency(frequency);
 	d_phaser.setMix(mix);
-	d_phaser.setCentreFrequency(1000.0f); // You can parameterize centre frequency as needed TODO: add this parameter
 }
 
 void DelayEngine::setReverbSettings(const float roomSize, const float damping, const float width, const float mix)
@@ -237,5 +236,5 @@ void DelayEngine::applyDelayLineEffects(juce::AudioBuffer<float>& buffer, const 
     juce::dsp::AudioBlock<float> block_2(d_wetDelayBuffer);
     juce::dsp::AudioBlock<float> block_2_Sub = block_2.getSubBlock(0, static_cast<size_t>(bufferLength));
     juce::dsp::ProcessContextReplacing<float> context_2(block_2_Sub);
-    d_reverb.process(context_2);
+    //d_reverb.process(context_2);
 }

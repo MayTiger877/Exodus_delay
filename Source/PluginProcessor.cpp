@@ -182,7 +182,7 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 		m_parameters->phaserTypeParam->get(),
 		m_parameters->phaserRateParam->get(),
 		m_parameters->phaserDepthParam->get(),
-		m_parameters->phaserFeedbackParam->get(),
+		m_parameters->phaserFreqParam->get(),
 		m_parameters->phaserMixParam[m_index]->get());
 
     m_delayEngine->setReverbSettings(
@@ -307,14 +307,16 @@ juce::AudioProcessorValueTreeState::ParameterLayout Exodus_2AudioProcessor::crea
 	layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_TYPE", "Phaser Type",
 		juce::NormalisableRange<float>(PHASER_TYPE_SLIDER_MIN_VALUE, PHASER_TYPE_SLIDER_MAX_VALUE, PHASER_TYPE_SLIDER_INTERVAL), PHASER_TYPE_SLIDER_DEFAULT_VALUE));
     
-    layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_RATE", "Phaser Rate",
-        juce::NormalisableRange<float>(PHASER_RATE_SLIDER_MIN_VALUE, PHASER_RATE_SLIDER_MAX_VALUE, PHASER_RATE_SLIDER_INTERVAL), PHASER_RATE_SLIDER_DEFAULT_VALUE));
+    juce::NormalisableRange<float> phaserRateNR(PHASER_RATE_SLIDER_MIN_VALUE, PHASER_RATE_SLIDER_MAX_VALUE);
+    phaserRateNR.setSkewForCentre(PHASER_RATE_SLIDER_SKEW_MID_POINT);
+    layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_RATE", "Phaser Rate", phaserRateNR, PHASER_RATE_SLIDER_DEFAULT_VALUE));
 
     layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_DEPTH", "Phaser Depth",
 		juce::NormalisableRange<float>(PHASER_DEPTH_SLIDER_MIN_VALUE, PHASER_DEPTH_SLIDER_MAX_VALUE, PHASER_DEPTH_SLIDER_INTERVAL), PHASER_DEPTH_SLIDER_DEFAULT_VALUE));
 
-	layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_FEEDBACK", "Phaser Feedback",
-		juce::NormalisableRange<float>(PHASER_FEEDBACK_SLIDER_MIN_VALUE, PHASER_FEEDBACK_SLIDER_MAX_VALUE, PHASER_FEEDBACK_SLIDER_INTERVAL), PHASER_FEEDBACK_SLIDER_DEFAULT_VALUE));
+	juce::NormalisableRange<float> phaserFreqNR(PHASER_FREQ_SLIDER_MIN_VALUE, PHASER_FREQ_SLIDER_MAX_VALUE);
+	phaserFreqNR.setSkewForCentre(PHASER_FREQ_SLIDER_SKEW_MID_POINT);
+    layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_FREQ", "Phaser Freq", phaserFreqNR, PHASER_FREQ_SLIDER_DEFAULT_VALUE));
 
 	layout.add(std::make_unique<juce::AudioParameterFloat>("REVERB_ROOM_SIZE", "Reverb Room Size",
 		juce::NormalisableRange<float>(REVERB_ROOM_SIZE_SLIDER_MIN_VALUE, REVERB_ROOM_SIZE_SLIDER_MAX_VALUE, REVERB_ROOM_SIZE_SLIDER_INTERVAL), REVERB_ROOM_SIZE_SLIDER_DEFAULT_VALUE));

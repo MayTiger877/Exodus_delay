@@ -34,8 +34,8 @@ inline const juce::String phaserRateParamID = "PHASER_RATE";
 inline const juce::String phaserRateParamName = "PHASER_RATE_NAME";
 inline const juce::String phaserDepthParamID = "PHASER_DEPTH";
 inline const juce::String phaserDepthParamName = "PHASER_DEPTH_NAME";
-inline const juce::String phaserFeedbackParamID = "PHASER_FEEDBACK";
-inline const juce::String phaserFeedbackParamName = "PHASER_FEEDBACK_NAME";
+inline const juce::String phaserFreqParamID = "PHASER_FREQ";
+inline const juce::String phaserFreqParamName = "PHASER_FREQ_NAME";
 
 inline const juce::String reverbRoomSizeParamID = "REVERB_ROOM_SIZE";
 inline const juce::String reverbRoomSizeParamName = "REVERB_ROOM_SIZE_NAME";
@@ -95,7 +95,7 @@ struct parameters
 		phaserTypeParam = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(phaserTypeParamID));
 		phaserRateParam = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(phaserRateParamID));
 		phaserDepthParam = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(phaserDepthParamID));
-		phaserFeedbackParam = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(phaserFeedbackParamID));
+		phaserFreqParam = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(phaserFreqParamID));
 
 		reverbRoomSizeParam = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(reverbRoomSizeParamID));
 		reverbDampingParam = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(reverbDampingParamID));
@@ -123,7 +123,7 @@ struct parameters
 	juce::AudioParameterFloat* phaserTypeParam{ nullptr };
 	juce::AudioParameterFloat* phaserRateParam{ nullptr };
 	juce::AudioParameterFloat* phaserDepthParam{ nullptr };
-	juce::AudioParameterFloat* phaserFeedbackParam{ nullptr };
+	juce::AudioParameterFloat* phaserFreqParam{ nullptr };
 
 	juce::AudioParameterFloat* reverbRoomSizeParam{ nullptr };
 	juce::AudioParameterFloat* reverbDampingParam{ nullptr };

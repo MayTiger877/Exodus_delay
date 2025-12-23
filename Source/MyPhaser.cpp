@@ -99,6 +99,7 @@ void MyPhaser::setLFOType(int newLFOType)
 
 void MyPhaser::setCentreFrequency(float newCentreHz)
 {
+    //newCentreHz = juce::jmap(newCentreHz, static_cast<float> (0.0), static_cast<float> (1.0), static_cast<float> (600.0), static_cast<float> (6000.0));
     jassert(juce::isPositiveAndBelow(newCentreHz, static_cast<float> (sampleRate * 0.5)));
 
     centreFrequency = newCentreHz;
