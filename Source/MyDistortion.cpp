@@ -37,28 +37,40 @@ void MyDistortion::setThreshold(float newThreshold)
 
 void MyDistortion::processBuffer(juce::AudioBuffer<float>& buffer, int channel)
 {
+	jassert(channel >= 0 && channel < buffer.getNumChannels());
+	jassert(dist_drive > 0.0f);
+
 	float* channelData = buffer.getWritePointer(channel);
 	for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
 	{
-		float inputSample = channelData[sample];
+		float inputSample = channelData[sample] * dist_drive;
 		float distortedSample = 0.0f;
 		int distTypeInt = static_cast<int>(dist_type);
 		switch (distTypeInt)
 		{
 		case distType_SoftClip:
-			distortedSample = std::tanh(dist_drive * inputSample);
+			distortedSample = std::tanh(inputSample);
 			break;
 		case distType_HardClip:
-			distortedSample = juce::jlimit(0 - dist_threshold, dist_threshold, inputSample * dist_drive);
+			distortedSample = juce::jlimit(0 - dist_threshold, dist_threshold, inputSample);
 			break;
 		case distType_Exponential:
-			distortedSample = (inputSample >= 0.0f) ? (1.0f - std::exp(dist_drive * inputSample)) : (-1.0f + std::exp(dist_drive * inputSample));
+			distortedSample = (inputSample >= 0.0f) ? (1.0f - std::exp(inputSample)) : (-1.0f + std::exp(inputSample));
 			break;
+		case distType_Foldback:
+		{
+			if ((inputSample > dist_threshold) || (inputSample < -dist_threshold))
+				distortedSample = fabs(fabs(fmod(inputSample - dist_threshold, dist_threshold * 4)) - dist_threshold * 2) - dist_threshold;
+			else
+				distortedSample = inputSample;
+			break;
+		}
 		default:
 			distortedSample = inputSample;
 			break;
 		}
 			
+		distortedSample = distortedSample / dist_drive;
 		channelData[sample] = (1.0f - dist_mix) * inputSample + dist_mix * distortedSample;
 	}
 }
