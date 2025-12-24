@@ -42,13 +42,13 @@
 #define PAN_SLIDER_INTERVAL 0.2f
 
 #define DISTORTION_MIX_SLIDER_Y 208
-#define DISTORTION_MIX_SLIDER_DEFAULT_VALUE 0.0f
+#define DISTORTION_MIX_SLIDER_DEFAULT_VALUE 1.0f
 #define DISTORTION_MIX_SLIDER_MIN_VALUE 0.0f
 #define DISTORTION_MIX_SLIDER_MAX_VALUE 1.0f
 #define DISTORTION_MIX_SLIDER_INTERVAL 0.1f
 
 #define PHASER_MIX_SLIDER_Y 278
-#define PHASER_MIX_SLIDER_DEFAULT_VALUE 1.0f
+#define PHASER_MIX_SLIDER_DEFAULT_VALUE 0.0f
 #define PHASER_MIX_SLIDER_MIN_VALUE 0.0f
 #define PHASER_MIX_SLIDER_MAX_VALUE 1.0f
 #define PHASER_MIX_SLIDER_INTERVAL 0.1f
@@ -93,7 +93,7 @@ typedef enum
     distType_SoftClip = 0,
     distType_HardClip = 1,
     distType_Exponential = 2,
-    distType_Tube = 3,
+    distType_Foldback = 3,
     distType_numberOfTypes = 4
 }DistortionType;
 

@@ -236,5 +236,5 @@ void DelayEngine::applyDelayLineEffects(juce::AudioBuffer<float>& buffer, const 
     juce::dsp::AudioBlock<float> block_2(d_wetDelayBuffer);
     juce::dsp::AudioBlock<float> block_2_Sub = block_2.getSubBlock(0, static_cast<size_t>(bufferLength));
     juce::dsp::ProcessContextReplacing<float> context_2(block_2_Sub);
-    //d_reverb.process(context_2);
+    d_reverb.process(context_2);
 }
