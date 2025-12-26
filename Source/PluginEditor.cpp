@@ -90,8 +90,15 @@ void Exodus_2AudioProcessorEditor::initiateChannelStrips()
 		strip.gainSlider.setBounds(TILE_SLIDER_STARTING_X + i * TILE_SLIDER_GAP_X, GAIN_SLIDER_Y, TILE_SLIDER_BG_WIDTH, TILE_SLIDER_BG_HEIGHT);
 		strip.gainSlider.setValue(GAIN_SLIDER_DEFAULT_VALUE);
 		strip.gainSlider.setRange(GAIN_SLIDER_MIN_VALUE, GAIN_SLIDER_MAX_VALUE, GAIN_SLIDER_INTERVAL);
+		strip.gainSlider.setName("GAIN_" + std::to_string(i));
         strip.gainSlider.setSliderStyle(juce::Slider::LinearVertical);
-		strip.gainSlider.setSliderSnapsToMousePosition(true);
+		strip.gainSlider.setSliderSnapsToMousePosition(false);
+		strip.gainSlider.setVelocityBasedMode(false);
+		strip.gainSlider.setScrollWheelEnabled(false);
+		strip.gainSlider.setInterceptsMouseClicks(true, false);
+
+		//strip.gainSlider.setSliderSnapsToMousePosition(true);
+		strip.gainSlider.addMouseListener(this, false);
 		strip.gainSlider.setVelocityBasedMode(false);
 		strip.gainSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
 		strip.gainSlider.setLookAndFeel(&gainLAF);
@@ -324,4 +331,94 @@ void Exodus_2AudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
+}
+
+
+void Exodus_2AudioProcessorEditor::mouseDown(const juce::MouseEvent& e)
+{
+	if (auto* slider = dynamic_cast<juce::Slider*>(e.eventComponent))
+	{
+		int mouseYPos = e.getMouseDownScreenPosition().getY() - this->getScreenBounds().getY();
+		if ((mouseYPos > GAIN_SLIDER_Y) && (mouseYPos < GAIN_SLIDER_Y + TILE_SLIDER_BG_HEIGHT))
+		{
+			activeSliderType = 0; // gain
+		}
+		else if ((mouseYPos > PAN_SLIDER_Y) && (mouseYPos < PAN_SLIDER_Y + TILE_SLIDER_BG_HEIGHT))
+		{
+			activeSliderType = 1; // pan
+		}
+		else if ((mouseYPos > DISTORTION_MIX_SLIDER_Y) && (mouseYPos < DISTORTION_MIX_SLIDER_Y + TILE_SLIDER_BG_HEIGHT))
+		{
+			activeSliderType = 2; // distortion mix
+		}
+		else if ((mouseYPos > REVERB_MIX_SLIDER_Y) && (mouseYPos < REVERB_MIX_SLIDER_Y + TILE_SLIDER_BG_HEIGHT))
+		{
+			activeSliderType = 3; // reverb mix
+		}
+		else if ((mouseYPos > PHASER_MIX_SLIDER_Y) && (mouseYPos < PHASER_MIX_SLIDER_Y + TILE_SLIDER_BG_HEIGHT))
+		{
+			activeSliderType = 4; // phaser mix
+		}
+		else
+		{
+			activeSliderType = -1;
+			return;
+		}	
+			
+		activeSlider = slider;
+		dragStartValue = slider->getValue();
+
+		//if (auto* param = audioProcessor.apvts.getParameter(slider->getName()))
+			//param->beginChangeGesture();
+	}
+}
+
+
+void Exodus_2AudioProcessorEditor::mouseDrag(const juce::MouseEvent& e)
+{
+	if (!activeSlider)
+		return;
+
+	const auto editorPos = e.getEventRelativeTo(this).position.toInt();
+	const auto sliderPos = activeSlider->getBounds();
+	if ((editorPos.getX() < activeSlider->getX()) && (editorPos.getX() > TILE_SLIDER_STARTING_X))
+	{
+		//if (auto* param = audioProcessor.apvts.getParameter(activeSlider->getName()))
+			//param->endChangeGesture();
+
+		dragStartValue = activeSlider->getValue();
+		int newSliderIndex = ((activeSlider->getX() - TILE_SLIDER_STARTING_X) / TILE_SLIDER_GAP_X) - 1;
+		activeSlider = &m_channelStrips[newSliderIndex].gainSlider;
+
+		//if (auto* param = audioProcessor.apvts.getParameter(activeSlider->getName()))
+			//param->beginChangeGesture();
+	}
+	else if ((editorPos.getX() > activeSlider->getRight()) && (editorPos.getX() < TILDE_SLIDER_ENDING_X))
+	{
+		//if (auto* param = audioProcessor.apvts.getParameter(activeSlider->getName()))
+			//param->endChangeGesture();
+
+		dragStartValue = activeSlider->getValue();
+		int newSliderIndex = ((activeSlider->getX() - TILE_SLIDER_STARTING_X) / TILE_SLIDER_GAP_X) + 1;
+		activeSlider = &m_channelStrips[newSliderIndex].gainSlider;
+
+		//if (auto* param = audioProcessor.apvts.getParameter(activeSlider->getName()))
+			//param->beginChangeGesture();
+	}
+
+	const double YToValue = 1.0 - (static_cast<double>(e.getPosition().getY()) / TILE_SLIDER_BG_HEIGHT);
+	const double newValue = juce::jlimit(activeSlider->getMinimum(), activeSlider->getMaximum(), YToValue);
+	activeSlider->setValue(newValue, juce::sendNotificationSync);
+}
+
+
+void Exodus_2AudioProcessorEditor::mouseUp(const juce::MouseEvent&)
+{
+	if (!activeSlider)
+		return;
+
+	//if (auto* param = audioProcessor.apvts.getParameter(activeSlider->getName()))
+		//param->endChangeGesture();
+
+	activeSlider = nullptr;
 }

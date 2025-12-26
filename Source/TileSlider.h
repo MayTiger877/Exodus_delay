@@ -13,6 +13,68 @@
 #include <JuceHeader.h>
 #include "Configs.h"
 
+
+//class MouseDrivenSlider : public juce::Slider
+//{
+//public:
+//    MouseDrivenSlider()
+//    {
+//        setSliderSnapsToMousePosition(false);
+//        setVelocityBasedMode(false);
+//    }
+//
+//    void mouseDown(const juce::MouseEvent& e) override
+//    {
+//        isDragging = true;
+//        startValue = getValue();
+//        previewValue = startValue;
+//
+//        if (onGestureStart)
+//            onGestureStart();
+//    }
+//
+//    void mouseDrag(const juce::MouseEvent& e) override
+//    {
+//        const float proportion =
+//            1.0f - (float)e.position.y / (float)getHeight();
+//
+//        previewValue = juce::jlimit(
+//            getMinimum(),
+//            getMaximum(),
+//            getMinimum() + proportion * (getMaximum() - getMinimum()));
+//
+//        repaint(); // preview only
+//    }
+//
+//    void mouseUp(const juce::MouseEvent&) override
+//    {
+//        isDragging = false;
+//
+//        setValue(previewValue, juce::sendNotificationSync);
+//
+//        if (onGestureEnd)
+//            onGestureEnd();
+//
+//        repaint();
+//    }
+//
+//    bool isPreviewing() const { return isDragging; }
+//    double getPreviewValue() const { return previewValue; }
+//
+//    std::function<void()> onGestureStart;
+//    std::function<void()> onGestureEnd;
+//
+//private:
+//    bool isDragging = false;
+//    double previewValue = 0.0;
+//    double startValue = 0.0;
+//};
+//
+
+//*****************************************************************************************************
+//*****************************************************************************************************
+
+
 class TileSlider : public juce::LookAndFeel_V4
 {
 public:

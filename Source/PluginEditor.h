@@ -45,7 +45,9 @@ struct reverbSettings
 	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> reverbRoomSizeAttachment, reverbDampingAttachment, reverbWidthAttachment;
 };
 
-class Exodus_2AudioProcessorEditor : public juce::AudioProcessorEditor, public juce::Timer
+class Exodus_2AudioProcessorEditor : public juce::AudioProcessorEditor,
+									 public juce::Timer,
+									 public juce::MouseListener
 {
 public:
     Exodus_2AudioProcessorEditor (Exodus_2AudioProcessor&);
@@ -56,6 +58,10 @@ public:
     void resized() override;
 
 	void timerCallback() override;
+
+	void mouseDown(const juce::MouseEvent& event) override;
+	void mouseDrag(const juce::MouseEvent& event) override;
+	void mouseUp(const juce::MouseEvent& event) override;
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -68,6 +74,9 @@ private:
     std::unique_ptr<juce::Drawable> backgroundDrawable, backgroundTextureDrawable, leftPanelWoodDrawable, rightPanelWoodDrawable, ventDrawable;
 
 	channelStrip m_channelStrips[16];
+	juce::Slider* activeSlider = nullptr;
+	int activeSliderType = -1; // 0: gain, 1: pan, 2: distortion mix, 3: reverb mix, 4: phaser mix
+	double dragStartValue = 0.0;
 	void initiateChannelStrips();
 
 	//general settings
