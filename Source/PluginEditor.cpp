@@ -95,7 +95,7 @@ void Exodus_2AudioProcessorEditor::initiateChannelStrips()
 		strip.gainSlider.setInterceptsMouseClicks(false, false);
 		strip.gainSlider.setSliderSnapsToMousePosition(false);
 		strip.gainSlider.setVelocityBasedMode(false);
-		strip.gainSlider.setScrollWheelEnabled(true);
+		strip.gainSlider.setScrollWheelEnabled(false);
 		strip.gainSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
 		strip.gainSlider.setLookAndFeel(&gainLAF);
         addAndMakeVisible(strip.gainSlider);
@@ -108,7 +108,7 @@ void Exodus_2AudioProcessorEditor::initiateChannelStrips()
 		strip.panSlider.setInterceptsMouseClicks(false, false);
 		strip.panSlider.setSliderSnapsToMousePosition(false);
 		strip.panSlider.setVelocityBasedMode(false);
-		strip.panSlider.setScrollWheelEnabled(true);
+		strip.panSlider.setScrollWheelEnabled(false);
         strip.panSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
 		strip.panSlider.setLookAndFeel(&panLAF);
         addAndMakeVisible(strip.panSlider);
@@ -121,7 +121,7 @@ void Exodus_2AudioProcessorEditor::initiateChannelStrips()
 		strip.distortionMixSlider.setInterceptsMouseClicks(false, false);
 		strip.distortionMixSlider.setSliderSnapsToMousePosition(false);
 		strip.distortionMixSlider.setVelocityBasedMode(false);
-		strip.distortionMixSlider.setScrollWheelEnabled(true);
+		strip.distortionMixSlider.setScrollWheelEnabled(false);
 		strip.distortionMixSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
 		strip.distortionMixSlider.setLookAndFeel(&distortionLAF);
 		addAndMakeVisible(strip.distortionMixSlider);
@@ -134,7 +134,7 @@ void Exodus_2AudioProcessorEditor::initiateChannelStrips()
 		strip.reverbMixSlider.setInterceptsMouseClicks(false, false);
 		strip.reverbMixSlider.setSliderSnapsToMousePosition(false);
 		strip.reverbMixSlider.setVelocityBasedMode(false);
-		strip.reverbMixSlider.setScrollWheelEnabled(true);
+		strip.reverbMixSlider.setScrollWheelEnabled(false);
 		strip.reverbMixSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
 		strip.reverbMixSlider.setLookAndFeel(&reverbLAF);
 		addAndMakeVisible(strip.reverbMixSlider);
@@ -147,7 +147,7 @@ void Exodus_2AudioProcessorEditor::initiateChannelStrips()
 		strip.phaserMixSlider.setInterceptsMouseClicks(false, false);
 		strip.phaserMixSlider.setSliderSnapsToMousePosition(false);
 		strip.phaserMixSlider.setVelocityBasedMode(false);
-		strip.phaserMixSlider.setScrollWheelEnabled(true);
+		strip.phaserMixSlider.setScrollWheelEnabled(false);
 		strip.phaserMixSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 0, 0);
 		strip.phaserMixSlider.setLookAndFeel(&phaserLAF);
 		addAndMakeVisible(strip.phaserMixSlider);
@@ -337,6 +337,7 @@ void Exodus_2AudioProcessorEditor::resized()
     // subcomponents in your editor..
 }
 
+//----------------------------------------------------------------------------------------------------------------
 
 void Exodus_2AudioProcessorEditor::tileMouseDown(const juce::MouseEvent& e)
 {
@@ -383,7 +384,7 @@ void Exodus_2AudioProcessorEditor::tileMouseDown(const juce::MouseEvent& e)
 	{
 		tile_activeSliderType = -1;
 		return;
-	}	
+	}
 
 	const double YToValue = 1.0 - ((static_cast<double>(mouseYPos) - tile_relativeYPos) / TILE_SLIDER_BG_HEIGHT);
 	const double newValue = juce::jlimit(tile_activeSlider->getMinimum(), tile_activeSlider->getMaximum(), YToValue);
@@ -465,6 +466,57 @@ void Exodus_2AudioProcessorEditor::tileMouseUp(const juce::MouseEvent&)
 }
 
 
+void Exodus_2AudioProcessorEditor::tileMouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& wheel)
+{
+	if (wheel.isInertial)
+		return;
+
+	const auto mouseXPos = e.position.toInt().getX();
+	if ((mouseXPos < TILE_SLIDER_STARTING_X) || (mouseXPos > TILE_SLIDER_ENDING_X))
+	{
+		return;
+	}
+
+	const int sliderIndex = (mouseXPos - TILE_SLIDER_STARTING_X) / TILE_SLIDER_GAP_X;
+	const int mouseYPos = e.getMouseDownPosition().getY();
+	if ((mouseYPos > GAIN_SLIDER_Y) && (mouseYPos < GAIN_SLIDER_Y + TILE_SLIDER_BG_HEIGHT))
+	{
+		tile_relativeYPos = GAIN_SLIDER_Y;
+		tile_activeSlider = &m_channelStrips[sliderIndex].gainSlider;
+	}
+	else if ((mouseYPos > PAN_SLIDER_Y) && (mouseYPos < PAN_SLIDER_Y + TILE_SLIDER_BG_HEIGHT))
+	{
+		tile_relativeYPos = PAN_SLIDER_Y;
+		tile_activeSlider = &m_channelStrips[sliderIndex].panSlider;
+	}
+	else if ((mouseYPos > DISTORTION_MIX_SLIDER_Y) && (mouseYPos < DISTORTION_MIX_SLIDER_Y + TILE_SLIDER_BG_HEIGHT))
+	{
+		tile_relativeYPos = DISTORTION_MIX_SLIDER_Y;
+		tile_activeSlider = &m_channelStrips[sliderIndex].distortionMixSlider;
+	}
+	else if ((mouseYPos > REVERB_MIX_SLIDER_Y) && (mouseYPos < REVERB_MIX_SLIDER_Y + TILE_SLIDER_BG_HEIGHT))
+	{
+		tile_relativeYPos = REVERB_MIX_SLIDER_Y;
+		tile_activeSlider = &m_channelStrips[sliderIndex].reverbMixSlider;
+	}
+	else if ((mouseYPos > PHASER_MIX_SLIDER_Y) && (mouseYPos < PHASER_MIX_SLIDER_Y + TILE_SLIDER_BG_HEIGHT))
+	{
+		tile_relativeYPos = PHASER_MIX_SLIDER_Y;
+		tile_activeSlider = &m_channelStrips[sliderIndex].phaserMixSlider;
+	}
+	else
+	{
+		return;
+	}
+
+	const double newValue = juce::jlimit(tile_activeSlider->getMinimum(), tile_activeSlider->getMaximum(), tile_activeSlider->getValue() + wheel.deltaY);
+	tile_activeSlider->setValue(newValue, juce::sendNotificationSync);
+
+	tile_activeSlider = nullptr;
+}
+
+//----------------------------------------------------------------------------------------------------------------
+
 void Exodus_2AudioProcessorEditor::mouseDown(const juce::MouseEvent& e)
 {
 	tileMouseDown(e);
@@ -478,4 +530,9 @@ void Exodus_2AudioProcessorEditor::mouseDrag(const juce::MouseEvent& e)
 void Exodus_2AudioProcessorEditor::mouseUp(const juce::MouseEvent& e)
 {
 	tileMouseUp(e);
+}
+
+void Exodus_2AudioProcessorEditor::mouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& wheel)
+{
+	tileMouseWheelMove(e, wheel);
 }

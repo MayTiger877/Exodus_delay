@@ -62,6 +62,8 @@ public:
 	void mouseDown(const juce::MouseEvent& event) override;
 	void mouseDrag(const juce::MouseEvent& event) override;
 	void mouseUp(const juce::MouseEvent& event) override;
+	void mouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& wheel) override;
+
 
 private:
     // This reference is provided as a quick way for your editor to
@@ -81,6 +83,7 @@ private:
 	void tileMouseDown(const juce::MouseEvent& event);
 	void tileMouseDrag(const juce::MouseEvent& event);
 	void tileMouseUp(const juce::MouseEvent& event);
+	void tileMouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& wheel);
 
 
 	//general settings
