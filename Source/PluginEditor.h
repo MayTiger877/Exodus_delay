@@ -74,10 +74,14 @@ private:
     std::unique_ptr<juce::Drawable> backgroundDrawable, backgroundTextureDrawable, leftPanelWoodDrawable, rightPanelWoodDrawable, ventDrawable;
 
 	channelStrip m_channelStrips[16];
-	juce::Slider* activeSlider = nullptr;
-	int activeSliderType = -1; // 0: gain, 1: pan, 2: distortion mix, 3: reverb mix, 4: phaser mix
-	double dragStartValue = 0.0;
+	juce::Slider* tile_activeSlider = nullptr;
+	int tile_activeSliderType = -1; // 0: gain, 1: pan, 2: distortion mix, 3: reverb mix, 4: phaser mix
+	double tile_relativeYPos = 0.0;
 	void initiateChannelStrips();
+	void tileMouseDown(const juce::MouseEvent& event);
+	void tileMouseDrag(const juce::MouseEvent& event);
+	void tileMouseUp(const juce::MouseEvent& event);
+
 
 	//general settings
 	juce::Slider m_delayTimeSlider, m_feedbackSlider, m_dryLevelSlider, m_wetLevelSlider;
