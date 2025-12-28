@@ -160,6 +160,26 @@ static void test__Reverb(juce::AudioBuffer<float>& buffer, juce::dsp::Reverb& re
 
 void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
+    juce::Optional<juce::AudioPlayHead::PositionInfo> newPositionInfo;
+    if (auto* playhead = getPlayHead())
+    {
+        newPositionInfo = playhead->getPosition();
+        if (newPositionInfo.hasValue())
+        {
+            auto bpm = newPositionInfo->getBpm();
+            m_bpm.set(bpm.hasValue() ? (*bpm) : DEFAULT_BPM);
+
+            auto timeSig = newPositionInfo->getTimeSignature();
+            if (timeSig.hasValue())
+            {
+                auto ts = m_timeSignature.get();
+                ts.numerator = (*timeSig).numerator;
+                ts.denominator = (*timeSig).denominator;
+                m_timeSignature.set(ts);
+            }
+        }
+    }
+
     m_delayEngine->setDelayEngineParameters({
         m_parameters->delayTimeParam->get(),
 				m_parameters->delayFeedbackParam->get(),
@@ -259,6 +279,11 @@ void Exodus_2AudioProcessor::setStateInformation (const void* data, int sizeInBy
 juce::AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new Exodus_2AudioProcessor();
+}
+
+double Exodus_2AudioProcessor::getBPM() const
+{
+    return m_bpm.get();
 }
 
 // Parameter Layout

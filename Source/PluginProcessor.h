@@ -59,12 +59,17 @@ public:
 
     //----------------------
 
+    double getBPM() const;
+
 	DelayEngine* getDelayEngine() const { return m_delayEngine.get(); }
 	void setIndex(int index) { m_index = index; }
 	const float getDelayTimeInMs() const { return m_delayTimeInMs; }
 
 private:
 	
+    juce::Atomic<double> m_bpm{ DEFAULT_BPM };
+    juce::Atomic<juce::AudioPlayHead::TimeSignature> m_timeSignature;
+
     std::unique_ptr<DelayEngine> m_delayEngine;
 
 	int m_index = 0;

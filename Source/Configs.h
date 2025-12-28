@@ -17,6 +17,8 @@
 
 #define FPS 60
 
+#define DEFAULT_BPM 120.0
+
 // Slider values and positions
 
 #define TILE_SLIDER_WIDTH 28

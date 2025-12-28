@@ -4,35 +4,35 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" pluginFormats="buildVST3">
   <MAINGROUP id="fJgS2l" name="Exodus_2">
     <GROUP id="{F932481B-72FA-71E3-F647-B4B516A500F9}" name="Resources">
-      <FILE id="dQWcFz" name="Knob.svg" compile="0" resource="1" file="Resources/Knob.svg"/>
-      <FILE id="JruIcP" name="bg.svg" compile="0" resource="1" file="Resources/bg.svg"/>
-      <FILE id="FPLiGo" name="TileBG.svg" compile="0" resource="1" file="Resources/TileBG.svg"/>
-      <FILE id="GhVWnc" name="green Slider.svg" compile="0" resource="1"
-            file="Resources/green Slider.svg"/>
-      <FILE id="ma9xHe" name="orange Slider.svg" compile="0" resource="1"
-            file="Resources/orange Slider.svg"/>
-      <FILE id="DFZkJj" name="Vent.svg" compile="0" resource="1" file="Resources/Vent.svg"/>
-      <FILE id="WE9TJt" name="purple Slider.svg" compile="0" resource="1"
-            file="Resources/purple Slider.svg"/>
-      <FILE id="tVXr7b" name="Red Slider.svg" compile="0" resource="1" file="Resources/Red Slider.svg"/>
-      <FILE id="iRqrZT" name="BrushedMetal_Texture.png" compile="0" resource="1"
-            file="Resources/BrushedMetal_Texture.png"/>
-      <FILE id="l2S6cg" name="black_wood_texture.png" compile="0" resource="1"
+      <FILE id="Hzz6gj" name="bg.svg" compile="0" resource="1" file="Resources/bg.svg"/>
+      <FILE id="LsXbNN" name="black_wood_texture.png" compile="0" resource="1"
             file="Resources/black_wood_texture.png"/>
-      <FILE id="lJ4lj8" name="saw down lines choose.svg" compile="0" resource="1"
-            file="Resources/saw down lines choose.svg"/>
-      <FILE id="AM4PRv" name="saw up lines choose.svg" compile="0" resource="1"
-            file="Resources/saw up lines choose.svg"/>
-      <FILE id="jKXFq9" name="sine line choose.svg" compile="0" resource="1"
-            file="Resources/sine line choose.svg"/>
-      <FILE id="swnYgu" name="square lines choose.svg" compile="0" resource="1"
-            file="Resources/square lines choose.svg"/>
-      <FILE id="KDFZAC" name="DistKnob.svg" compile="0" resource="1" file="Resources/DistKnob.svg"/>
-      <FILE id="Nf4YJx" name="triangle lines choose.svg" compile="0" resource="1"
-            file="Resources/triangle lines choose.svg"/>
-      <FILE id="wwBfOZ" name="yellow Slider.svg" compile="0" resource="1"
-            file="Resources/yellow Slider.svg"/>
-      <FILE id="sroukz" name="TileShnatot.svg" compile="0" resource="1" file="Resources/TileShnatot.svg"/>
+      <FILE id="KXsDZz" name="BrushedMetal_Texture.png" compile="0" resource="1"
+            file="Resources/BrushedMetal_Texture.png"/>
+      <FILE id="UWPjWY" name="DistKnob.svg" compile="0" resource="1" file="Resources/DistKnob.svg"/>
+      <FILE id="tfxZ6W" name="green_Slider.svg" compile="0" resource="1"
+            file="Resources/green_Slider.svg"/>
+      <FILE id="mMxldK" name="Knob.svg" compile="0" resource="1" file="Resources/Knob.svg"/>
+      <FILE id="y3i3Vj" name="orange_Slider.svg" compile="0" resource="1"
+            file="Resources/orange_Slider.svg"/>
+      <FILE id="tQFj7e" name="purple_Slider.svg" compile="0" resource="1"
+            file="Resources/purple_Slider.svg"/>
+      <FILE id="qCptg9" name="Red_Slider.svg" compile="0" resource="1" file="Resources/Red_Slider.svg"/>
+      <FILE id="Fo5C0k" name="saw_down_lines_choose.svg" compile="0" resource="1"
+            file="Resources/saw_down_lines_choose.svg"/>
+      <FILE id="klKQ5q" name="saw_up_lines_choose.svg" compile="0" resource="1"
+            file="Resources/saw_up_lines_choose.svg"/>
+      <FILE id="QXiQBR" name="sine_line_choose.svg" compile="0" resource="1"
+            file="Resources/sine_line_choose.svg"/>
+      <FILE id="C6skwJ" name="square_lines_choose.svg" compile="0" resource="1"
+            file="Resources/square_lines_choose.svg"/>
+      <FILE id="df2jMd" name="TileBG.svg" compile="0" resource="1" file="Resources/TileBG.svg"/>
+      <FILE id="Dj8FOa" name="TileShnatot.svg" compile="0" resource="1" file="Resources/TileShnatot.svg"/>
+      <FILE id="i1EqA2" name="triangle_lines_choose.svg" compile="0" resource="1"
+            file="Resources/triangle_lines_choose.svg"/>
+      <FILE id="caeP12" name="Vent.svg" compile="0" resource="1" file="Resources/Vent.svg"/>
+      <FILE id="RiJFq3" name="yellow_Slider.svg" compile="0" resource="1"
+            file="Resources/yellow_Slider.svg"/>
     </GROUP>
     <GROUP id="{9C46E52D-2BF1-E7D6-EEB7-623E057E1954}" name="Source">
       <FILE id="vK7fRF" name="CostumeLogger.h" compile="0" resource="0" file="Source/CostumeLogger.h"/>
@@ -69,6 +69,11 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="jBEaML" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
+    <GROUP id="{9757A937-22EA-7237-F22B-0B04E9061930}" name="CMake">
+      <FILE id="nvz1d2" name="CPM.cmake" compile="0" resource="1" file="CMake/CPM.cmake"/>
+      <FILE id="SNVzPi" name="Findjuce.cmake" compile="0" resource="1" file="CMake/Findjuce.cmake"/>
+    </GROUP>
+    <FILE id="jo8uby" name="CMakeLists.txt" compile="0" resource="1" file="CMakeLists.txt"/>
   </MAINGROUP>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

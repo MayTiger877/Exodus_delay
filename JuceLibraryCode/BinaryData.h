@@ -8,35 +8,32 @@
 
 namespace BinaryData
 {
-    extern const char*   Knob_svg;
-    const int            Knob_svgSize = 1205;
-
     extern const char*   bg_svg;
     const int            bg_svgSize = 232070;
 
-    extern const char*   TileBG_svg;
-    const int            TileBG_svgSize = 773;
+    extern const char*   black_wood_texture_png;
+    const int            black_wood_texture_pngSize = 198517;
+
+    extern const char*   BrushedMetal_Texture_png;
+    const int            BrushedMetal_Texture_pngSize = 34892;
+
+    extern const char*   DistKnob_svg;
+    const int            DistKnob_svgSize = 624;
 
     extern const char*   green_Slider_svg;
     const int            green_Slider_svgSize = 365;
 
+    extern const char*   Knob_svg;
+    const int            Knob_svgSize = 1205;
+
     extern const char*   orange_Slider_svg;
     const int            orange_Slider_svgSize = 365;
-
-    extern const char*   Vent_svg;
-    const int            Vent_svgSize = 598;
 
     extern const char*   purple_Slider_svg;
     const int            purple_Slider_svgSize = 365;
 
     extern const char*   Red_Slider_svg;
     const int            Red_Slider_svgSize = 365;
-
-    extern const char*   BrushedMetal_Texture_png;
-    const int            BrushedMetal_Texture_pngSize = 34892;
-
-    extern const char*   black_wood_texture_png;
-    const int            black_wood_texture_pngSize = 198517;
 
     extern const char*   saw_down_lines_choose_svg;
     const int            saw_down_lines_choose_svgSize = 385;
@@ -50,20 +47,32 @@ namespace BinaryData
     extern const char*   square_lines_choose_svg;
     const int            square_lines_choose_svgSize = 382;
 
-    extern const char*   DistKnob_svg;
-    const int            DistKnob_svgSize = 624;
-
-    extern const char*   triangle_lines_choose_svg;
-    const int            triangle_lines_choose_svgSize = 303;
-
-    extern const char*   yellow_Slider_svg;
-    const int            yellow_Slider_svgSize = 365;
+    extern const char*   TileBG_svg;
+    const int            TileBG_svgSize = 773;
 
     extern const char*   TileShnatot_svg;
     const int            TileShnatot_svgSize = 870;
 
+    extern const char*   triangle_lines_choose_svg;
+    const int            triangle_lines_choose_svgSize = 303;
+
+    extern const char*   Vent_svg;
+    const int            Vent_svgSize = 598;
+
+    extern const char*   yellow_Slider_svg;
+    const int            yellow_Slider_svgSize = 365;
+
+    extern const char*   CPM_cmake;
+    const int            CPM_cmakeSize = 42286;
+
+    extern const char*   Findjuce_cmake;
+    const int            Findjuce_cmakeSize = 704;
+
+    extern const char*   CMakeLists_txt;
+    const int            CMakeLists_txtSize = 5005;
+
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 18;
+    const int namedResourceListSize = 21;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
