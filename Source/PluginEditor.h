@@ -105,14 +105,10 @@ private:
 	phaserSettings m_phaserSettings;
 	reverbSettings m_reverbSettings;
 
-	juce::ToggleButton m_generalDelayTempoToggleButton;
-	//std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> m_generalDelayTempoToggleAttachment;
-	ByTempoToggle generalDelayTempoToggleButtonLAF;
+	juce::ToggleButton m_generalDelayTempoToggleButton, m_phaserDelayTempoToggleButton;
+	std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> m_generalDelayTempoToggleAttachment, m_phaserDelayTempoToggleAttachment;
+	ByTempoToggle TempoToggleButtonLAF;
 	void updateGeneralDelayTimeAttachment();
-
-	juce::ToggleButton m_phaserDelayTempoToggleButton;
-	//std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> m_phaserDelayTempoToggleAttachment;
-	ByTempoToggle phaserDelayTempoToggleLAF;
 	void updatePhaserDelayTimeAttachment();
 
 	void initiateEffectSettings();

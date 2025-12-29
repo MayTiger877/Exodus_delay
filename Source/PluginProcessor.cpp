@@ -134,29 +134,50 @@ bool Exodus_2AudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 #endif
 
 
-static void test__Distortion(juce::AudioBuffer<float>& buffer)
+//static void test__Distortion(juce::AudioBuffer<float>& buffer)
+//{
+//    MyDistortion distortion;
+//    distortion.setMix(1.0f);
+//    distortion.setDrive(1.0f); // You can set drive value as needed
+//    distortion.setType(distType_SoftClip); // You can set distortion type as needed
+//    distortion.processBuffer(buffer, 0);
+//    distortion.processBuffer(buffer, 1);
+//}
+//
+//static void test__Phaser(juce::AudioBuffer<float>& buffer, juce::dsp::Phaser<float>& phaser)
+//{
+//    juce::dsp::AudioBlock<float> audioBlock(buffer);
+//    juce::dsp::ProcessContextReplacing<float> context(audioBlock);
+//    phaser.process(context);
+//}
+//
+//static void test__Reverb(juce::AudioBuffer<float>& buffer, juce::dsp::Reverb& reverb)
+//{
+//    juce::dsp::AudioBlock<float> audioBlock(buffer);
+//    juce::dsp::ProcessContextReplacing<float> context(audioBlock);
+//    reverb.process(context);
+//}
+
+const float Exodus_2AudioProcessor::getDelayTimeInSec() const
 {
-    MyDistortion distortion;
-    distortion.setMix(1.0f);
-    distortion.setDrive(1.0f); // You can set drive value as needed
-    distortion.setType(distType_SoftClip); // You can set distortion type as needed
-    distortion.processBuffer(buffer, 0);
-    distortion.processBuffer(buffer, 1);
+    constexpr float msToSec = 0.001f;
+
+    if (m_parameters->generalTempoSyncToggleParam->get())
+    {
+        const double bpm = m_bpm.get();
+        jassert(bpm > 0.0);
+
+        const double quarterNoteMs = 60000.0 / bpm;
+        const int index = m_parameters->delayTempoSyncParam->get();
+
+        return static_cast<float>(quarterNoteMs * divisionMultipliers[index] * msToSec);
+    }
+    else
+    {
+        return m_parameters->delayTimeParam->get();
+    }
 }
 
-static void test__Phaser(juce::AudioBuffer<float>& buffer, juce::dsp::Phaser<float>& phaser)
-{
-    juce::dsp::AudioBlock<float> audioBlock(buffer);
-    juce::dsp::ProcessContextReplacing<float> context(audioBlock);
-    phaser.process(context);
-}
-
-static void test__Reverb(juce::AudioBuffer<float>& buffer, juce::dsp::Reverb& reverb)
-{
-    juce::dsp::AudioBlock<float> audioBlock(buffer);
-    juce::dsp::ProcessContextReplacing<float> context(audioBlock);
-    reverb.process(context);
-}
 
 void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
@@ -181,10 +202,10 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
     }
 
     m_delayEngine->setDelayEngineParameters({
-        m_parameters->delayTimeParam->get(),
-				m_parameters->delayFeedbackParam->get(),
-				m_parameters->delayDryLevelParam->get(),
-				m_parameters->delayWetLevelParam->get() });
+        getDelayTimeInSec(),
+		m_parameters->delayFeedbackParam->get(),
+		m_parameters->delayDryLevelParam->get(),
+		m_parameters->delayWetLevelParam->get() });
 
     m_delayEngine->setDelayLineSettings(m_index, {
         m_parameters->gainMixParam[m_index]->get(),
@@ -311,9 +332,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout Exodus_2AudioProcessor::crea
     layout.add(std::make_unique<juce::AudioParameterFloat>("GNRL_DELAY_TIME", "General Delay Time",
 		juce::NormalisableRange<float>(GNRL_DELAY_TIME_SLIDER_MIN_VALUE, GNRL_DELAY_TIME_SLIDER_MAX_VALUE, GNRL_DELAY_TIME_SLIDER_INTERVAL), GNRL_DELAY_TIME_SLIDER_DEFAULT_VALUE));
 
-    layout.add(std::make_unique<juce::AudioParameterInt>("GNRL_DELAY_TIME_SYNCED", "Delay Sync Division", TIME_SYNCED_SLIDER_MIN_VALUE, TIME_SYNCED_SLIDER_MAX_VALUE, TIME_SYNCED_SLIDER_DEFAULT_VALUE)); // default = quarter
-
-	//layout.add(std::make_unique<juce::AudioParameterBool>("GNRL_TEMPO_SYNC_BOOL", "General Sync to BPM", GNRL_BY_TEMPO_TOGGLE_DEFAULT_VALUE));
+    layout.add(std::make_unique<juce::AudioParameterInt>(delayTempoSyncParamID, delayTempoSyncParamName, TIME_SYNCED_SLIDER_MIN_VALUE, TIME_SYNCED_SLIDER_MAX_VALUE, TIME_SYNCED_SLIDER_DEFAULT_VALUE));
     
     layout.add(std::make_unique<juce::AudioParameterFloat>("GNRL_FEEDBACK", "General Feedback",
 		juce::NormalisableRange<float>(GNRL_FEEDBACK_SLIDER_MIN_VALUE, GNRL_FEEDBACK_SLIDER_MAX_VALUE, GNRL_FEEDBACK_SLIDER_INTERVAL), GNRL_FEEDBACK_SLIDER_DEFAULT_VALUE));
@@ -340,9 +359,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout Exodus_2AudioProcessor::crea
     phaserRateNR.setSkewForCentre(PHASER_RATE_SLIDER_SKEW_MID_POINT);
     layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_RATE", "Phaser Rate", phaserRateNR, PHASER_RATE_SLIDER_DEFAULT_VALUE));
 
-    layout.add(std::make_unique<juce::AudioParameterInt>("PHASER_RATE_SYNCED", "Phaser Sync Division", TIME_SYNCED_SLIDER_MIN_VALUE, TIME_SYNCED_SLIDER_MAX_VALUE, TIME_SYNCED_SLIDER_DEFAULT_VALUE)); // default = quarter
-
-    layout.add(std::make_unique<juce::AudioParameterBool>("PHASER_TEMPO_SYNC_BOOL", "Phaser sync to BPM", PHASER_BY_TEMPO_TOGGLE_DEFAULT_VALUE));
+    layout.add(std::make_unique<juce::AudioParameterInt>(phaserTempoSyncParamID, phaserTempoSyncParamName, TIME_SYNCED_SLIDER_MIN_VALUE, TIME_SYNCED_SLIDER_MAX_VALUE, TIME_SYNCED_SLIDER_DEFAULT_VALUE));
 
     layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_DEPTH", "Phaser Depth",
 		juce::NormalisableRange<float>(PHASER_DEPTH_SLIDER_MIN_VALUE, PHASER_DEPTH_SLIDER_MAX_VALUE, PHASER_DEPTH_SLIDER_INTERVAL), PHASER_DEPTH_SLIDER_DEFAULT_VALUE));
@@ -359,6 +376,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout Exodus_2AudioProcessor::crea
 
 	layout.add(std::make_unique<juce::AudioParameterFloat>("REVERB_WIDTH", "Reverb Width",
 		juce::NormalisableRange<float>(REVERB_WIDTH_SLIDER_MIN_VALUE, REVERB_WIDTH_SLIDER_MAX_VALUE, REVERB_WIDTH_SLIDER_INTERVAL), REVERB_WIDTH_SLIDER_DEFAULT_VALUE));
+
+	layout.add(std::make_unique<juce::AudioParameterBool>(generalTempoSyncToggleParamID, generalTempoSyncToggleParamName, GNRL_BY_TEMPO_TOGGLE_DEFAULT_VALUE));
+
+    layout.add(std::make_unique<juce::AudioParameterBool>(phaserTempoSyncToggleParamID, phaserTempoSyncToggleParamName, PHASER_BY_TEMPO_TOGGLE_DEFAULT_VALUE));
 
     return layout;
 }

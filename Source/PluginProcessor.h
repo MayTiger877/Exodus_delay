@@ -69,6 +69,7 @@ private:
 	
     juce::Atomic<double> m_bpm{ DEFAULT_BPM };
     juce::Atomic<juce::AudioPlayHead::TimeSignature> m_timeSignature;
+	const float getDelayTimeInSec() const;
 
     std::unique_ptr<DelayEngine> m_delayEngine;
 

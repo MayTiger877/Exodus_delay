@@ -170,9 +170,10 @@ void Exodus_2AudioProcessorEditor::initiateGeneralSettings()
 	m_delayTimeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "GNRL_DELAY_TIME", m_delayTimeSlider);
 
 	m_generalDelayTempoToggleButton.setBounds(GNRL_BY_TEMPO_TOGGLE_BOUNDS);
-	m_generalDelayTempoToggleButton.setLookAndFeel(&generalDelayTempoToggleButtonLAF);
+	m_generalDelayTempoToggleButton.setLookAndFeel(&TempoToggleButtonLAF);
 	m_generalDelayTempoToggleButton.onClick = [this]() { updateGeneralDelayTimeAttachment(); };
 	addAndMakeVisible(m_generalDelayTempoToggleButton);
+	m_generalDelayTempoToggleAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.apvts, generalTempoSyncToggleParamID, m_generalDelayTempoToggleButton);
 
 	m_feedbackSlider.setValue(GNRL_FEEDBACK_SLIDER_DEFAULT_VALUE);
 	m_feedbackSlider.setRange(GNRL_FEEDBACK_SLIDER_MIN_VALUE, GNRL_FEEDBACK_SLIDER_MAX_VALUE, GNRL_FEEDBACK_SLIDER_INTERVAL);
@@ -253,9 +254,10 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_phaserSettings.phaserRateAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "PHASER_RATE", m_phaserSettings.phaserRateSlider);
 
 	m_phaserDelayTempoToggleButton.setBounds(PHASER_BY_TEMPO_TOGGLE_BOUNDS);
-	m_phaserDelayTempoToggleButton.setLookAndFeel(&phaserDelayTempoToggleLAF);
+	m_phaserDelayTempoToggleButton.setLookAndFeel(&TempoToggleButtonLAF);
 	m_phaserDelayTempoToggleButton.onClick = [this]() { updatePhaserDelayTimeAttachment(); };
 	addAndMakeVisible(m_phaserDelayTempoToggleButton);
+	m_phaserDelayTempoToggleAttachment = std::make_unique<juce::AudioProcessorValueTreeState::ButtonAttachment>(audioProcessor.apvts, phaserTempoSyncToggleParamID, m_phaserDelayTempoToggleButton);
 
 	m_phaserSettings.phaserDepthSlider.setValue(PHASER_DEPTH_SLIDER_DEFAULT_VALUE);
 	m_phaserSettings.phaserDepthSlider.setRange(PHASER_DEPTH_SLIDER_MIN_VALUE, PHASER_DEPTH_SLIDER_MAX_VALUE, PHASER_DEPTH_SLIDER_INTERVAL);
@@ -531,21 +533,22 @@ void Exodus_2AudioProcessorEditor::tileMouseWheelMove(const juce::MouseEvent& e,
 void Exodus_2AudioProcessorEditor::updateGeneralDelayTimeAttachment()
 {
 	m_delayTimeAttachment.reset();
-	if (m_generalDelayTempoToggleButton.getToggleState() == true)
+	bool temp = m_generalDelayTempoToggleButton.getToggleState();
+	if (temp == true)
 	{
 		m_delayTimeSlider.setRange(TIME_SYNCED_SLIDER_MIN_VALUE, TIME_SYNCED_SLIDER_MAX_VALUE, TIME_SYNCED_SLIDER_INTERVAL);
-		m_delayTimeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "GNRL_DELAY_TIME_SYNCED", m_delayTimeSlider);
+		m_delayTimeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, delayTempoSyncParamID, m_delayTimeSlider);
 	}
 	else
 	{
 		m_delayTimeSlider.setRange(GNRL_DELAY_TIME_SLIDER_MIN_VALUE, GNRL_DELAY_TIME_SLIDER_MAX_VALUE, GNRL_DELAY_TIME_SLIDER_INTERVAL);
-		m_delayTimeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "GNRL_DELAY_TIME", m_delayTimeSlider);
+		m_delayTimeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, phaserTempoSyncParamID, m_delayTimeSlider);
 	}
 }
 
 void Exodus_2AudioProcessorEditor::updatePhaserDelayTimeAttachment()
 {
-	this->m_phaserSettings.phaserRateAttachment.reset();
+	m_phaserSettings.phaserRateAttachment.reset();
 	if (m_phaserDelayTempoToggleButton.getToggleState() == true)
 	{
 		m_phaserSettings.phaserRateSlider.setRange(TIME_SYNCED_SLIDER_MIN_VALUE, TIME_SYNCED_SLIDER_MAX_VALUE, TIME_SYNCED_SLIDER_INTERVAL);
