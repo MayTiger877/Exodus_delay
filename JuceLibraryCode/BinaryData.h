@@ -9,7 +9,7 @@
 namespace BinaryData
 {
     extern const char*   bg_svg;
-    const int            bg_svgSize = 232070;
+    const int            bg_svgSize = 244927;
 
     extern const char*   black_wood_texture_png;
     const int            black_wood_texture_pngSize = 198517;
@@ -22,6 +22,12 @@ namespace BinaryData
 
     extern const char*   green_Slider_svg;
     const int            green_Slider_svgSize = 365;
+
+    extern const char*   toggleUp_svg;
+    const int            toggleUp_svgSize = 2631;
+
+    extern const char*   toggleDown_svg;
+    const int            toggleDown_svgSize = 2415;
 
     extern const char*   Knob_svg;
     const int            Knob_svgSize = 1205;
@@ -72,7 +78,7 @@ namespace BinaryData
     const int            CMakeLists_txtSize = 5005;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 21;
+    const int namedResourceListSize = 23;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

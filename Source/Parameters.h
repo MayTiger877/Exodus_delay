@@ -14,6 +14,8 @@
 
 inline const juce::String delayTimeParamID = "GNRL_DELAY_TIME";
 inline const juce::String delayTimeParamName = "GNRL_DELAY_TIME_NAME";
+inline const juce::String delayTempoSyncParamID = "GNRL_DELAY_TIME_SYNCED";
+inline const juce::String delayTempoSyncParamName = "GNRL_DELAY_TIME_SYNCED_NAME";
 inline const juce::String delayFeedbackParamID = "GNRL_FEEDBACK";
 inline const juce::String delayFeedbackParamName = "GNRL_FEEDBACK_NAME";
 inline const juce::String delayDryLevelParamID = "GNRL_DRY_LEVEL";
@@ -32,6 +34,8 @@ inline const juce::String phaserTypeParamID = "PHASER_TYPE";
 inline const juce::String phaserTypeParamName = "PHASER_TYPE_NAME";
 inline const juce::String phaserRateParamID = "PHASER_RATE";
 inline const juce::String phaserRateParamName = "PHASER_RATE_NAME";
+inline const juce::String phaserTempoSyncParamID = "PHASER_RATE_SYNCED";
+inline const juce::String phaserTempoSyncParamName = "PHASER_RATE_SYNCED_NAME";
 inline const juce::String phaserDepthParamID = "PHASER_DEPTH";
 inline const juce::String phaserDepthParamName = "PHASER_DEPTH_NAME";
 inline const juce::String phaserFreqParamID = "PHASER_FREQ";
@@ -84,6 +88,7 @@ struct parameters
     explicit parameters(juce::AudioProcessorValueTreeState& apvts)
     {
 		delayTimeParam = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(delayTimeParamID));
+		delayTempoSyncParam = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(delayTempoSyncParamID));
 		delayFeedbackParam = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(delayFeedbackParamID));
 		delayDryLevelParam = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(delayDryLevelParamID));
 		delayWetLevelParam = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(delayWetLevelParamID));
@@ -94,6 +99,7 @@ struct parameters
 
 		phaserTypeParam = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(phaserTypeParamID));
 		phaserRateParam = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(phaserRateParamID));
+        phaserTempoSyncParam = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(phaserTempoSyncParamID));
 		phaserDepthParam = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(phaserDepthParamID));
 		phaserFreqParam = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(phaserFreqParamID));
 
@@ -112,6 +118,7 @@ struct parameters
 	}
 
     juce::AudioParameterFloat* delayTimeParam { nullptr };
+    juce::AudioParameterBool* delayTempoSyncParam{ nullptr };
     juce::AudioParameterFloat* delayFeedbackParam{ nullptr };
 	juce::AudioParameterFloat* delayDryLevelParam{ nullptr };
 	juce::AudioParameterFloat* delayWetLevelParam{ nullptr };
@@ -122,6 +129,7 @@ struct parameters
 
 	juce::AudioParameterFloat* phaserTypeParam{ nullptr };
 	juce::AudioParameterFloat* phaserRateParam{ nullptr };
+    juce::AudioParameterBool* phaserTempoSyncParam{ nullptr };
 	juce::AudioParameterFloat* phaserDepthParam{ nullptr };
 	juce::AudioParameterFloat* phaserFreqParam{ nullptr };
 

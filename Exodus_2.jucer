@@ -12,6 +12,8 @@
       <FILE id="UWPjWY" name="DistKnob.svg" compile="0" resource="1" file="Resources/DistKnob.svg"/>
       <FILE id="tfxZ6W" name="green_Slider.svg" compile="0" resource="1"
             file="Resources/green_Slider.svg"/>
+      <FILE id="YjEVVm" name="toggleUp.svg" compile="0" resource="1" file="Resources/toggleUp.svg"/>
+      <FILE id="Igck5X" name="toggleDown.svg" compile="0" resource="1" file="Resources/toggleDown.svg"/>
       <FILE id="mMxldK" name="Knob.svg" compile="0" resource="1" file="Resources/Knob.svg"/>
       <FILE id="y3i3Vj" name="orange_Slider.svg" compile="0" resource="1"
             file="Resources/orange_Slider.svg"/>
@@ -51,6 +53,9 @@
         <FILE id="nfovOG" name="MyDistortion.h" compile="0" resource="0" file="Source/MyDistortion.h"/>
       </GROUP>
       <GROUP id="{39851644-156E-C24B-5607-21347F49C710}" name="GUI">
+        <FILE id="jhCX8A" name="ByTempoToggle.cpp" compile="1" resource="0"
+              file="Source/ByTempoToggle.cpp"/>
+        <FILE id="MdDCcu" name="ByTempoToggle.h" compile="0" resource="0" file="Source/ByTempoToggle.h"/>
         <FILE id="yKnanI" name="CostumeKnob.cpp" compile="1" resource="0" file="Source/CostumeKnob.cpp"/>
         <FILE id="QBVm3t" name="CostumeKnob.h" compile="0" resource="0" file="Source/CostumeKnob.h"/>
         <FILE id="pkQO6D" name="DistKnob.cpp" compile="1" resource="0" file="Source/DistKnob.cpp"/>

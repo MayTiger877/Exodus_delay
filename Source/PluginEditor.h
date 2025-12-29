@@ -15,6 +15,7 @@
 #include "CostumeKnob.h"
 #include "DistKnob.h"
 #include "PhaserKnob.h"
+#include "ByTempoToggle.h"
 #include <chrono>
 
 //==============================================================================
@@ -85,7 +86,6 @@ private:
 	void tileMouseUp(const juce::MouseEvent& event);
 	void tileMouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& wheel);
 
-
 	//general settings
 	juce::Slider m_delayTimeSlider, m_feedbackSlider, m_dryLevelSlider, m_wetLevelSlider;
 	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_delayTimeAttachment, m_feedbackAttachment, m_dryLevelAttachment, m_wetLevelAttachment;
@@ -104,6 +104,16 @@ private:
 	distortionSettings m_distortionSettings;
 	phaserSettings m_phaserSettings;
 	reverbSettings m_reverbSettings;
+
+	juce::ToggleButton m_generalDelayTempoToggleButton;
+	//std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> m_generalDelayTempoToggleAttachment;
+	ByTempoToggle generalDelayTempoToggleButtonLAF;
+	void updateGeneralDelayTimeAttachment();
+
+	juce::ToggleButton m_phaserDelayTempoToggleButton;
+	//std::unique_ptr<juce::AudioProcessorValueTreeState::ButtonAttachment> m_phaserDelayTempoToggleAttachment;
+	ByTempoToggle phaserDelayTempoToggleLAF;
+	void updatePhaserDelayTimeAttachment();
 
 	void initiateEffectSettings();
 	

@@ -42,6 +42,31 @@ struct DelayParameters
 	float wetLevel = 0.8f;
 };
 
+enum DelayDivision
+{
+	Whole,
+	Half,
+	Quarter,
+	Eighth,
+	Sixteenth,
+	DottedEighth,
+	TripletEighth,
+	TripletSixteenth
+};
+
+static constexpr double divisionMultipliers[] =
+{
+	4.0,    // whole
+	2.0,    // half
+	1.0,    // quarter
+	0.5,    // eighth
+	0.25,   // sixteenth
+	0.75,   // dotted eighth
+	1.0 / 3.0, // triplet eighth
+	1.0 / 6.0  // triplet sixteenth
+};
+
+
 //----------------------------------------------------------------
 
 class DelayEngine

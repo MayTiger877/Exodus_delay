@@ -311,7 +311,11 @@ juce::AudioProcessorValueTreeState::ParameterLayout Exodus_2AudioProcessor::crea
     layout.add(std::make_unique<juce::AudioParameterFloat>("GNRL_DELAY_TIME", "General Delay Time",
 		juce::NormalisableRange<float>(GNRL_DELAY_TIME_SLIDER_MIN_VALUE, GNRL_DELAY_TIME_SLIDER_MAX_VALUE, GNRL_DELAY_TIME_SLIDER_INTERVAL), GNRL_DELAY_TIME_SLIDER_DEFAULT_VALUE));
 
-	layout.add(std::make_unique<juce::AudioParameterFloat>("GNRL_FEEDBACK", "General Feedback",
+    layout.add(std::make_unique<juce::AudioParameterInt>("GNRL_DELAY_TIME_SYNCED", "Delay Sync Division", TIME_SYNCED_SLIDER_MIN_VALUE, TIME_SYNCED_SLIDER_MAX_VALUE, TIME_SYNCED_SLIDER_DEFAULT_VALUE)); // default = quarter
+
+	//layout.add(std::make_unique<juce::AudioParameterBool>("GNRL_TEMPO_SYNC_BOOL", "General Sync to BPM", GNRL_BY_TEMPO_TOGGLE_DEFAULT_VALUE));
+    
+    layout.add(std::make_unique<juce::AudioParameterFloat>("GNRL_FEEDBACK", "General Feedback",
 		juce::NormalisableRange<float>(GNRL_FEEDBACK_SLIDER_MIN_VALUE, GNRL_FEEDBACK_SLIDER_MAX_VALUE, GNRL_FEEDBACK_SLIDER_INTERVAL), GNRL_FEEDBACK_SLIDER_DEFAULT_VALUE));
 
 	layout.add(std::make_unique<juce::AudioParameterFloat>("GNRL_DRY_LEVEL", "General Dry Level",
@@ -335,6 +339,10 @@ juce::AudioProcessorValueTreeState::ParameterLayout Exodus_2AudioProcessor::crea
     juce::NormalisableRange<float> phaserRateNR(PHASER_RATE_SLIDER_MIN_VALUE, PHASER_RATE_SLIDER_MAX_VALUE);
     phaserRateNR.setSkewForCentre(PHASER_RATE_SLIDER_SKEW_MID_POINT);
     layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_RATE", "Phaser Rate", phaserRateNR, PHASER_RATE_SLIDER_DEFAULT_VALUE));
+
+    layout.add(std::make_unique<juce::AudioParameterInt>("PHASER_RATE_SYNCED", "Phaser Sync Division", TIME_SYNCED_SLIDER_MIN_VALUE, TIME_SYNCED_SLIDER_MAX_VALUE, TIME_SYNCED_SLIDER_DEFAULT_VALUE)); // default = quarter
+
+    layout.add(std::make_unique<juce::AudioParameterBool>("PHASER_TEMPO_SYNC_BOOL", "Phaser sync to BPM", PHASER_BY_TEMPO_TOGGLE_DEFAULT_VALUE));
 
     layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_DEPTH", "Phaser Depth",
 		juce::NormalisableRange<float>(PHASER_DEPTH_SLIDER_MIN_VALUE, PHASER_DEPTH_SLIDER_MAX_VALUE, PHASER_DEPTH_SLIDER_INTERVAL), PHASER_DEPTH_SLIDER_DEFAULT_VALUE));

@@ -63,6 +63,9 @@ Exodus_2AudioProcessorEditor::~Exodus_2AudioProcessorEditor()
 	m_reverbSettings.reverbRoomSizeSlider.setLookAndFeel(nullptr);
 	m_reverbSettings.reverbDampingSlider.setLookAndFeel(nullptr);
 	m_reverbSettings.reverbWidthSlider.setLookAndFeel(nullptr);
+
+	m_generalDelayTempoToggleButton.setLookAndFeel(nullptr);
+	m_phaserDelayTempoToggleButton.setLookAndFeel(nullptr);
 }
 
 //==============================================================================
@@ -166,6 +169,11 @@ void Exodus_2AudioProcessorEditor::initiateGeneralSettings()
 	addAndMakeVisible(m_delayTimeSlider);
 	m_delayTimeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "GNRL_DELAY_TIME", m_delayTimeSlider);
 
+	m_generalDelayTempoToggleButton.setBounds(GNRL_BY_TEMPO_TOGGLE_BOUNDS);
+	m_generalDelayTempoToggleButton.setLookAndFeel(&generalDelayTempoToggleButtonLAF);
+	m_generalDelayTempoToggleButton.onClick = [this]() { updateGeneralDelayTimeAttachment(); };
+	addAndMakeVisible(m_generalDelayTempoToggleButton);
+
 	m_feedbackSlider.setValue(GNRL_FEEDBACK_SLIDER_DEFAULT_VALUE);
 	m_feedbackSlider.setRange(GNRL_FEEDBACK_SLIDER_MIN_VALUE, GNRL_FEEDBACK_SLIDER_MAX_VALUE, GNRL_FEEDBACK_SLIDER_INTERVAL);
 	m_feedbackSlider.setBounds(GNRL_FEEDBACK_SLIDER_BOUNDS);
@@ -243,6 +251,11 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_phaserSettings.phaserRateSlider.setLookAndFeel(&costumeKnobLAF);
 	addAndMakeVisible(m_phaserSettings.phaserRateSlider);
 	m_phaserSettings.phaserRateAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "PHASER_RATE", m_phaserSettings.phaserRateSlider);
+
+	m_phaserDelayTempoToggleButton.setBounds(PHASER_BY_TEMPO_TOGGLE_BOUNDS);
+	m_phaserDelayTempoToggleButton.setLookAndFeel(&phaserDelayTempoToggleLAF);
+	m_phaserDelayTempoToggleButton.onClick = [this]() { updatePhaserDelayTimeAttachment(); };
+	addAndMakeVisible(m_phaserDelayTempoToggleButton);
 
 	m_phaserSettings.phaserDepthSlider.setValue(PHASER_DEPTH_SLIDER_DEFAULT_VALUE);
 	m_phaserSettings.phaserDepthSlider.setRange(PHASER_DEPTH_SLIDER_MIN_VALUE, PHASER_DEPTH_SLIDER_MAX_VALUE, PHASER_DEPTH_SLIDER_INTERVAL);
@@ -513,6 +526,36 @@ void Exodus_2AudioProcessorEditor::tileMouseWheelMove(const juce::MouseEvent& e,
 	tile_activeSlider->setValue(newValue, juce::sendNotificationSync);
 
 	tile_activeSlider = nullptr;
+}
+
+void Exodus_2AudioProcessorEditor::updateGeneralDelayTimeAttachment()
+{
+	m_delayTimeAttachment.reset();
+	if (m_generalDelayTempoToggleButton.getToggleState() == true)
+	{
+		m_delayTimeSlider.setRange(TIME_SYNCED_SLIDER_MIN_VALUE, TIME_SYNCED_SLIDER_MAX_VALUE, TIME_SYNCED_SLIDER_INTERVAL);
+		m_delayTimeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "GNRL_DELAY_TIME_SYNCED", m_delayTimeSlider);
+	}
+	else
+	{
+		m_delayTimeSlider.setRange(GNRL_DELAY_TIME_SLIDER_MIN_VALUE, GNRL_DELAY_TIME_SLIDER_MAX_VALUE, GNRL_DELAY_TIME_SLIDER_INTERVAL);
+		m_delayTimeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "GNRL_DELAY_TIME", m_delayTimeSlider);
+	}
+}
+
+void Exodus_2AudioProcessorEditor::updatePhaserDelayTimeAttachment()
+{
+	this->m_phaserSettings.phaserRateAttachment.reset();
+	if (m_phaserDelayTempoToggleButton.getToggleState() == true)
+	{
+		m_phaserSettings.phaserRateSlider.setRange(TIME_SYNCED_SLIDER_MIN_VALUE, TIME_SYNCED_SLIDER_MAX_VALUE, TIME_SYNCED_SLIDER_INTERVAL);
+		m_phaserSettings.phaserRateAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "PHASER_RATE_SYNCED", m_phaserSettings.phaserRateSlider);
+	}
+	else
+	{		
+		m_phaserSettings.phaserRateSlider.setRange(PHASER_RATE_SLIDER_MIN_VALUE, PHASER_RATE_SLIDER_MAX_VALUE);
+		m_phaserSettings.phaserRateAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, "PHASER_RATE", m_phaserSettings.phaserRateSlider);
+	}
 }
 
 //----------------------------------------------------------------------------------------------------------------
