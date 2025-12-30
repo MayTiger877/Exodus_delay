@@ -169,7 +169,6 @@ const float Exodus_2AudioProcessor::getDelayTimeInSec() const
 
         const double quarterNoteMs = 60000.0 / bpm;
         const int index = m_parameters->delayTempoSyncParam->get();
-
         return static_cast<float>(quarterNoteMs * divisionMultipliers[index] * msToSec);
     }
     else
@@ -178,6 +177,24 @@ const float Exodus_2AudioProcessor::getDelayTimeInSec() const
     }
 }
 
+const float Exodus_2AudioProcessor::getPhaserTimeInSec() const
+{
+    constexpr float msToSec = 0.001f;
+
+    if (m_parameters->phaserTempoSyncToggleParam->get())
+    {
+        const double bpm = m_bpm.get();
+        jassert(bpm > 0.0);
+
+        const double quarterNoteMs = 60000.0 / bpm;
+        const int index = m_parameters->phaserTempoSyncParam->get();
+        return static_cast<float>(quarterNoteMs * divisionMultipliers[index] * msToSec);
+    }
+    else
+    {
+        return m_parameters->phaserRateParam->get();
+    }
+}
 
 void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
@@ -221,7 +238,7 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
 	m_delayEngine->setPhaserSettings(
 		m_parameters->phaserTypeParam->get(),
-		m_parameters->phaserRateParam->get(),
+        getPhaserTimeInSec(),
 		m_parameters->phaserDepthParam->get(),
 		m_parameters->phaserFreqParam->get(),
 		m_parameters->phaserMixParam[m_index]->get());
