@@ -1,0 +1,176 @@
+name: Cross-platform JUCE Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+env:
+  JUCE_VERSION: 8.0.12
+
+jobs:
+  build:
+    name: Build - ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        include:
+          - name: macOS
+            os: macos-14
+            pluginval-binary: pluginval.app/Contents/MacOS/pluginval
+            extra-flags: -G Ninja -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+          - name: Windows
+            os: windows-latest
+            pluginval-binary: ./pluginval.exe
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up MSVC (Windows only)
+        if: runner.os == 'Windows'
+        uses: ilammy/msvc-dev-cmd@v1
+
+      - name: Clone JUCE
+        run: git clone --branch ${{ env.JUCE_VERSION }} --depth 1 https://github.com/juce-framework/JUCE.git
+
+      - name: Configure with CMake
+        run: cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Find and list build artifacts
+        run: |
+          echo "Searching for build artifacts..."
+          find build -name "*.vst3" -o -name "*.component" -o -name "*.dll" -o -name "*.so" -o -name "*.dylib" | head -20
+          echo "Build directory structure:"
+          ls -la build/
+        shell: bash
+
+      - name: Upload VST3 Plugin (All platforms)
+        uses: actions/upload-artifact@v4
+        with:
+          name: ExodusDelay-VST3-${{ matrix.os }}
+          path: |
+            build/**/*.vst3
+            build/**/ExodusDelay.vst3
+          if-no-files-found: warn
+
+      - name: Upload macOS Component (macOS only)
+        if: runner.os == 'macOS'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ExodusDelay-Component-macOS
+          path: |
+            build/**/*.component
+            build/**/ExodusDelay.component
+          if-no-files-found: ignore
+
+      - name: Setting up Pluginval
+        run: |
+          curl -LO "https://github.com/Tracktion/pluginval/releases/download/v1.0.3/pluginval_${{ matrix.name }}.zip"
+          7z x pluginval_${{ matrix.name }}.zip
+          echo "=== Contents after extraction ==="
+          ls -la
+          echo "=== Looking for pluginval executables ==="
+          find . -name "*pluginval*" -o -name "*Pluginval*"
+        shell: bash
+
+      - name: Running Pluginval
+        if: runner.os == 'windows'
+        run: |
+          VST3_PATH=$(find . -name "ExodusDelay.vst3" -path "*/x86_64-win/*" -type f | head -1)
+          if [ -n "$VST3_PATH" ]; then
+            echo "Found VST3 at: $VST3_PATH"
+            ./pluginval --strictness-level 10 --validate-in-process --output-dir validation_results "$VST3_PATH"
+          else
+            echo "VST3 plugin not found!"
+            exit 1
+          fi
+        shell: bash
+
+      - name: Running Pluginval
+        if: runner.os == 'macos'
+        run: |
+          VST3_PATH=$(find . -name "*.vst3" -path "*/VST3/*" -type d | head -1)
+          if [ -n "$VST3_PATH" ]; then
+            echo "Found VST3 at: $VST3_PATH"
+            # Try different possible pluginval locations
+            if [ -f "./pluginval" ]; then
+              ./pluginval --strictness-level 10 --validate-in-process --output-dir validation_results "$VST3_PATH"
+            elif [ -f "./Pluginval.app/Contents/MacOS/Pluginval" ]; then
+              ./Pluginval.app/Contents/MacOS/Pluginval --strictness-level 10 --validate-in-process --output-dir validation_results "$VST3_PATH"
+            elif [ -f "./pluginval.app/Contents/MacOS/pluginval" ]; then
+              ./pluginval.app/Contents/MacOS/pluginval --strictness-level 10 --validate-in-process --output-dir validation_results "$VST3_PATH"
+            else
+              echo "Pluginval executable not found! Available files:"
+              ls -la
+              exit 1
+            fi
+          else
+            echo "VST3 plugin not found!"
+            exit 1
+          fi
+        shell: bash
+
+      - name: Running AUVal (macOS only)
+        if: runner.os == 'macOS'
+        continue-on-error: true  # Don't fail the build, but report the issue
+        run: |
+          # Find the AU component
+          AU_PATH=$(find build -name "ExodusDelay.component" -type d | head -1)
+              
+          if [ -z "$AU_PATH" ]; then
+            echo "AU component not found!"
+            exit 1
+          fi
+              
+          echo "Found AU at: $AU_PATH"
+              
+          # Copy plugin to system location for validation
+          sudo cp -r "$AU_PATH" "/Library/Audio/Plug-Ins/Components/"
+              
+          # Reset AU cache
+          killall -9 AudioComponentRegistrar || true
+              
+          # Wait for cache to rebuild
+          sleep 5
+              
+          echo "Listing all Audio Units..."
+          auval -a
+              
+          echo ""
+          echo "Running AUVal validation on ExodusDelay..."
+          auval -v aufx ExDe Juce 2>&1 | tee auval_output.txt || {
+            echo ""
+            echo "======================================"
+            echo "AUVal validation completed with errors"
+            echo "======================================"
+            cat auval_output.txt
+            exit 1
+          }
+              
+          echo ""
+          echo "======================================"
+          echo "AUVal validation passed!"
+          echo "======================================"
+        shell: bash
+
+      - name: Upload AUVal results
+        if: runner.os == 'macOS' && always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: auval-results
+          path: auval_output.txt
+          if-no-files-found: ignore
+        
+      - name: Upload validation results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: validation-results-${{ matrix.os }}
+          path: validation_results/
+          if-no-files-found: ignore

@@ -56,8 +56,6 @@
         <FILE id="MdDCcu" name="ByTempoToggle.h" compile="0" resource="0" file="Source/ByTempoToggle.h"/>
         <FILE id="yKnanI" name="CostumeKnob.cpp" compile="1" resource="0" file="Source/CostumeKnob.cpp"/>
         <FILE id="QBVm3t" name="CostumeKnob.h" compile="0" resource="0" file="Source/CostumeKnob.h"/>
-        <FILE id="YRgS6U" name="CostumeSliderClass.cpp" compile="1" resource="0"
-              file="Source/CostumeSliderClass.cpp"/>
         <FILE id="oVl47N" name="CostumeSliderClass.h" compile="0" resource="0"
               file="Source/CostumeSliderClass.h"/>
         <FILE id="pkQO6D" name="DistKnob.cpp" compile="1" resource="0" file="Source/DistKnob.cpp"/>
@@ -68,13 +66,13 @@
         <FILE id="yMGRCO" name="TileSlider.h" compile="0" resource="0" file="Source/TileSlider.h"/>
       </GROUP>
       <FILE id="chDtez" name="Configs.h" compile="0" resource="0" file="Source/Configs.h"/>
+      <FILE id="N9DWkc" name="Parameters.h" compile="0" resource="0" file="Source/Parameters.h"/>
       <FILE id="NM7QHZ" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="BLWcXb" name="PluginProcessor.h" compile="0" resource="0"
             file="Source/PluginProcessor.h"/>
       <FILE id="CgAg2S" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
-      <FILE id="N9DWkc" name="Parameters.h" compile="0" resource="0" file="Source/Parameters.h"/>
       <FILE id="jBEaML" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
     <GROUP id="{9757A937-22EA-7237-F22B-0B04E9061930}" name="CMake">

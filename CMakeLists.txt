@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 4.2)
+cmake_minimum_required(VERSION 3.24)
 
 project(ExodusDelay VERSION 1.0.0)
 
@@ -56,7 +56,7 @@ juce_add_plugin(ExodusDelay
     COPY_PLUGIN_AFTER_BUILD FALSE
     PLUGIN_MANUFACTURER_CODE Juce
     PLUGIN_CODE ExDe
-    FORMATS VST3
+    FORMATS VST3 AU
     PRODUCT_NAME "ExodusDelay"
 )
 
@@ -64,49 +64,57 @@ juce_generate_juce_header(ExodusDelay)
 
 target_sources(ExodusDelay PRIVATE
     Source/
+    Source/ByTempoToggle.h
+    Source/ByTempoToggle.cpp
+    Source/Configs.h
+    Source/CostumeKnob.h
+    Source/CostumeKnob.cpp
+    Source/CostumeSliderClass.h
     Source/DelayEngine.h
     Source/DelayEngine.cpp
-    Source/PluginProcessor.h
-    Source/PluginProcessor.cpp
-    Source/PluginEditor.h
-    Source/PluginEditor.cpp
-    Source/Parameters.h
-    Source/Configs.h
-    Source/MyReverb.h
-    Source/MyReverb.cpp
+    Source/DistKnob.h
+    Source/DistKnob.cpp
     Source/MyDistortion.h
     Source/MyDistortion.cpp
     Source/MyPhaser.h
     Source/MyPhaser.cpp
-    Source/TileSlider.h
-    Source/TileSlider.cpp
+    Source/MyReverb.h
+    Source/MyReverb.cpp
+    Source/Parameters.h
     Source/PhaserKnob.h
     Source/PhaserKnob.cpp
-    Source/DistKnob.h
-    Source/DistKnob.cpp
-    Source/CostumeKnob.h
-    Source/CostumeKnob.cpp
+    Source/PluginEditor.h
+    Source/PluginEditor.cpp
+    Source/PluginProcessor.h
+    Source/PluginProcessor.cpp
+    Source/TileSlider.h
+    Source/TileSlider.cpp
 )
 
-juce_add_binary_data(ResourcesData SOURCES
-    Resources/bg.svg
-    Resources/Knob.svg
-    Resources/DistKnob.svg
-    Resources/TileBG.svg
-    Resources/TileShnatot.svg
-    Resources/Vent.svg
-    Resources/BrushedMetal_Texture.png
-    Resources/black_wood_texture.png
-    Resources/green_Slider.svg
-    Resources/yellow_Slider.svg
-    Resources/purple_Slider.svg
-    Resources/orange_Slider.svg
-    Resources/Red_Slider.svg
-    Resources/triangle_lines_choose.svg
-    Resources/aquere_lines_choose.svg
-    Resources/sine_line_choose.svg
-    Resources/saw_up_lines_choose.svg
-    Resources/saw_down_lines_choose.svg
+juce_add_binary_data(ResourcesData 
+    NAMESPACE BinaryData
+    HEADER_NAME BinaryData.h
+    SOURCES
+        Resources/bg.svg
+        Resources/Knob.svg
+        Resources/DistKnob.svg
+        Resources/TileBG.svg
+        Resources/TileShnatot.svg
+        Resources/Vent.svg
+        Resources/BrushedMetal_Texture.png
+        Resources/black_wood_texture.png
+        Resources/green_Slider.svg
+        Resources/yellow_Slider.svg
+        Resources/purple_Slider.svg
+        Resources/orange_Slider.svg
+        Resources/Red_Slider.svg
+        Resources/triangle_lines_choose.svg
+        Resources/square_lines_choose.svg
+        Resources/sine_line_choose.svg
+        Resources/saw_up_lines_choose.svg
+        Resources/saw_down_lines_choose.svg
+        Resources/toggleDown.svg
+        Resources/toggleUp.svg
 )
 
 # # Get all preset files automatically
@@ -138,7 +146,7 @@ target_compile_definitions(ExodusDelay PRIVATE
 
 # Safe clean target that doesn't remove the directory it's running from
 add_custom_target(clean-all
-    COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/BallPit_artefacts
+    COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/ExodusDelay_artefacts
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/CMakeFiles
     COMMAND ${CMAKE_COMMAND} -E remove_directory ${CMAKE_BINARY_DIR}/_deps
     COMMAND ${CMAKE_COMMAND} -E remove ${CMAKE_BINARY_DIR}/CMakeCache.txt
