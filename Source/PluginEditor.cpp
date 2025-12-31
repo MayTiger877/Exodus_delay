@@ -402,7 +402,11 @@ void Exodus_2AudioProcessorEditor::tileMouseDown(const juce::MouseEvent& e)
 	}
 
 	const double YToValue = 1.0 - ((static_cast<double>(mouseYPos) - tile_relativeYPos) / TILE_SLIDER_BG_HEIGHT);
-	const double newValue = juce::jlimit(tile_activeSlider->getMinimum(), tile_activeSlider->getMaximum(), YToValue);
+	double newValue = juce::jlimit(tile_activeSlider->getMinimum(), tile_activeSlider->getMaximum(), YToValue);
+	if (tile_activeSliderType == 1)
+	{
+		newValue = juce::jmap<double>(newValue, 0.0, 1.0, -1.0, 1.0);
+	}
 	tile_activeSlider->setValue(newValue, juce::sendNotificationSync);
 }
 
@@ -465,7 +469,11 @@ void Exodus_2AudioProcessorEditor::tileMouseDrag(const juce::MouseEvent& e)
 	}
 
 	const double YToValue = 1.0 - ((static_cast<double>(editorPos.getY()) - tile_relativeYPos) / TILE_SLIDER_BG_HEIGHT);
-	const double newValue = juce::jlimit(tile_activeSlider->getMinimum(), tile_activeSlider->getMaximum(), YToValue);
+	double newValue = juce::jlimit(tile_activeSlider->getMinimum(), tile_activeSlider->getMaximum(), YToValue);
+	if (tile_activeSliderType == 1)
+	{
+		newValue = juce::jmap<double>(newValue, 0.0, 1.0, -1.0, 1.0);
+	}
 	tile_activeSlider->setValue(newValue, juce::sendNotificationSync);
 }
 
