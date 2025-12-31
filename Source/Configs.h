@@ -168,10 +168,10 @@ inline const float PHASER_DEPTH_SLIDER_MAX_VALUE = 1.0f;
 inline const float PHASER_DEPTH_SLIDER_INTERVAL = 0.01f;
 
 inline const juce::Rectangle<int> PHASER_FREQ_SLIDER_BOUNDS = {415, 580, COSTUME_KNOB_WIDTH, COSTUME_KNOB_HEIGHT};
-inline const float PHASER_FREQ_SLIDER_SKEW_MID_POINT = 1000.0f;
+inline const float PHASER_FREQ_SLIDER_SKEW_MID_POINT = 3000.0f;
 inline const float PHASER_FREQ_SLIDER_DEFAULT_VALUE = 4000.0f;
 inline const float PHASER_FREQ_SLIDER_MIN_VALUE = 600.0f;
-inline const float PHASER_FREQ_SLIDER_MAX_VALUE = 12000.0f;
+inline const float PHASER_FREQ_SLIDER_MAX_VALUE = 10000.0f;
 
 // Reverb Settings;
 
