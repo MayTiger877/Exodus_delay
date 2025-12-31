@@ -37,8 +37,6 @@
             file="Resources/yellow_Slider.svg"/>
     </GROUP>
     <GROUP id="{9C46E52D-2BF1-E7D6-EEB7-623E057E1954}" name="Source">
-      <FILE id="vK7fRF" name="CostumeLogger.h" compile="0" resource="0" file="Source/CostumeLogger.h"/>
-      <FILE id="N9DWkc" name="Parameters.h" compile="0" resource="0" file="Source/Parameters.h"/>
       <GROUP id="{8C76F35E-C977-BFB0-F1DB-A39EF7C35947}" name="Engine">
         <FILE id="xmnlml" name="DelayEngine.cpp" compile="1" resource="0" file="Source/DelayEngine.cpp"/>
         <FILE id="XV11hP" name="DelayEngine.h" compile="0" resource="0" file="Source/DelayEngine.h"/>
@@ -58,6 +56,10 @@
         <FILE id="MdDCcu" name="ByTempoToggle.h" compile="0" resource="0" file="Source/ByTempoToggle.h"/>
         <FILE id="yKnanI" name="CostumeKnob.cpp" compile="1" resource="0" file="Source/CostumeKnob.cpp"/>
         <FILE id="QBVm3t" name="CostumeKnob.h" compile="0" resource="0" file="Source/CostumeKnob.h"/>
+        <FILE id="YRgS6U" name="CostumeSliderClass.cpp" compile="1" resource="0"
+              file="Source/CostumeSliderClass.cpp"/>
+        <FILE id="oVl47N" name="CostumeSliderClass.h" compile="0" resource="0"
+              file="Source/CostumeSliderClass.h"/>
         <FILE id="pkQO6D" name="DistKnob.cpp" compile="1" resource="0" file="Source/DistKnob.cpp"/>
         <FILE id="Kp1Rb7" name="DistKnob.h" compile="0" resource="0" file="Source/DistKnob.h"/>
         <FILE id="loaktL" name="PhaserKnob.cpp" compile="1" resource="0" file="Source/PhaserKnob.cpp"/>
@@ -72,6 +74,7 @@
             file="Source/PluginProcessor.h"/>
       <FILE id="CgAg2S" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
+      <FILE id="N9DWkc" name="Parameters.h" compile="0" resource="0" file="Source/Parameters.h"/>
       <FILE id="jBEaML" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
     <GROUP id="{9757A937-22EA-7237-F22B-0B04E9061930}" name="CMake">

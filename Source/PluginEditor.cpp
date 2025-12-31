@@ -30,9 +30,50 @@ Exodus_2AudioProcessorEditor::Exodus_2AudioProcessorEditor (Exodus_2AudioProcess
 	auto ventSVGFile = juce::MemoryInputStream(BinaryData::Vent_svg, BinaryData::Vent_svgSize, false);
 	ventDrawable = juce::Drawable::createFromImageDataStream(ventSVGFile);
 
+	valuePopup.setVisible(false);
+	valuePopup.setJustificationType(juce::Justification::centred);
+	valuePopup.setInterceptsMouseClicks(false, false);
+	valuePopup.setColour(juce::Label::backgroundColourId, juce::Colours::black.withAlpha(0.85f));
+	valuePopup.setColour(juce::Label::textColourId, juce::Colours::white);
+	addAndMakeVisible(valuePopup);
+
     initiateChannelStrips();
 	initiateGeneralSettings();
 	initiateEffectSettings();
+
+}
+
+void Exodus_2AudioProcessorEditor::attachPopup(ValuePopupSlider& s)
+{
+	s.onPopupStart = [this](ValuePopupSlider& slider)
+	{
+		activeSlider = &slider;
+		valuePopup.setVisible(true);
+	};
+
+	s.onPopupUpdate = [this](ValuePopupSlider& slider)
+	{
+		if (activeSlider != &slider)
+			return;
+			
+		juce::String toDisplay(slider.getValue(), 2);
+
+		if (slider.getName().containsIgnoreCase("Gain"))
+			toDisplay.append(" db", 3);
+
+		if (slider.getName().containsIgnoreCase("Rate"))
+			toDisplay.append(" Hz", 3);
+
+		valuePopup.setText(juce::String(slider.getValue(), 2), juce::dontSendNotification);
+		auto b = slider.getBounds();
+		valuePopup.setBounds(b.getCentreX() - 30, b.getY() - 24, 60, 20);
+	};
+
+	s.onPopupEnd = [this](ValuePopupSlider&)
+	{
+		valuePopup.setVisible(false);
+		activeSlider = nullptr;
+	};
 }
 
 Exodus_2AudioProcessorEditor::~Exodus_2AudioProcessorEditor()
@@ -166,6 +207,7 @@ void Exodus_2AudioProcessorEditor::initiateGeneralSettings()
 	m_delayTimeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_delayTimeSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
 	m_delayTimeSlider.setLookAndFeel(&costumeKnobLAF);
+	attachPopup(m_delayTimeSlider);
 	addAndMakeVisible(m_delayTimeSlider);
 	m_delayTimeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, delayTimeParamID, m_delayTimeSlider);
 
@@ -181,6 +223,7 @@ void Exodus_2AudioProcessorEditor::initiateGeneralSettings()
 	m_feedbackSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_feedbackSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
 	m_feedbackSlider.setLookAndFeel(&costumeKnobLAF);
+	attachPopup(m_feedbackSlider);
 	addAndMakeVisible(m_feedbackSlider);
 	m_feedbackAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, delayFeedbackParamID, m_feedbackSlider);
 
@@ -190,6 +233,7 @@ void Exodus_2AudioProcessorEditor::initiateGeneralSettings()
 	m_dryLevelSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_dryLevelSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
 	m_dryLevelSlider.setLookAndFeel(&costumeKnobLAF);
+	attachPopup(m_dryLevelSlider);
 	addAndMakeVisible(m_dryLevelSlider);
 	m_dryLevelAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, delayDryLevelParamID, m_dryLevelSlider);
 
@@ -199,9 +243,9 @@ void Exodus_2AudioProcessorEditor::initiateGeneralSettings()
 	m_wetLevelSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_wetLevelSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
 	m_wetLevelSlider.setLookAndFeel(&costumeKnobLAF);
+	attachPopup(m_wetLevelSlider);
 	addAndMakeVisible(m_wetLevelSlider);
 	m_wetLevelAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, delayWetLevelParamID, m_wetLevelSlider);
-
 }
 
 void Exodus_2AudioProcessorEditor::initiateEffectSettings()
@@ -213,6 +257,7 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_distortionSettings.distortionTypeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_distortionSettings.distortionTypeSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
 	m_distortionSettings.distortionTypeSlider.setLookAndFeel(&distKnobLAF);
+	attachPopup(m_distortionSettings.distortionTypeSlider);
 	addAndMakeVisible(m_distortionSettings.distortionTypeSlider);
 	m_distortionSettings.distortionTypeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, distortionTypeParamID, m_distortionSettings.distortionTypeSlider);
 
@@ -222,6 +267,7 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_distortionSettings.distortionDriveSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_distortionSettings.distortionDriveSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
 	m_distortionSettings.distortionDriveSlider.setLookAndFeel(&costumeKnobLAF);
+	attachPopup(m_distortionSettings.distortionDriveSlider);
 	addAndMakeVisible(m_distortionSettings.distortionDriveSlider);
 	m_distortionSettings.distortionDriveAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, distortionDriveParamID, m_distortionSettings.distortionDriveSlider);
 
@@ -231,6 +277,7 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_distortionSettings.distortionThresholdSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_distortionSettings.distortionThresholdSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
 	m_distortionSettings.distortionThresholdSlider.setLookAndFeel(&costumeKnobLAF);
+	attachPopup(m_distortionSettings.distortionThresholdSlider);
 	addAndMakeVisible(m_distortionSettings.distortionThresholdSlider);
 	m_distortionSettings.distortionThresholdAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, distortionThresholdParamID, m_distortionSettings.distortionThresholdSlider);
 
@@ -241,6 +288,7 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_phaserSettings.phaserTypeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_phaserSettings.phaserTypeSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
 	m_phaserSettings.phaserTypeSlider.setLookAndFeel(&phaserKnobLAF);
+	attachPopup(m_phaserSettings.phaserTypeSlider);
 	addAndMakeVisible(m_phaserSettings.phaserTypeSlider);
 	m_phaserSettings.phaserTypeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, phaserTypeParamID, m_phaserSettings.phaserTypeSlider);
 
@@ -250,6 +298,7 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_phaserSettings.phaserRateSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_phaserSettings.phaserRateSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
 	m_phaserSettings.phaserRateSlider.setLookAndFeel(&costumeKnobLAF);
+	attachPopup(m_phaserSettings.phaserRateSlider);
 	addAndMakeVisible(m_phaserSettings.phaserRateSlider);
 	m_phaserSettings.phaserRateAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, phaserRateParamID, m_phaserSettings.phaserRateSlider);
 
@@ -265,6 +314,7 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_phaserSettings.phaserDepthSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_phaserSettings.phaserDepthSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
 	m_phaserSettings.phaserDepthSlider.setLookAndFeel(&costumeKnobLAF);
+	attachPopup(m_phaserSettings.phaserDepthSlider);
 	addAndMakeVisible(m_phaserSettings.phaserDepthSlider);
 	m_phaserSettings.phaserDepthAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, phaserDepthParamID, m_phaserSettings.phaserDepthSlider);
 
@@ -274,6 +324,7 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_phaserSettings.phaserFreqSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_phaserSettings.phaserFreqSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
 	m_phaserSettings.phaserFreqSlider.setLookAndFeel(&costumeKnobLAF);
+	attachPopup(m_phaserSettings.phaserFreqSlider);
 	addAndMakeVisible(m_phaserSettings.phaserFreqSlider);
 	m_phaserSettings.phaserFreqAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, phaserFreqParamID, m_phaserSettings.phaserFreqSlider);
 
@@ -284,6 +335,7 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_reverbSettings.reverbRoomSizeSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_reverbSettings.reverbRoomSizeSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
 	m_reverbSettings.reverbRoomSizeSlider.setLookAndFeel(&costumeKnobLAF);
+	attachPopup(m_reverbSettings.reverbRoomSizeSlider);
 	addAndMakeVisible(m_reverbSettings.reverbRoomSizeSlider);
 	m_reverbSettings.reverbRoomSizeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, reverbRoomSizeParamID, m_reverbSettings.reverbRoomSizeSlider);
 
@@ -293,6 +345,7 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_reverbSettings.reverbDampingSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_reverbSettings.reverbDampingSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
 	m_reverbSettings.reverbDampingSlider.setLookAndFeel(&costumeKnobLAF);
+	attachPopup(m_reverbSettings.reverbDampingSlider);
 	addAndMakeVisible(m_reverbSettings.reverbDampingSlider);
 	m_reverbSettings.reverbDampingAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, reverbDampingParamID, m_reverbSettings.reverbDampingSlider);
 
@@ -302,6 +355,7 @@ void Exodus_2AudioProcessorEditor::initiateEffectSettings()
 	m_reverbSettings.reverbWidthSlider.setSliderStyle(juce::Slider::RotaryHorizontalVerticalDrag);
 	m_reverbSettings.reverbWidthSlider.setTextBoxStyle(juce::Slider::NoTextBox, true, 50, 20);
 	m_reverbSettings.reverbWidthSlider.setLookAndFeel(&costumeKnobLAF);
+	attachPopup(m_reverbSettings.reverbWidthSlider);
 	addAndMakeVisible(m_reverbSettings.reverbWidthSlider);
 	m_reverbSettings.reverbWidthAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, reverbWidthParamID, m_reverbSettings.reverbWidthSlider);
 }

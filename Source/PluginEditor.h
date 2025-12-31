@@ -16,6 +16,7 @@
 #include "DistKnob.h"
 #include "PhaserKnob.h"
 #include "ByTempoToggle.h"
+#include "CostumeSliderClass.h"
 #include <chrono>
 
 //==============================================================================
@@ -24,25 +25,25 @@
 
 struct channelStrip
 {
-    juce::Slider gainSlider, panSlider, distortionMixSlider, reverbMixSlider, phaserMixSlider;
+	ValuePopupSlider gainSlider, panSlider, distortionMixSlider, reverbMixSlider, phaserMixSlider;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> gainAttachment, panAttachment, distortionMixAttachment, reverbMixAttachment, phaserMixAttachment;
 };
 
 struct distortionSettings
 {
-	juce::Slider distortionDriveSlider, distortionThresholdSlider, distortionTypeSlider;
+	ValuePopupSlider distortionDriveSlider, distortionThresholdSlider, distortionTypeSlider;
 	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> distortionDriveAttachment, distortionThresholdAttachment, distortionTypeAttachment;
 };
 
 struct phaserSettings
 {
-	juce::Slider phaserRateSlider, phaserDepthSlider, phaserFreqSlider, phaserTypeSlider;
+	ValuePopupSlider phaserRateSlider, phaserDepthSlider, phaserFreqSlider, phaserTypeSlider;
 	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> phaserRateAttachment, phaserDepthAttachment, phaserFreqAttachment, phaserTypeAttachment;
 };
 
 struct reverbSettings
 {
-	juce::Slider reverbRoomSizeSlider, reverbDampingSlider, reverbWidthSlider;
+	ValuePopupSlider reverbRoomSizeSlider, reverbDampingSlider, reverbWidthSlider;
 	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> reverbRoomSizeAttachment, reverbDampingAttachment, reverbWidthAttachment;
 };
 
@@ -76,8 +77,10 @@ private:
 
     std::unique_ptr<juce::Drawable> backgroundDrawable, backgroundTextureDrawable, leftPanelWoodDrawable, rightPanelWoodDrawable, ventDrawable;
 
+	void attachPopup(ValuePopupSlider& slider);
+
 	channelStrip m_channelStrips[16];
-	juce::Slider* tile_activeSlider = nullptr;
+	ValuePopupSlider* tile_activeSlider = nullptr;
 	int tile_activeSliderType = -1; // 0: gain, 1: pan, 2: distortion mix, 3: reverb mix, 4: phaser mix
 	double tile_relativeYPos = 0.0;
 	void initiateChannelStrips();
@@ -87,7 +90,7 @@ private:
 	void tileMouseWheelMove(const juce::MouseEvent& e, const juce::MouseWheelDetails& wheel);
 
 	//general settings
-	juce::Slider m_delayTimeSlider, m_feedbackSlider, m_dryLevelSlider, m_wetLevelSlider;
+	ValuePopupSlider m_delayTimeSlider, m_feedbackSlider, m_dryLevelSlider, m_wetLevelSlider;
 	std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> m_delayTimeAttachment, m_feedbackAttachment, m_dryLevelAttachment, m_wetLevelAttachment;
 	void initiateGeneralSettings();
 
@@ -112,6 +115,9 @@ private:
 	void updatePhaserDelayTimeAttachment();
 
 	void initiateEffectSettings();
+
+	juce::Label valuePopup;
+	ValuePopupSlider* activeSlider = nullptr;
 	
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Exodus_2AudioProcessorEditor)
 };
