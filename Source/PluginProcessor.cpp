@@ -133,30 +133,7 @@ bool Exodus_2AudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts)
 }
 #endif
 
-
-//static void test__Distortion(juce::AudioBuffer<float>& buffer)
-//{
-//    MyDistortion distortion;
-//    distortion.setMix(1.0f);
-//    distortion.setDrive(1.0f); // You can set drive value as needed
-//    distortion.setType(distType_SoftClip); // You can set distortion type as needed
-//    distortion.processBuffer(buffer, 0);
-//    distortion.processBuffer(buffer, 1);
-//}
-//
-//static void test__Phaser(juce::AudioBuffer<float>& buffer, juce::dsp::Phaser<float>& phaser)
-//{
-//    juce::dsp::AudioBlock<float> audioBlock(buffer);
-//    juce::dsp::ProcessContextReplacing<float> context(audioBlock);
-//    phaser.process(context);
-//}
-//
-//static void test__Reverb(juce::AudioBuffer<float>& buffer, juce::dsp::Reverb& reverb)
-//{
-//    juce::dsp::AudioBlock<float> audioBlock(buffer);
-//    juce::dsp::ProcessContextReplacing<float> context(audioBlock);
-//    reverb.process(context);
-//}
+//----------------------------------------------------------------------------
 
 const float Exodus_2AudioProcessor::getDelayTimeInSec() const
 {
@@ -206,7 +183,7 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
         {
             auto bpm = newPositionInfo->getBpm();
             m_bpm.set(bpm.hasValue() ? (*bpm) : DEFAULT_BPM);
-
+            
             auto timeSig = newPositionInfo->getTimeSignature();
             if (timeSig.hasValue())
             {
@@ -215,8 +192,12 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
                 ts.denominator = (*timeSig).denominator;
                 m_timeSignature.set(ts);
             }
+
+            
         }
     }
+
+    // normal DSP here
 
     m_delayEngine->setDelayEngineParameters({
         getDelayTimeInSec(),
@@ -256,7 +237,7 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
     const int numSamples = buffer.getNumSamples();
 
-	this->m_delayTimeInMs = m_delayEngine->getDelayEngineParameters().delayTimeInSec * 1000.0f;
+	this->m_delayTimeInMs.set(m_delayEngine->getDelayEngineParameters().delayTimeInSec * 1000.0f);
 
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     {
@@ -265,12 +246,6 @@ void Exodus_2AudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juc
 
     if (numSamples == 0)
         return;
-
-	//test__Phaser(buffer, m_delayEngine->d_phaser);
-    //return;
-
-	//test__Reverb(buffer, m_delayEngine->d_reverb);
-    //return;
 
 	m_delayEngine->fillDelayBuffer(0, numSamples, buffer.getReadPointer(0));
     m_delayEngine->fillDelayBuffer(1, numSamples, buffer.getReadPointer(1));
@@ -330,68 +305,68 @@ juce::AudioProcessorValueTreeState::ParameterLayout Exodus_2AudioProcessor::crea
     juce::AudioProcessorValueTreeState::ParameterLayout layout;
     for (int i = 0; i < 16; ++i)
     {
-        layout.add(std::make_unique<juce::AudioParameterFloat>("GAIN_" + std::to_string(i), "Gain " + std::to_string(i),
+        layout.add(std::make_unique<juce::AudioParameterFloat>(gainMixParamID[i], "Gain " + std::to_string(i),
             juce::NormalisableRange<float>(GAIN_SLIDER_MIN_VALUE, GAIN_SLIDER_MAX_VALUE, GAIN_SLIDER_INTERVAL), GAIN_SLIDER_DEFAULT_VALUE));
         
-        layout.add(std::make_unique<juce::AudioParameterFloat>("PAN_" + std::to_string(i), "Pan " + std::to_string(i),
+        layout.add(std::make_unique<juce::AudioParameterFloat>(panMixParamID[i], "Pan " + std::to_string(i),
             juce::NormalisableRange<float>(PAN_SLIDER_MIN_VALUE, PAN_SLIDER_MAX_VALUE, PAN_SLIDER_INTERVAL), PAN_SLIDER_DEFAULT_VALUE));
 		
-        layout.add(std::make_unique<juce::AudioParameterFloat>("DISTORTION_MIX_" + std::to_string(i), "Distortion Mix " + std::to_string(i),
+        layout.add(std::make_unique<juce::AudioParameterFloat>(distortionMixParamID[i], "Distortion Mix " + std::to_string(i),
 			juce::NormalisableRange<float>(DISTORTION_MIX_SLIDER_MIN_VALUE, DISTORTION_MIX_SLIDER_MAX_VALUE, DISTORTION_MIX_SLIDER_INTERVAL), DISTORTION_MIX_SLIDER_DEFAULT_VALUE));
 		
-        layout.add(std::make_unique<juce::AudioParameterFloat>("REVERB_MIX_" + std::to_string(i), "Reverb Mix " + std::to_string(i),
+        layout.add(std::make_unique<juce::AudioParameterFloat>(reverbMixParamID[i], "Reverb Mix " + std::to_string(i),
 			juce::NormalisableRange<float>(REVERB_MIX_SLIDER_MIN_VALUE, REVERB_MIX_SLIDER_MAX_VALUE, REVERB_MIX_SLIDER_INTERVAL), REVERB_MIX_SLIDER_DEFAULT_VALUE));
 		
-        layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_MIX_" + std::to_string(i), "Phaser Mix " + std::to_string(i),
+        layout.add(std::make_unique<juce::AudioParameterFloat>(phaserMixParamID[i], "Phaser Mix " + std::to_string(i),
 			juce::NormalisableRange<float>(PHASER_MIX_SLIDER_MIN_VALUE, PHASER_MIX_SLIDER_MAX_VALUE, PHASER_MIX_SLIDER_INTERVAL), PHASER_MIX_SLIDER_DEFAULT_VALUE));
     }
 
-    layout.add(std::make_unique<juce::AudioParameterFloat>("GNRL_DELAY_TIME", "General Delay Time",
+    layout.add(std::make_unique<juce::AudioParameterFloat>(delayTimeParamID, delayTimeParamName,
 		juce::NormalisableRange<float>(GNRL_DELAY_TIME_SLIDER_MIN_VALUE, GNRL_DELAY_TIME_SLIDER_MAX_VALUE, GNRL_DELAY_TIME_SLIDER_INTERVAL), GNRL_DELAY_TIME_SLIDER_DEFAULT_VALUE));
 
     layout.add(std::make_unique<juce::AudioParameterInt>(delayTempoSyncParamID, delayTempoSyncParamName, TIME_SYNCED_SLIDER_MIN_VALUE, TIME_SYNCED_SLIDER_MAX_VALUE, TIME_SYNCED_SLIDER_DEFAULT_VALUE));
     
-    layout.add(std::make_unique<juce::AudioParameterFloat>("GNRL_FEEDBACK", "General Feedback",
+    layout.add(std::make_unique<juce::AudioParameterFloat>(delayFeedbackParamID, delayFeedbackParamName,
 		juce::NormalisableRange<float>(GNRL_FEEDBACK_SLIDER_MIN_VALUE, GNRL_FEEDBACK_SLIDER_MAX_VALUE, GNRL_FEEDBACK_SLIDER_INTERVAL), GNRL_FEEDBACK_SLIDER_DEFAULT_VALUE));
 
-	layout.add(std::make_unique<juce::AudioParameterFloat>("GNRL_DRY_LEVEL", "General Dry Level",
+	layout.add(std::make_unique<juce::AudioParameterFloat>(delayDryLevelParamID, delayDryLevelParamName,
 		juce::NormalisableRange<float>(GNRL_DRY_LEVEL_SLIDER_MIN_VALUE, GNRL_DRY_LEVEL_SLIDER_MAX_VALUE, GNRL_DRY_LEVEL_SLIDER_INTERVAL), GNRL_DRY_LEVEL_SLIDER_DEFAULT_VALUE));
 
-	layout.add(std::make_unique<juce::AudioParameterFloat>("GNRL_WET_LEVEL", "General Wet Level",
+	layout.add(std::make_unique<juce::AudioParameterFloat>(delayWetLevelParamID, delayWetLevelParamName,
 		juce::NormalisableRange<float>(GNRL_WET_LEVEL_SLIDER_MIN_VALUE, GNRL_WET_LEVEL_SLIDER_MAX_VALUE, GNRL_WET_LEVEL_SLIDER_INTERVAL), GNRL_WET_LEVEL_SLIDER_DEFAULT_VALUE));
 
-	layout.add(std::make_unique<juce::AudioParameterFloat>("DISTORTION_TYPE", "Distortion Type",
+	layout.add(std::make_unique<juce::AudioParameterFloat>(distortionTypeParamID, distortionTypeParamName,
 		juce::NormalisableRange<float>(DISTORTION_TYPE_SLIDER_MIN_VALUE, DISTORTION_TYPE_SLIDER_MAX_VALUE, DISTORTION_TYPE_SLIDER_INTERVAL), DISTORTION_TYPE_SLIDER_DEFAULT_VALUE));
 
-	layout.add(std::make_unique<juce::AudioParameterFloat>("DISTORTION_DRIVE", "Distortion Drive",
+	layout.add(std::make_unique<juce::AudioParameterFloat>(distortionDriveParamID, distortionDriveParamName,
         juce::NormalisableRange<float>(DISTORTION_DRIVE_SLIDER_MIN_VALUE, DISTORTION_DRIVE_SLIDER_MAX_VALUE, DISTORTION_DRIVE_SLIDER_INTERVAL), DISTORTION_DRIVE_SLIDER_DEFAULT_VALUE));
 
-    layout.add(std::make_unique<juce::AudioParameterFloat>("DISTORTION_THRESHOLD", "Distortion Threshold",
+    layout.add(std::make_unique<juce::AudioParameterFloat>(distortionThresholdParamID, distortionThresholdParamName,
 		juce::NormalisableRange<float>(DISTORTION_THRESHOLD_SLIDER_MIN_VALUE, DISTORTION_THRESHOLD_SLIDER_MAX_VALUE, DISTORTION_THRESHOLD_SLIDER_INTERVAL), DISTORTION_THRESHOLD_SLIDER_DEFAULT_VALUE));
 
-	layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_TYPE", "Phaser Type",
+	layout.add(std::make_unique<juce::AudioParameterFloat>(phaserTypeParamID, phaserTypeParamName,
 		juce::NormalisableRange<float>(PHASER_TYPE_SLIDER_MIN_VALUE, PHASER_TYPE_SLIDER_MAX_VALUE, PHASER_TYPE_SLIDER_INTERVAL), PHASER_TYPE_SLIDER_DEFAULT_VALUE));
     
     juce::NormalisableRange<float> phaserRateNR(PHASER_RATE_SLIDER_MIN_VALUE, PHASER_RATE_SLIDER_MAX_VALUE);
     phaserRateNR.setSkewForCentre(PHASER_RATE_SLIDER_SKEW_MID_POINT);
-    layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_RATE", "Phaser Rate", phaserRateNR, PHASER_RATE_SLIDER_DEFAULT_VALUE));
+    layout.add(std::make_unique<juce::AudioParameterFloat>(phaserRateParamID, phaserRateParamName, phaserRateNR, PHASER_RATE_SLIDER_DEFAULT_VALUE));
 
     layout.add(std::make_unique<juce::AudioParameterInt>(phaserTempoSyncParamID, phaserTempoSyncParamName, TIME_SYNCED_SLIDER_MIN_VALUE, TIME_SYNCED_SLIDER_MAX_VALUE, TIME_SYNCED_SLIDER_DEFAULT_VALUE));
 
-    layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_DEPTH", "Phaser Depth",
+    layout.add(std::make_unique<juce::AudioParameterFloat>(phaserDepthParamID, phaserDepthParamName,
 		juce::NormalisableRange<float>(PHASER_DEPTH_SLIDER_MIN_VALUE, PHASER_DEPTH_SLIDER_MAX_VALUE, PHASER_DEPTH_SLIDER_INTERVAL), PHASER_DEPTH_SLIDER_DEFAULT_VALUE));
 
 	juce::NormalisableRange<float> phaserFreqNR(PHASER_FREQ_SLIDER_MIN_VALUE, PHASER_FREQ_SLIDER_MAX_VALUE);
 	phaserFreqNR.setSkewForCentre(PHASER_FREQ_SLIDER_SKEW_MID_POINT);
-    layout.add(std::make_unique<juce::AudioParameterFloat>("PHASER_FREQ", "Phaser Freq", phaserFreqNR, PHASER_FREQ_SLIDER_DEFAULT_VALUE));
+    layout.add(std::make_unique<juce::AudioParameterFloat>(phaserFreqParamID, phaserFreqParamName, phaserFreqNR, PHASER_FREQ_SLIDER_DEFAULT_VALUE));
 
-	layout.add(std::make_unique<juce::AudioParameterFloat>("REVERB_ROOM_SIZE", "Reverb Room Size",
+	layout.add(std::make_unique<juce::AudioParameterFloat>(reverbRoomSizeParamID, reverbRoomSizeParamName,
 		juce::NormalisableRange<float>(REVERB_ROOM_SIZE_SLIDER_MIN_VALUE, REVERB_ROOM_SIZE_SLIDER_MAX_VALUE, REVERB_ROOM_SIZE_SLIDER_INTERVAL), REVERB_ROOM_SIZE_SLIDER_DEFAULT_VALUE));
 
-	layout.add(std::make_unique<juce::AudioParameterFloat>("REVERB_DAMPING", "Reverb Damping",
+	layout.add(std::make_unique<juce::AudioParameterFloat>(reverbDampingParamID, reverbDampingParamName,
 		juce::NormalisableRange<float>(REVERB_DAMPING_SLIDER_MIN_VALUE, REVERB_DAMPING_SLIDER_MAX_VALUE, REVERB_DAMPING_SLIDER_INTERVAL), REVERB_DAMPING_SLIDER_DEFAULT_VALUE));
 
-	layout.add(std::make_unique<juce::AudioParameterFloat>("REVERB_WIDTH", "Reverb Width",
+	layout.add(std::make_unique<juce::AudioParameterFloat>(reverbWidthParamID, reverbWidthParamName,
 		juce::NormalisableRange<float>(REVERB_WIDTH_SLIDER_MIN_VALUE, REVERB_WIDTH_SLIDER_MAX_VALUE, REVERB_WIDTH_SLIDER_INTERVAL), REVERB_WIDTH_SLIDER_DEFAULT_VALUE));
 
 	layout.add(std::make_unique<juce::AudioParameterBool>(generalTempoSyncToggleParamID, generalTempoSyncToggleParamName, GNRL_BY_TEMPO_TOGGLE_DEFAULT_VALUE));

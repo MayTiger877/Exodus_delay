@@ -63,7 +63,7 @@ public:
 
 	DelayEngine* getDelayEngine() const { return m_delayEngine.get(); }
 	void setIndex(int index) { m_index = index; }
-	const float getDelayTimeInMs() const { return m_delayTimeInMs; }
+    const float getDelayTimeInMs() const { return m_delayTimeInMs.get(); }
 
 private:
 	
@@ -75,11 +75,13 @@ private:
     std::unique_ptr<DelayEngine> m_delayEngine;
 
 	int m_index = 0;
-	float m_delayTimeInMs = 0.0f;
+	juce::Atomic<float> m_delayTimeInMs = 0.0f;
 
     juce::AudioProcessorValueTreeState::ParameterLayout creatParametersLayout();
 
 	std::unique_ptr<parameters> m_parameters;
+
+	int m_lastPPQPlayed = 0;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Exodus_2AudioProcessor)

@@ -9,7 +9,7 @@
 namespace BinaryData
 {
     extern const char*   bg_svg;
-    const int            bg_svgSize = 244927;
+    const int            bg_svgSize = 246278;
 
     extern const char*   black_wood_texture_png;
     const int            black_wood_texture_pngSize = 198517;
@@ -21,37 +21,37 @@ namespace BinaryData
     const int            DistKnob_svgSize = 624;
 
     extern const char*   green_Slider_svg;
-    const int            green_Slider_svgSize = 365;
+    const int            green_Slider_svgSize = 371;
 
     extern const char*   toggleUp_svg;
-    const int            toggleUp_svgSize = 2631;
+    const int            toggleUp_svgSize = 2648;
 
     extern const char*   toggleDown_svg;
-    const int            toggleDown_svgSize = 2415;
+    const int            toggleDown_svgSize = 2432;
 
     extern const char*   Knob_svg;
     const int            Knob_svgSize = 1205;
 
     extern const char*   orange_Slider_svg;
-    const int            orange_Slider_svgSize = 365;
+    const int            orange_Slider_svgSize = 371;
 
     extern const char*   purple_Slider_svg;
-    const int            purple_Slider_svgSize = 365;
+    const int            purple_Slider_svgSize = 371;
 
     extern const char*   Red_Slider_svg;
-    const int            Red_Slider_svgSize = 365;
+    const int            Red_Slider_svgSize = 371;
 
     extern const char*   saw_down_lines_choose_svg;
-    const int            saw_down_lines_choose_svgSize = 385;
+    const int            saw_down_lines_choose_svgSize = 391;
 
     extern const char*   saw_up_lines_choose_svg;
-    const int            saw_up_lines_choose_svgSize = 382;
+    const int            saw_up_lines_choose_svgSize = 388;
 
     extern const char*   sine_line_choose_svg;
-    const int            sine_line_choose_svgSize = 165;
+    const int            sine_line_choose_svgSize = 168;
 
     extern const char*   square_lines_choose_svg;
-    const int            square_lines_choose_svgSize = 382;
+    const int            square_lines_choose_svgSize = 388;
 
     extern const char*   TileBG_svg;
     const int            TileBG_svgSize = 773;
@@ -60,13 +60,13 @@ namespace BinaryData
     const int            TileShnatot_svgSize = 870;
 
     extern const char*   triangle_lines_choose_svg;
-    const int            triangle_lines_choose_svgSize = 303;
+    const int            triangle_lines_choose_svgSize = 308;
 
     extern const char*   Vent_svg;
     const int            Vent_svgSize = 598;
 
     extern const char*   yellow_Slider_svg;
-    const int            yellow_Slider_svgSize = 365;
+    const int            yellow_Slider_svgSize = 371;
 
     extern const char*   CPM_cmake;
     const int            CPM_cmakeSize = 42286;
