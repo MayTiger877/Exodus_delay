@@ -616,7 +616,7 @@ void Exodus_2AudioProcessorEditor::updateGeneralDelayTimeAttachment()
 	else
 	{
 		m_delayTimeSlider.setRange(GNRL_DELAY_TIME_SLIDER_MIN_VALUE, GNRL_DELAY_TIME_SLIDER_MAX_VALUE, GNRL_DELAY_TIME_SLIDER_INTERVAL);
-		m_delayTimeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, phaserTempoSyncParamID, m_delayTimeSlider);
+		m_delayTimeAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, delayTimeParamID, m_delayTimeSlider);
 	}
 }
 
@@ -631,7 +631,7 @@ void Exodus_2AudioProcessorEditor::updatePhaserDelayTimeAttachment()
 	else
 	{		
 		m_phaserSettings.phaserRateSlider.setRange(PHASER_RATE_SLIDER_MIN_VALUE, PHASER_RATE_SLIDER_MAX_VALUE);
-		m_phaserSettings.phaserRateAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, phaserDepthParamID, m_phaserSettings.phaserRateSlider);
+		m_phaserSettings.phaserRateAttachment = std::make_unique<juce::AudioProcessorValueTreeState::SliderAttachment>(audioProcessor.apvts, phaserRateParamID, m_phaserSettings.phaserRateSlider);
 	}
 }
 

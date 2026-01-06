@@ -75,7 +75,7 @@ namespace BinaryData
     const int            Findjuce_cmakeSize = 704;
 
     extern const char*   CMakeLists_txt;
-    const int            CMakeLists_txtSize = 5005;
+    const int            CMakeLists_txtSize = 5304;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 23;
